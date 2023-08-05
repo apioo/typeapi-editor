@@ -59,8 +59,12 @@ class Generator
         }
         $schema->definitions = $definitions;
 
-        if ($document->getRoot() !== null && isset($types[$document->getRoot()])) {
-            $schema->{'$ref'} = $types[$document->getRoot()]->getName();
+        $root = $document->getRoot();
+        if ($root !== null && isset($types[$document->getRoot()])) {
+            $rootType = $types[$root] ?? null;
+            if ($rootType instanceof Type) {
+                $schema->{'$ref'} = $rootType->getName();
+            }
         }
 
         return \json_encode($schema, \JSON_PRETTY_PRINT);
@@ -89,6 +93,9 @@ class Generator
         return $import;
     }
 
+    /**
+     * @throws GeneratorException
+     */
     private function generateOperation(Operation $operation): \stdClass
     {
         $result = new \stdClass();
@@ -108,7 +115,10 @@ class Generator
         if (count($operation->getArguments()) > 0) {
             $args = new \stdClass();
             foreach ($operation->getArguments() as $argument) {
-                $args->{$argument->getName()} = $this->generateArgument($argument->getIn(), $argument->getType());
+                $args->{$argument->getName()} = $this->generateArgument(
+                    $argument->getIn() ?? throw new GeneratorException('Argument no in provided'),
+                    $argument->getType() ?? throw new GeneratorException('Argument no type provided')
+                );
             }
             $result->arguments = $args;
         }
@@ -116,7 +126,10 @@ class Generator
         if (count($operation->getThrows()) > 0) {
             $throws = [];
             foreach ($operation->getThrows() as $throw) {
-                $throws[] = $this->generateResponse($throw->getCode() ?? 500, $throw->getType());
+                $throws[] = $this->generateResponse(
+                    $throw->getCode() ?? 500,
+                    $throw->getType() ?? throw new GeneratorException('Throw no type provided')
+                );
             }
             $result->throws = $throws;
         }
@@ -145,7 +158,7 @@ class Generator
         return $result;
     }
 
-    private function generateArgument(string $in, string $type): \stdClass
+    private function generateArgument(string $in, string $type): object
     {
         return (object) [
             'in' => $in,
@@ -277,13 +290,17 @@ class Generator
             $result->type = 'any';
         } elseif ($property->getType() === Property::TYPE_UNION) {
             $result->oneOf = [];
-            foreach ($refs as $ref) {
-                $result->oneOf[] = $this->resolveType([$ref]);
+            if (isset($refs)) {
+                foreach ($refs as $ref) {
+                    $result->oneOf[] = $this->resolveType([$ref]);
+                }
             }
         } elseif ($property->getType() === Property::TYPE_INTERSECTION) {
             $result->allOf = [];
-            foreach ($refs as $ref) {
-                $result->allOf[] = $this->resolveType([$ref]);
+            if (isset($refs)) {
+                foreach ($refs as $ref) {
+                    $result->allOf[] = $this->resolveType([$ref]);
+                }
             }
         }
 

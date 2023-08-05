@@ -181,7 +181,7 @@ class Document implements \JsonSerializable
         return $result;
     }
 
-    public static function from($document): self
+    public static function from(mixed $document): self
     {
         if (is_string($document)) {
             $document = \json_decode($document);

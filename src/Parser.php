@@ -69,14 +69,14 @@ class Parser
 
         $operations = [];
         if (isset($data->operations) && $data->operations instanceof \stdClass) {
-            foreach ($data->operations as $name => $operation) {
+            foreach (get_object_vars($data->operations) as $name => $operation) {
                 $operations[] = $this->parseOperation($name, $operation);
             }
         }
 
         $types = [];
         if (isset($data->definitions) && $data->definitions instanceof \stdClass) {
-            foreach ($data->definitions as $name => $type) {
+            foreach (get_object_vars($data->definitions) as $name => $type) {
                 $types[] = $this->parseType($name, $type);
             }
         }
@@ -112,7 +112,7 @@ class Parser
 
         if (isset($operation->arguments) && $operation->arguments instanceof \stdClass) {
             $arguments = [];
-            foreach ($operation->arguments as $name => $argument) {
+            foreach (get_object_vars($operation->arguments) as $name => $argument) {
                 $arguments[] = $this->parseArgument($name, $argument);
             }
             $return->setArguments($arguments);
@@ -234,7 +234,7 @@ class Parser
         }
 
         if (isset($type->{'$template'}) && $type->{'$template'} instanceof \stdClass) {
-            foreach ($type->{'$template'} as $ref) {
+            foreach (get_object_vars($type->{'$template'}) as $ref) {
                 if (is_string($ref)) {
                     $return->setTemplate($ref);
                     break;
@@ -244,7 +244,7 @@ class Parser
 
         if (isset($type->properties) && $type->properties instanceof \stdClass) {
             $properties = [];
-            foreach ($type->properties as $name => $property) {
+            foreach (get_object_vars($type->properties) as $name => $property) {
                 $properties[] = $this->parseProperty($name, $property);
             }
             $return->setProperties($properties);
