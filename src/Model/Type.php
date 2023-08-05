@@ -151,6 +151,7 @@ class Type implements \JsonSerializable
     {
         return array_filter([
             'name' => $this->name,
+            'type' => $this->type,
             'description' => $this->description,
             'parent' => $this->parent,
             'ref' => $this->ref,

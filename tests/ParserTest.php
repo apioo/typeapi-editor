@@ -21,15 +21,8 @@
 namespace TypeAPI\Editor\Tests;
 
 use PHPUnit\Framework\TestCase;
-use PSX\Api\Parser\TypeAPI;
-use PSX\Schema\Document\Document;
-use PSX\Schema\Document\Generator;
-use PSX\Schema\Document\Operation;
-use PSX\Schema\Document\Type;
-use PSX\Schema\Parser\TypeSchema;
 use PSX\Schema\SchemaManager;
 use TypeAPI\Editor\Parser;
-use Symfony\Component\Yaml\Yaml;
 
 /**
  * ParserTest
@@ -42,11 +35,9 @@ class ParserTest extends TestCase
 {
     public function testParse()
     {
-        $spec = (new TypeAPI(new SchemaManager()))->parse(file_get_contents(__DIR__ . '/resource/typeapi.json'));
+        $actual = (new Parser(new SchemaManager()))->parse(file_get_contents(__DIR__ . '/resource/typeapi.json'));
+        $expect = file_get_contents(__DIR__ . '/resource/document.json');
 
-        $actual = (new Parser(new SchemaManager()))->parse($spec);
-        $expect = Document::from(\json_decode(file_get_contents(__DIR__ . '/resource/document.json')));
-
-        $this->assertEquals($expect, $actual);
+        $this->assertJsonStringEqualsJsonString($expect, \json_encode($actual));
     }
 }

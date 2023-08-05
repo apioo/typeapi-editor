@@ -123,12 +123,14 @@ class Document implements \JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return [
+        return array_filter([
             'imports' => $this->imports,
             'operations' => $this->operations,
             'types' => $this->types,
             'root' => $this->root,
-        ];
+        ], function ($value) {
+            return $value !== null;
+        });
     }
 
     private function convertImports(array $imports): array
@@ -139,6 +141,8 @@ class Document implements \JsonSerializable
                 $result[] = new Import((array) $import);
             } elseif (is_array($import)) {
                 $result[] = new Import($import);
+            } elseif ($import instanceof Import) {
+                $result[] = $import;
             }
         }
 
@@ -153,6 +157,8 @@ class Document implements \JsonSerializable
                 $result[] = new Operation((array) $operation);
             } elseif (is_array($operation)) {
                 $result[] = new Operation($operation);
+            } elseif ($operation instanceof Operation) {
+                $result[] = $operation;
             }
         }
 
@@ -167,6 +173,8 @@ class Document implements \JsonSerializable
                 $result[] = new Type((array) $type);
             } elseif (is_array($type)) {
                 $result[] = new Type($type);
+            } elseif ($type instanceof Type) {
+                $result[] = $type;
             }
         }
 
