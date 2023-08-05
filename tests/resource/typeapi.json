@@ -8,13 +8,13 @@
                 "id": {
                     "in": "path",
                     "schema": {
-                        "$ref": "string"
+                        "type": "string"
                     }
                 },
                 "ref_id": {
                     "in": "query",
                     "schema": {
-                        "$ref": "string"
+                        "type": "string"
                     }
                 },
                 "payload": {

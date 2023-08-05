@@ -160,12 +160,21 @@ class Generator
 
     private function generateArgument(string $in, string $type): object
     {
-        return (object) [
-            'in' => $in,
-            'schema' => (object) [
-                '$ref' => $type
-            ],
-        ];
+        if ($in === 'body') {
+            return (object) [
+                'in' => $in,
+                'schema' => (object) [
+                    '$ref' => $type
+                ],
+            ];
+        } else {
+            return (object) [
+                'in' => $in,
+                'schema' => (object) [
+                    'type' => $type
+                ],
+            ];
+        }
     }
 
     private function generateResponse(int $httpCode, string $return): object

@@ -21,8 +21,8 @@
 namespace TypeAPI\Editor\Tests;
 
 use PHPUnit\Framework\TestCase;
-use PSX\Schema\Document\Document;
-use PSX\Schema\Document\Generator;
+use TypeAPI\Editor\Generator;
+use TypeAPI\Editor\Model\Document;
 
 /**
  * GeneratorTest
