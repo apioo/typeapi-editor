@@ -21,10 +21,10 @@
 namespace TypeAPI\Editor\Tests\Model;
 
 use PHPUnit\Framework\TestCase;
-use PSX\Schema\Document\Document;
-use PSX\Schema\Document\Operation;
-use PSX\Schema\Document\Type;
 use Symfony\Component\Yaml\Yaml;
+use TypeAPI\Editor\Model\Document;
+use TypeAPI\Editor\Model\Operation;
+use TypeAPI\Editor\Model\Type;
 
 /**
  * DocumentTest
