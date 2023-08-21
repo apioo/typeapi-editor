@@ -77,14 +77,26 @@ class Parser
     /**
      * @throws ParserException
      */
-    public function parseFile(string $file): Document
+    public function parseJson(string $json): Document
     {
-        $data = json_decode(file_get_contents($file));
+        $data = json_decode($json);
         if (!$data instanceof \stdClass) {
             throw new ParserException('Could not parse json file');
         }
 
         return $this->parse($data);
+    }
+
+    /**
+     * @throws ParserException
+     */
+    public function parseFile(string $file): Document
+    {
+        if (!is_file($file)) {
+            throw new ParserException('File does not exist');
+        }
+
+        return $this->parseJson(file_get_contents($file));
     }
 
     private function parseImport(string $name, \stdClass $import): Import
