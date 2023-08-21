@@ -35,7 +35,7 @@ class ParserTest extends TestCase
 {
     public function testParse()
     {
-        $actual = (new Parser(new SchemaManager()))->parse(file_get_contents(__DIR__ . '/resource/typeapi.json'));
+        $actual = (new Parser(new SchemaManager()))->parseFile(__DIR__ . '/resource/typeapi.json');
         $expect = file_get_contents(__DIR__ . '/resource/document.json');
 
         $this->assertJsonStringEqualsJsonString($expect, \json_encode($actual));
