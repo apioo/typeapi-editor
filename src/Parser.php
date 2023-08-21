@@ -20,12 +20,8 @@
 
 namespace TypeAPI\Editor;
 
-use PSX\Api\Exception\ArgumentNotFoundException;
-use PSX\Api\OperationInterface;
-use PSX\Api\SpecificationInterface;
-use PSX\Schema\DefinitionsInterface;
 use PSX\Schema\SchemaManagerInterface;
-use PSX\Schema\TypeInterface;
+use PSX\Schema\Type as SchemaType;
 use TypeAPI\Editor\Exception\ParserException;
 use TypeAPI\Editor\Model\Argument;
 use TypeAPI\Editor\Model\Document;
@@ -34,7 +30,6 @@ use TypeAPI\Editor\Model\Import;
 use TypeAPI\Editor\Model\Operation;
 use TypeAPI\Editor\Model\Property;
 use TypeAPI\Editor\Model\Type;
-use PSX\Schema\Type as SchemaType;
 
 /**
  * Generator which transforms a TypeSchema specification to a document
@@ -57,13 +52,8 @@ class Parser
      *
      * @throws ParserException
      */
-    public function parse(string $json): Document
+    public function parse(\stdClass $data): Document
     {
-        $data = \json_decode($json);
-        if (!$data instanceof \stdClass) {
-            throw new ParserException('Could not parse json');
-        }
-
         $imports = [];
         // @TODO handle import
 
@@ -82,6 +72,19 @@ class Parser
         }
 
         return new Document($imports, $operations, $types);
+    }
+
+    /**
+     * @throws ParserException
+     */
+    public function parseFile(string $file): Document
+    {
+        $data = json_decode(file_get_contents($file));
+        if (!$data instanceof \stdClass) {
+            throw new ParserException('Could not parse json file');
+        }
+
+        return $this->parse($data);
     }
 
     private function parseImport(string $name, \stdClass $import): Import
