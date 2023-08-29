@@ -43,4 +43,15 @@ class GeneratorTest extends TestCase
 
         $this->assertJsonStringEqualsJsonString($expect, $actual);
     }
+
+    public function testGenerateComplex()
+    {
+        $json     = \json_decode(file_get_contents(__DIR__ . '/resource/document_complex.json'));
+        $document = Document::from($json);
+
+        $actual = (new Generator())->generate($document);
+        $expect = file_get_contents(__DIR__ . '/resource/typeapi_complex.json');
+
+        $this->assertJsonStringEqualsJsonString($expect, $actual);
+    }
 }

@@ -1,0 +1,2794 @@
+{
+  "imports": [],
+  "operations": [
+    {
+      "name": "tag.changelog",
+      "description": "Generates the changelog for the current release",
+      "httpMethod": "POST",
+      "httpPath": "\/document\/:user\/:document\/changelog",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "payload",
+          "in": "body",
+          "type": "Passthru"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "TagChangelog",
+      "stability": 1,
+      "security": [
+        "tag"
+      ],
+      "authorization": true,
+      "tags": [
+        "tag"
+      ]
+    },
+    {
+      "name": "tag.create",
+      "description": "Creates a new tag",
+      "httpMethod": "POST",
+      "httpPath": "\/document\/:user\/:document\/tag",
+      "httpCode": 201,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "payload",
+          "in": "body",
+          "type": "Passthru"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "Message",
+      "stability": 1,
+      "security": [
+        "tag"
+      ],
+      "authorization": true,
+      "tags": [
+        "tag"
+      ]
+    },
+    {
+      "name": "tag.get",
+      "description": "Returns a tag",
+      "httpMethod": "GET",
+      "httpPath": "\/document\/:user\/:document\/tag\/:id",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "Tag",
+      "stability": 1,
+      "security": [],
+      "authorization": true,
+      "tags": [
+        "tag"
+      ]
+    },
+    {
+      "name": "tag.getAll",
+      "description": "Returns all tags for a document",
+      "httpMethod": "GET",
+      "httpPath": "\/document\/:user\/:document\/tag",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "startIndex",
+          "in": "query",
+          "type": "integer"
+        },
+        {
+          "name": "count",
+          "in": "query",
+          "type": "integer"
+        },
+        {
+          "name": "search",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "TagCollection",
+      "stability": 1,
+      "security": [],
+      "authorization": true,
+      "tags": [
+        "tag"
+      ]
+    },
+    {
+      "name": "star.getAll",
+      "description": "Returns all stared documents for the current user",
+      "httpMethod": "GET",
+      "httpPath": "\/star",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "startIndex",
+          "in": "query",
+          "type": "integer"
+        },
+        {
+          "name": "count",
+          "in": "query",
+          "type": "integer"
+        },
+        {
+          "name": "search",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "DocumentCollection",
+      "stability": 1,
+      "security": [
+        "star"
+      ],
+      "authorization": true,
+      "tags": [
+        "star"
+      ]
+    },
+    {
+      "name": "repository.delete",
+      "description": "Removes a repository",
+      "httpMethod": "DELETE",
+      "httpPath": "\/document\/:user\/:document\/repository\/:id",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "Message",
+      "stability": 1,
+      "security": [
+        "repository"
+      ],
+      "authorization": true,
+      "tags": [
+        "repository"
+      ]
+    },
+    {
+      "name": "repository.create",
+      "description": "Creates a new repository",
+      "httpMethod": "POST",
+      "httpPath": "\/document\/:user\/:document\/repository",
+      "httpCode": 201,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "payload",
+          "in": "body",
+          "type": "RepositoryCreate"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "Message",
+      "stability": 1,
+      "security": [
+        "repository"
+      ],
+      "authorization": true,
+      "tags": [
+        "repository"
+      ]
+    },
+    {
+      "name": "repository.get",
+      "description": "Returns a repository",
+      "httpMethod": "GET",
+      "httpPath": "\/document\/:user\/:document\/repository\/:id",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "Repository",
+      "stability": 1,
+      "security": [
+        "repository"
+      ],
+      "authorization": true,
+      "tags": [
+        "repository"
+      ]
+    },
+    {
+      "name": "repository.getAll",
+      "description": "Returns all configured repositories",
+      "httpMethod": "GET",
+      "httpPath": "\/document\/:user\/:document\/repository",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "startIndex",
+          "in": "query",
+          "type": "integer"
+        },
+        {
+          "name": "count",
+          "in": "query",
+          "type": "integer"
+        },
+        {
+          "name": "search",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "RepositoryCollection",
+      "stability": 1,
+      "security": [
+        "repository"
+      ],
+      "authorization": true,
+      "tags": [
+        "repository"
+      ]
+    },
+    {
+      "name": "pull_request.reactComment",
+      "description": "Reacts to a comment",
+      "httpMethod": "POST",
+      "httpPath": "\/document\/:user\/:document\/pull_request\/:id\/comment\/:comment\/:reaction",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "comment",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "reaction",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "payload",
+          "in": "body",
+          "type": "Passthru"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "Message",
+      "stability": 1,
+      "security": [
+        "pull_request"
+      ],
+      "authorization": true,
+      "tags": [
+        "pull_request"
+      ]
+    },
+    {
+      "name": "pull_request.createComment",
+      "description": "Creates a new issue comment",
+      "httpMethod": "POST",
+      "httpPath": "\/document\/:user\/:document\/pull_request\/:id\/comment",
+      "httpCode": 201,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "payload",
+          "in": "body",
+          "type": "CommentCreate"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "Message",
+      "stability": 1,
+      "security": [
+        "pull_request"
+      ],
+      "authorization": true,
+      "tags": [
+        "pull_request"
+      ]
+    },
+    {
+      "name": "pull_request.getAllComments",
+      "description": "Shows all pull request comments",
+      "httpMethod": "GET",
+      "httpPath": "\/document\/:user\/:document\/pull_request\/:id\/comment",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "startIndex",
+          "in": "query",
+          "type": "integer"
+        },
+        {
+          "name": "count",
+          "in": "query",
+          "type": "integer"
+        },
+        {
+          "name": "search",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "CommentCollection",
+      "stability": 1,
+      "security": [],
+      "authorization": true,
+      "tags": [
+        "pull_request"
+      ]
+    },
+    {
+      "name": "pull_request.delete",
+      "description": "Removes a pull request",
+      "httpMethod": "DELETE",
+      "httpPath": "\/document\/:user\/:document\/pull_request\/:id",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "Message",
+      "stability": 1,
+      "security": [
+        "pull_request"
+      ],
+      "authorization": true,
+      "tags": [
+        "pull_request"
+      ]
+    },
+    {
+      "name": "pull_request.update",
+      "description": "Merges a pull request",
+      "httpMethod": "PUT",
+      "httpPath": "\/document\/:user\/:document\/pull_request\/:id",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "payload",
+          "in": "body",
+          "type": "Passthru"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "Message",
+      "stability": 1,
+      "security": [
+        "pull_request"
+      ],
+      "authorization": true,
+      "tags": [
+        "pull_request"
+      ]
+    },
+    {
+      "name": "pull_request.create",
+      "description": "Creates a new pull request",
+      "httpMethod": "POST",
+      "httpPath": "\/document\/:user\/:document\/pull_request",
+      "httpCode": 201,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "payload",
+          "in": "body",
+          "type": "PullRequestCreate"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "Message",
+      "stability": 1,
+      "security": [
+        "pull_request"
+      ],
+      "authorization": true,
+      "tags": [
+        "pull_request"
+      ]
+    },
+    {
+      "name": "pull_request.get",
+      "description": "Returns an pull request",
+      "httpMethod": "GET",
+      "httpPath": "\/document\/:user\/:document\/pull_request\/:id",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "PullRequest",
+      "stability": 1,
+      "security": [],
+      "authorization": true,
+      "tags": [
+        "pull_request"
+      ]
+    },
+    {
+      "name": "pull_request.getAll",
+      "description": "Returns all issues",
+      "httpMethod": "GET",
+      "httpPath": "\/document\/:user\/:document\/pull_request",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "status",
+          "in": "query",
+          "type": "integer"
+        },
+        {
+          "name": "startIndex",
+          "in": "query",
+          "type": "integer"
+        },
+        {
+          "name": "count",
+          "in": "query",
+          "type": "integer"
+        },
+        {
+          "name": "search",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "PullRequestCollection",
+      "stability": 1,
+      "security": [],
+      "authorization": true,
+      "tags": [
+        "pull_request"
+      ]
+    },
+    {
+      "name": "issue.reactComment",
+      "description": "Reacts to a comment",
+      "httpMethod": "POST",
+      "httpPath": "\/document\/:user\/:document\/issue\/:id\/comment\/:comment\/:reaction",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "comment",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "reaction",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "payload",
+          "in": "body",
+          "type": "Passthru"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "Message",
+      "stability": 1,
+      "security": [
+        "issue"
+      ],
+      "authorization": true,
+      "tags": [
+        "issue"
+      ]
+    },
+    {
+      "name": "issue.createComment",
+      "description": "Creates a new issue comment",
+      "httpMethod": "POST",
+      "httpPath": "\/document\/:user\/:document\/issue\/:id\/comment",
+      "httpCode": 201,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "payload",
+          "in": "body",
+          "type": "CommentCreate"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "Message",
+      "stability": 1,
+      "security": [
+        "issue"
+      ],
+      "authorization": true,
+      "tags": [
+        "issue"
+      ]
+    },
+    {
+      "name": "issue.getAllComments",
+      "description": "Shows all issue comments",
+      "httpMethod": "GET",
+      "httpPath": "\/document\/:user\/:document\/issue\/:id\/comment",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "startIndex",
+          "in": "query",
+          "type": "integer"
+        },
+        {
+          "name": "count",
+          "in": "query",
+          "type": "integer"
+        },
+        {
+          "name": "search",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "CommentCollection",
+      "stability": 1,
+      "security": [],
+      "authorization": true,
+      "tags": [
+        "issue"
+      ]
+    },
+    {
+      "name": "issue.delete",
+      "description": "Removes an issue",
+      "httpMethod": "DELETE",
+      "httpPath": "\/document\/:user\/:document\/issue\/:id",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "Message",
+      "stability": 1,
+      "security": [
+        "issue"
+      ],
+      "authorization": true,
+      "tags": [
+        "issue"
+      ]
+    },
+    {
+      "name": "issue.create",
+      "description": "Creates a new issue",
+      "httpMethod": "POST",
+      "httpPath": "\/document\/:user\/:document\/issue",
+      "httpCode": 201,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "payload",
+          "in": "body",
+          "type": "IssueCreate"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "Message",
+      "stability": 1,
+      "security": [
+        "issue"
+      ],
+      "authorization": true,
+      "tags": [
+        "issue"
+      ]
+    },
+    {
+      "name": "issue.get",
+      "description": "Returns an issue",
+      "httpMethod": "GET",
+      "httpPath": "\/document\/:user\/:document\/issue\/:id",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "Issue",
+      "stability": 1,
+      "security": [],
+      "authorization": true,
+      "tags": [
+        "issue"
+      ]
+    },
+    {
+      "name": "issue.getAll",
+      "description": "Returns all issues",
+      "httpMethod": "GET",
+      "httpPath": "\/document\/:user\/:document\/issue",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "status",
+          "in": "query",
+          "type": "integer"
+        },
+        {
+          "name": "startIndex",
+          "in": "query",
+          "type": "integer"
+        },
+        {
+          "name": "count",
+          "in": "query",
+          "type": "integer"
+        },
+        {
+          "name": "search",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "IssueCollection",
+      "stability": 1,
+      "security": [],
+      "authorization": true,
+      "tags": [
+        "issue"
+      ]
+    },
+    {
+      "name": "explore.getAll",
+      "description": "Returns trending documents",
+      "httpMethod": "GET",
+      "httpPath": "\/explore",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "startIndex",
+          "in": "query",
+          "type": "integer"
+        },
+        {
+          "name": "count",
+          "in": "query",
+          "type": "integer"
+        },
+        {
+          "name": "search",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "DocumentCollection",
+      "stability": 1,
+      "security": [],
+      "authorization": true,
+      "tags": [
+        "explore"
+      ]
+    },
+    {
+      "name": "document.revert",
+      "description": "Reverts your document to this commit",
+      "httpMethod": "POST",
+      "httpPath": "\/document\/:user\/:document\/revert\/:id",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "payload",
+          "in": "body",
+          "type": "Passthru"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "Message",
+      "stability": 1,
+      "security": [
+        "document"
+      ],
+      "authorization": true,
+      "tags": [
+        "document"
+      ]
+    },
+    {
+      "name": "document.reset",
+      "description": "Reverts your document to the latest source",
+      "httpMethod": "POST",
+      "httpPath": "\/document\/:user\/:document\/reset",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "payload",
+          "in": "body",
+          "type": "Passthru"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "Message",
+      "stability": 1,
+      "security": [
+        "document"
+      ],
+      "authorization": true,
+      "tags": [
+        "document"
+      ]
+    },
+    {
+      "name": "document.fork",
+      "description": "Export this document",
+      "httpMethod": "GET",
+      "httpPath": "\/document\/:user\/:document\/fork",
+      "httpCode": 201,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "Message",
+      "stability": 1,
+      "security": [
+        "document"
+      ],
+      "authorization": true,
+      "tags": [
+        "document"
+      ]
+    },
+    {
+      "name": "document.import",
+      "description": "Import a TypeSchema document",
+      "httpMethod": "POST",
+      "httpPath": "\/document\/:user\/:document\/import",
+      "httpCode": 201,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "payload",
+          "in": "body",
+          "type": "Passthru"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "Message",
+      "stability": 1,
+      "security": [
+        "document"
+      ],
+      "authorization": true,
+      "tags": [
+        "document"
+      ]
+    },
+    {
+      "name": "document.export",
+      "description": "Export this document",
+      "httpMethod": "POST",
+      "httpPath": "\/document\/:user\/:document\/export",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "payload",
+          "in": "body",
+          "type": "DocumentExportRequest"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "DocumentExportResponse",
+      "stability": 1,
+      "security": [],
+      "authorization": true,
+      "tags": [
+        "document"
+      ]
+    },
+    {
+      "name": "document.star",
+      "description": "Stars this document",
+      "httpMethod": "POST",
+      "httpPath": "\/document\/:user\/:document\/star",
+      "httpCode": 201,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "payload",
+          "in": "body",
+          "type": "Passthru"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "Message",
+      "stability": 1,
+      "security": [
+        "document"
+      ],
+      "authorization": true,
+      "tags": [
+        "document"
+      ]
+    },
+    {
+      "name": "document.delete",
+      "description": "Removes a document",
+      "httpMethod": "DELETE",
+      "httpPath": "\/document\/:user\/:document",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "Message",
+      "stability": 1,
+      "security": [
+        "document"
+      ],
+      "authorization": true,
+      "tags": [
+        "document"
+      ]
+    },
+    {
+      "name": "document.meta",
+      "description": "Updates the meta data of an document",
+      "httpMethod": "PUT",
+      "httpPath": "\/document\/:user\/:document\/meta",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "payload",
+          "in": "body",
+          "type": "DocumentMeta"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "Message",
+      "stability": 1,
+      "security": [
+        "document"
+      ],
+      "authorization": true,
+      "tags": [
+        "document"
+      ]
+    },
+    {
+      "name": "document.update",
+      "description": "Updates a document",
+      "httpMethod": "PUT",
+      "httpPath": "\/document\/:user\/:document",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "payload",
+          "in": "body",
+          "type": "DocumentUpdate"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "Message",
+      "stability": 1,
+      "security": [
+        "document"
+      ],
+      "authorization": true,
+      "tags": [
+        "document"
+      ]
+    },
+    {
+      "name": "document.create",
+      "description": "Creates a new document",
+      "httpMethod": "POST",
+      "httpPath": "\/document\/:user",
+      "httpCode": 201,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "payload",
+          "in": "body",
+          "type": "DocumentCreate"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "Message",
+      "stability": 1,
+      "security": [
+        "document"
+      ],
+      "authorization": true,
+      "tags": [
+        "document"
+      ]
+    },
+    {
+      "name": "document.showPreview",
+      "description": "Returns a document preview",
+      "httpMethod": "GET",
+      "httpPath": "\/document\/:user\/:document\/preview",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "version",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "throws": [
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "DocumentPreview",
+      "stability": 1,
+      "security": [],
+      "authorization": true,
+      "tags": [
+        "document"
+      ]
+    },
+    {
+      "name": "document.get",
+      "description": "Returns a document",
+      "httpMethod": "GET",
+      "httpPath": "\/document\/:user\/:document",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "version",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "throws": [
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "Document",
+      "stability": 1,
+      "security": [],
+      "authorization": true,
+      "tags": [
+        "document"
+      ]
+    },
+    {
+      "name": "document.getAll",
+      "description": "Returns all documents",
+      "httpMethod": "GET",
+      "httpPath": "\/document\/:user",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "startIndex",
+          "in": "query",
+          "type": "integer"
+        },
+        {
+          "name": "count",
+          "in": "query",
+          "type": "integer"
+        },
+        {
+          "name": "search",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "DocumentCollection",
+      "stability": 1,
+      "security": [],
+      "authorization": true,
+      "tags": [
+        "document"
+      ]
+    },
+    {
+      "name": "commit.get",
+      "description": "Returns a commit",
+      "httpMethod": "GET",
+      "httpPath": "\/document\/:user\/:document\/commit\/:id",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "Commit",
+      "stability": 1,
+      "security": [],
+      "authorization": true,
+      "tags": [
+        "commit"
+      ]
+    },
+    {
+      "name": "commit.getAll",
+      "description": "Returns all commits for a document",
+      "httpMethod": "GET",
+      "httpPath": "\/document\/:user\/:document\/commit",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "user",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "startIndex",
+          "in": "query",
+          "type": "integer"
+        },
+        {
+          "name": "count",
+          "in": "query",
+          "type": "integer"
+        },
+        {
+          "name": "search",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "throws": [
+        {
+          "code": 400,
+          "type": "Message"
+        },
+        {
+          "code": 404,
+          "type": "Message"
+        },
+        {
+          "code": 500,
+          "type": "Message"
+        }
+      ],
+      "return": "CommitCollection",
+      "stability": 1,
+      "security": [],
+      "authorization": true,
+      "tags": [
+        "commit"
+      ]
+    },
+    {
+      "name": "meta.getAbout",
+      "description": "",
+      "httpMethod": "GET",
+      "httpPath": "\/",
+      "httpCode": 200,
+      "arguments": [],
+      "throws": [],
+      "return": "About",
+      "stability": 1,
+      "security": [],
+      "authorization": true,
+      "tags": []
+    }
+  ],
+  "types": [
+    {
+      "name": "About",
+      "type": "object",
+      "properties": [
+        {
+          "name": "apiVersion",
+          "type": "string"
+        },
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "termsOfService",
+          "type": "string"
+        },
+        {
+          "name": "contactName",
+          "type": "string"
+        },
+        {
+          "name": "contactUrl",
+          "type": "string"
+        },
+        {
+          "name": "contactEmail",
+          "type": "string"
+        },
+        {
+          "name": "licenseName",
+          "type": "string"
+        },
+        {
+          "name": "licenseUrl",
+          "type": "string"
+        },
+        {
+          "name": "paymentCurrency",
+          "type": "string"
+        },
+        {
+          "name": "categories",
+          "type": "array",
+          "refs": [
+            "string"
+          ]
+        },
+        {
+          "name": "scopes",
+          "type": "array",
+          "refs": [
+            "string"
+          ]
+        },
+        {
+          "name": "apps",
+          "type": "object",
+          "refs": [
+            "AboutApps"
+          ]
+        },
+        {
+          "name": "links",
+          "type": "array",
+          "refs": [
+            "AboutLink"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "AboutApps",
+      "type": "map",
+      "properties": []
+    },
+    {
+      "name": "AboutLink",
+      "type": "object",
+      "properties": [
+        {
+          "name": "rel",
+          "type": "string"
+        },
+        {
+          "name": "href",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "Collection",
+      "type": "object",
+      "properties": [
+        {
+          "name": "totalResults",
+          "type": "integer"
+        },
+        {
+          "name": "startIndex",
+          "type": "integer"
+        },
+        {
+          "name": "itemsPerPage",
+          "type": "integer"
+        },
+        {
+          "name": "entry",
+          "type": "array",
+          "refs": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Comment",
+      "type": "object",
+      "properties": [
+        {
+          "name": "id",
+          "type": "integer"
+        },
+        {
+          "name": "user",
+          "type": "object",
+          "refs": [
+            "User"
+          ]
+        },
+        {
+          "name": "status",
+          "type": "integer"
+        },
+        {
+          "name": "reaction",
+          "type": "object",
+          "refs": [
+            "CommentReactions"
+          ]
+        },
+        {
+          "name": "comment",
+          "type": "string"
+        },
+        {
+          "name": "updateDate",
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "name": "insertDate",
+          "type": "string",
+          "format": "date-time"
+        }
+      ]
+    },
+    {
+      "name": "CommentCollection",
+      "type": "reference",
+      "ref": "Collection",
+      "template": "Comment",
+      "properties": []
+    },
+    {
+      "name": "CommentCreate",
+      "type": "object",
+      "parent": "Comment",
+      "properties": []
+    },
+    {
+      "name": "CommentReactions",
+      "type": "object",
+      "properties": [
+        {
+          "name": "like",
+          "type": "integer"
+        },
+        {
+          "name": "dislike",
+          "type": "integer"
+        },
+        {
+          "name": "laugh",
+          "type": "integer"
+        },
+        {
+          "name": "hooray",
+          "type": "integer"
+        },
+        {
+          "name": "confused",
+          "type": "integer"
+        },
+        {
+          "name": "heart",
+          "type": "integer"
+        },
+        {
+          "name": "rocket",
+          "type": "integer"
+        },
+        {
+          "name": "eyes",
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "name": "Commit",
+      "type": "object",
+      "properties": [
+        {
+          "name": "id",
+          "type": "integer"
+        },
+        {
+          "name": "document",
+          "type": "object",
+          "refs": [
+            "Document"
+          ]
+        },
+        {
+          "name": "user",
+          "type": "object",
+          "refs": [
+            "User"
+          ]
+        },
+        {
+          "name": "previous",
+          "type": "object",
+          "refs": [
+            "CommitPrevious"
+          ]
+        },
+        {
+          "name": "message",
+          "type": "string"
+        },
+        {
+          "name": "commitHash",
+          "type": "string"
+        },
+        {
+          "name": "spec",
+          "type": "any"
+        },
+        {
+          "name": "insertDate",
+          "type": "string",
+          "format": "date-time"
+        }
+      ]
+    },
+    {
+      "name": "CommitCollection",
+      "type": "reference",
+      "ref": "Collection",
+      "template": "Commit",
+      "properties": []
+    },
+    {
+      "name": "CommitPrevious",
+      "type": "object",
+      "properties": [
+        {
+          "name": "id",
+          "type": "integer"
+        },
+        {
+          "name": "message",
+          "type": "string"
+        },
+        {
+          "name": "commitHash",
+          "type": "string"
+        },
+        {
+          "name": "spec",
+          "type": "any"
+        },
+        {
+          "name": "insertDate",
+          "type": "string",
+          "format": "date-time"
+        }
+      ]
+    },
+    {
+      "name": "Document",
+      "type": "object",
+      "properties": [
+        {
+          "name": "id",
+          "type": "integer"
+        },
+        {
+          "name": "user",
+          "type": "object",
+          "refs": [
+            "User"
+          ]
+        },
+        {
+          "name": "source",
+          "type": "object",
+          "refs": [
+            "Document"
+          ]
+        },
+        {
+          "name": "status",
+          "type": "integer"
+        },
+        {
+          "name": "stars",
+          "type": "integer"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "baseUrl",
+          "type": "string"
+        },
+        {
+          "name": "keywords",
+          "type": "array",
+          "refs": [
+            "string"
+          ]
+        },
+        {
+          "name": "homepage",
+          "type": "string"
+        },
+        {
+          "name": "license",
+          "type": "string"
+        },
+        {
+          "name": "spec",
+          "type": "any"
+        },
+        {
+          "name": "updateDate",
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "name": "insertDate",
+          "type": "string",
+          "format": "date-time"
+        }
+      ]
+    },
+    {
+      "name": "DocumentCollection",
+      "type": "reference",
+      "ref": "Collection",
+      "template": "Document",
+      "properties": []
+    },
+    {
+      "name": "DocumentCreate",
+      "type": "object",
+      "properties": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "baseUrl",
+          "type": "string"
+        },
+        {
+          "name": "baseVersion",
+          "type": "string"
+        },
+        {
+          "name": "keywords",
+          "type": "string"
+        },
+        {
+          "name": "homepage",
+          "type": "string"
+        },
+        {
+          "name": "license",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "DocumentExportRequest",
+      "type": "object",
+      "properties": [
+        {
+          "name": "version",
+          "type": "string"
+        },
+        {
+          "name": "format",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "DocumentExportResponse",
+      "type": "object",
+      "properties": [
+        {
+          "name": "href",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "DocumentMeta",
+      "type": "object",
+      "properties": [
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "baseUrl",
+          "type": "string"
+        },
+        {
+          "name": "keywords",
+          "type": "string"
+        },
+        {
+          "name": "homepage",
+          "type": "string"
+        },
+        {
+          "name": "license",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "DocumentPreview",
+      "type": "object",
+      "properties": [
+        {
+          "name": "repositories",
+          "type": "array",
+          "refs": [
+            "Repository"
+          ]
+        },
+        {
+          "name": "tags",
+          "type": "array",
+          "refs": [
+            "Tag"
+          ]
+        },
+        {
+          "name": "types",
+          "type": "array",
+          "refs": [
+            "string"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "DocumentUpdate",
+      "type": "object",
+      "properties": [
+        {
+          "name": "spec",
+          "type": "any"
+        }
+      ]
+    },
+    {
+      "name": "Issue",
+      "type": "object",
+      "properties": [
+        {
+          "name": "id",
+          "type": "integer"
+        },
+        {
+          "name": "user",
+          "type": "object",
+          "refs": [
+            "User"
+          ]
+        },
+        {
+          "name": "document",
+          "type": "object",
+          "refs": [
+            "Document"
+          ]
+        },
+        {
+          "name": "status",
+          "type": "integer"
+        },
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "updateDate",
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "name": "insertDate",
+          "type": "string",
+          "format": "date-time"
+        }
+      ]
+    },
+    {
+      "name": "IssueCollection",
+      "type": "reference",
+      "ref": "Collection",
+      "template": "Issue",
+      "properties": []
+    },
+    {
+      "name": "IssueCreate",
+      "type": "object",
+      "properties": [
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "Message",
+      "type": "object",
+      "properties": [
+        {
+          "name": "success",
+          "type": "boolean"
+        },
+        {
+          "name": "message",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "Passthru",
+      "type": "map",
+      "description": "No schema information available",
+      "properties": []
+    },
+    {
+      "name": "PullRequest",
+      "type": "object",
+      "properties": [
+        {
+          "name": "id",
+          "type": "integer"
+        },
+        {
+          "name": "status",
+          "type": "integer"
+        },
+        {
+          "name": "source",
+          "type": "object",
+          "refs": [
+            "Document"
+          ]
+        },
+        {
+          "name": "target",
+          "type": "object",
+          "refs": [
+            "Document"
+          ]
+        },
+        {
+          "name": "user",
+          "type": "object",
+          "refs": [
+            "User"
+          ]
+        },
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "updateDate",
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "name": "insertDate",
+          "type": "string",
+          "format": "date-time"
+        }
+      ]
+    },
+    {
+      "name": "PullRequestCollection",
+      "type": "reference",
+      "ref": "Collection",
+      "template": "PullRequest",
+      "properties": []
+    },
+    {
+      "name": "PullRequestCreate",
+      "type": "object",
+      "properties": [
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "Repository",
+      "type": "object",
+      "properties": [
+        {
+          "name": "id",
+          "type": "integer"
+        },
+        {
+          "name": "user",
+          "type": "object",
+          "refs": [
+            "User"
+          ]
+        },
+        {
+          "name": "document",
+          "type": "object",
+          "refs": [
+            "Document"
+          ]
+        },
+        {
+          "name": "generator",
+          "type": "string"
+        },
+        {
+          "name": "url",
+          "type": "string"
+        },
+        {
+          "name": "username",
+          "type": "string"
+        },
+        {
+          "name": "password",
+          "type": "string"
+        },
+        {
+          "name": "folder",
+          "type": "string"
+        },
+        {
+          "name": "config",
+          "type": "string"
+        },
+        {
+          "name": "sync",
+          "type": "boolean"
+        },
+        {
+          "name": "updateDate",
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "name": "insertDate",
+          "type": "string",
+          "format": "date-time"
+        }
+      ]
+    },
+    {
+      "name": "RepositoryCollection",
+      "type": "reference",
+      "ref": "Collection",
+      "template": "Repository",
+      "properties": []
+    },
+    {
+      "name": "RepositoryCreate",
+      "type": "object",
+      "parent": "Repository",
+      "properties": []
+    },
+    {
+      "name": "Tag",
+      "type": "object",
+      "properties": [
+        {
+          "name": "id",
+          "type": "string"
+        },
+        {
+          "name": "document",
+          "type": "object",
+          "refs": [
+            "Document"
+          ]
+        },
+        {
+          "name": "user",
+          "type": "object",
+          "refs": [
+            "User"
+          ]
+        },
+        {
+          "name": "version",
+          "type": "string"
+        },
+        {
+          "name": "changelog",
+          "type": "string"
+        },
+        {
+          "name": "spec",
+          "type": "any"
+        },
+        {
+          "name": "insertDate",
+          "type": "string",
+          "format": "date-time"
+        }
+      ]
+    },
+    {
+      "name": "TagChangelog",
+      "type": "object",
+      "properties": [
+        {
+          "name": "master",
+          "type": "any"
+        },
+        {
+          "name": "tag",
+          "type": "any"
+        },
+        {
+          "name": "version",
+          "type": "string"
+        },
+        {
+          "name": "changelog",
+          "type": "array",
+          "refs": [
+            "string"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TagCollection",
+      "type": "reference",
+      "ref": "Collection",
+      "template": "Tag",
+      "properties": []
+    },
+    {
+      "name": "User",
+      "type": "object",
+      "properties": [
+        {
+          "name": "id",
+          "type": "integer"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        }
+      ]
+    }
+  ]
+}
