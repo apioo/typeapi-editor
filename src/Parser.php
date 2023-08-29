@@ -336,7 +336,7 @@ class Parser
      */
     private function detectType(\stdClass $type): string
     {
-        if (isset($type->properties) && $type->properties instanceof \stdClass) {
+        if ((isset($type->properties) && $type->properties instanceof \stdClass) || (isset($type->{'$extends'}) && is_string($type->{'$extends'}))) {
             return Type::TYPE_OBJECT;
         } elseif (isset($type->additionalProperties) && $type->additionalProperties instanceof \stdClass) {
             return Type::TYPE_MAP;
