@@ -1,5 +1,16 @@
 {
     "operations": {
+        "test.getAll": {
+            "description": "Returns all entries",
+            "method": "GET",
+            "path": "\/test",
+            "return": {
+                "code": 200,
+                "schema": {
+                    "$ref": "CustomerCollection"
+                }
+            }
+        },
         "test.execute": {
             "description": "Executes a test operation",
             "method": "POST",
@@ -41,6 +52,32 @@
         }
     },
     "definitions": {
+        "Collection": {
+            "type": "object",
+            "properties": {
+                "totalResults": {
+                    "type": "integer"
+                },
+                "startIndex": {
+                    "type": "integer"
+                },
+                "itemsPerPage": {
+                    "type": "integer"
+                },
+                "entry": {
+                    "type": "array",
+                    "items": {
+                        "$generic": "T"
+                    }
+                }
+            }
+        },
+        "CustomerCollection": {
+            "$ref": "Collection",
+            "$template": {
+                "T": "Customer"
+            }
+        },
         "Customer": {
             "type": "object",
             "properties": {

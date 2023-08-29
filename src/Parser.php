@@ -222,6 +222,8 @@ class Parser
             return $schema->{'$ref'};
         } elseif (isset($schema->type) && is_string($schema->type)) {
             return $schema->type;
+        } elseif (isset($schema->{'$generic'}) && is_string($schema->{'$generic'})) {
+            return 'T';
         } else {
             throw new ParserException('Provided an invalid schema');
         }
