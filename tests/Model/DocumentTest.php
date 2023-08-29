@@ -53,7 +53,7 @@ class DocumentTest extends TestCase
 
     protected function assertDocument(Document $document): void
     {
-        $this->assertEquals(1, count($document->getOperations()));
+        $this->assertEquals(2, count($document->getOperations()));
 
         $operation = $document->getOperation($document->indexOfOperation('test.execute'));
         $this->assertInstanceOf(Operation::class, $operation);
@@ -62,7 +62,7 @@ class DocumentTest extends TestCase
         $this->assertEquals(3, count($operation->getArguments()));
         $this->assertEquals(1, count($operation->getThrows()));
 
-        $this->assertEquals(5, count($document->getTypes()));
+        $this->assertEquals(7, count($document->getTypes()));
 
         $type = $document->getType($document->indexOfType('Product'));
         $this->assertInstanceOf(Type::class, $type);

@@ -1,4 +1,13 @@
+imports: []
 operations:
+  - name: test.getAll
+    description: Returns all entries
+    httpMethod: GET
+    httpPath: "/test"
+    httpCode: 200
+    arguments: []
+    throws: []
+    return: CustomerCollection
   - name: test.execute
     description: Executes a test operation
     httpMethod: POST
@@ -19,6 +28,24 @@ operations:
         type: Error
     return: Customer
 types:
+  - name: Collection
+    type: object
+    properties:
+      - name: totalResults
+        type: integer
+      - name: startIndex
+        type: integer
+      - name: itemsPerPage
+        type: integer
+      - name: entry
+        type: array
+        refs:
+          - T
+  - name: CustomerCollection
+    type: reference
+    ref: Collection
+    template: Customer
+    properties: []
   - name: Customer
     type: object
     properties:
