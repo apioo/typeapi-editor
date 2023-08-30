@@ -267,6 +267,10 @@ class Parser
             $return->setProperties($properties);
         }
 
+        if (isset($type->additionalProperties) && $type->additionalProperties instanceof \stdClass) {
+            $return->setRef($this->parseSchema($type->additionalProperties));
+        }
+
         return $return;
     }
 
