@@ -2538,7 +2538,7 @@
     "AboutApps": {
       "type": "object",
       "additionalProperties": {
-        "$ref": null
+        "type": "string"
       }
     },
     "AboutLink": {
@@ -2910,7 +2910,7 @@
       "description": "No schema information available",
       "type": "object",
       "additionalProperties": {
-        "$ref": null
+        "type": "any"
       }
     },
     "PullRequest": {

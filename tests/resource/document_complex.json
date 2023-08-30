@@ -2058,6 +2058,7 @@
     {
       "name": "AboutApps",
       "type": "map",
+      "ref": "string",
       "properties": []
     },
     {
@@ -2556,6 +2557,7 @@
       "name": "Passthru",
       "type": "map",
       "description": "No schema information available",
+      "ref": "any",
       "properties": []
     },
     {
