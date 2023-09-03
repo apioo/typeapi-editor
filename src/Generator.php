@@ -38,9 +38,14 @@ class Generator
     /**
      * Generates a TypeSchema specification based on the document
      */
-    public function generate(Document $document): string
+    public function generate(Document $document, ?string $baseUrl = null): string
     {
         $schema = new \stdClass();
+
+        if (!empty($baseUrl)) {
+            $schema->baseUrl = $baseUrl;
+        }
+
         $import = $this->generateImport($document->getImports());
         if (!empty($import)) {
             $schema->{'$import'} = $import;
