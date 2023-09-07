@@ -54,4 +54,15 @@ class GeneratorTest extends TestCase
 
         $this->assertJsonStringEqualsJsonString($expect, $actual);
     }
+
+    public function testGenerateSchema()
+    {
+        $json     = \json_decode(file_get_contents(__DIR__ . '/resource/document_typeschema.json'));
+        $document = Document::from($json);
+
+        $actual = (new Generator())->generate($document);
+        $expect = file_get_contents(__DIR__ . '/resource/typeschema.json');
+
+        $this->assertJsonStringEqualsJsonString($expect, $actual, $actual);
+    }
 }

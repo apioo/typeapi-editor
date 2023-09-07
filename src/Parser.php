@@ -64,14 +64,22 @@ class Parser
             }
         }
 
+        $rootRef = $data->{'$ref'} ?? null;
+        $root = null;
+
         $types = [];
+        $index = 0;
         if (isset($data->definitions) && $data->definitions instanceof \stdClass) {
             foreach (get_object_vars($data->definitions) as $name => $type) {
+                if ($rootRef === $name) {
+                    $root = $index;
+                }
                 $types[] = $this->parseType($name, $type);
+                $index++;
             }
         }
 
-        return new Document($imports, $operations, $types);
+        return new Document($imports, $operations, $types, $root);
     }
 
     /**
@@ -292,10 +300,6 @@ class Parser
             $return->setDescription($property->description);
         }
 
-        if (isset($property->type) && is_string($property->type)) {
-            $return->setType($property->type);
-        }
-
         if (isset($property->format) && is_string($property->format)) {
             $return->setFormat($property->format);
         }
@@ -351,36 +355,32 @@ class Parser
         }
     }
 
-    private function detectPropertyType(\stdClass $type, array &$refs): string
+    private function detectPropertyType(\stdClass $type, array &$refs, int $count = 0): string
     {
         if (isset($type->properties) && $type->properties instanceof \stdClass) {
             return Property::TYPE_OBJECT;
         } elseif (isset($type->additionalProperties) && $type->additionalProperties instanceof \stdClass) {
-            $refs[] = $this->parseSchema($type->additionalProperties);
+            $this->detectPropertyType($type->additionalProperties, $refs, $count + 1);
             return Property::TYPE_MAP;
         } elseif (isset($type->items) && $type->items instanceof \stdClass) {
-            $refs[] = $this->parseSchema($type->items);
+            $this->detectPropertyType($type->items, $refs, $count + 1);
             return Property::TYPE_ARRAY;
         } elseif (isset($type->oneOf) && is_array($type->oneOf)) {
-            foreach ($type->oneOf as $ref) {
-                if (!$ref instanceof \stdClass) {
-                    continue;
-                }
-                $refs[] = $this->parseSchema($ref);
-            }
+            $refs = array_merge($refs, $this->parseComposite($type->oneOf));
             return Property::TYPE_UNION;
         } elseif (isset($type->allOf) && is_array($type->allOf)) {
-            foreach ($type->allOf as $ref) {
-                if (!$ref instanceof \stdClass) {
-                    continue;
-                }
-                $refs[] = $this->parseSchema($ref);
-            }
+            $refs = array_merge($refs, $this->parseComposite($type->allOf));
             return Property::TYPE_INTERSECTION;
         } elseif (isset($type->{'$ref'}) && is_string($type->{'$ref'})) {
             $refs[] = $type->{'$ref'};
             return Property::TYPE_OBJECT;
+        } elseif (isset($type->{'$generic'}) && is_string($type->{'$generic'})) {
+            $refs[] = $type->{'$generic'};
+            return Property::TYPE_GENERIC;
         } elseif (isset($type->type) && is_string($type->type)) {
+            if ($count > 0) {
+                $refs[] = $type->type;
+            }
             $schemaType = SchemaType::tryFrom($type->type);
             if ($schemaType === SchemaType::STRING) {
                 return Property::TYPE_STRING;
@@ -396,5 +396,18 @@ class Parser
         }
 
         throw new ParserException('Could not determine type');
+    }
+
+    private function parseComposite(array $items): array
+    {
+        $refs = [];
+        foreach ($items as $ref) {
+            if (!$ref instanceof \stdClass) {
+                continue;
+            }
+
+            $refs[] = $this->parseSchema($ref);
+        }
+        return $refs;
     }
 }

@@ -204,7 +204,7 @@ class Generator
             $result->{'$ref'} = $type->getRef();
 
             if ($type->getTemplate() !== null) {
-                $result->{'$template'} = (object)[
+                $result->{'$template'} = (object) [
                     'T' => $type->getTemplate()
                 ];
             }
@@ -255,7 +255,7 @@ class Generator
             $result->readonly = $property->getReadonly();
         }
 
-        $refs = $property->getRefs();
+        $refs = $property->getRefs() ?? [];
         
         if ($property->getType() === Property::TYPE_OBJECT) {
             $props = $this->resolveType($refs);
@@ -304,17 +304,13 @@ class Generator
             $result->type = 'any';
         } elseif ($property->getType() === Property::TYPE_UNION) {
             $result->oneOf = [];
-            if (isset($refs)) {
-                foreach ($refs as $ref) {
-                    $result->oneOf[] = $this->resolveType([$ref]);
-                }
+            foreach ($refs as $ref) {
+                $result->oneOf[] = $this->resolveType([$ref]);
             }
         } elseif ($property->getType() === Property::TYPE_INTERSECTION) {
             $result->allOf = [];
-            if (isset($refs)) {
-                foreach ($refs as $ref) {
-                    $result->allOf[] = $this->resolveType([$ref]);
-                }
+            foreach ($refs as $ref) {
+                $result->allOf[] = $this->resolveType([$ref]);
             }
         }
 

@@ -38,6 +38,7 @@ class Property implements \JsonSerializable
     public const TYPE_ARRAY = 'array';
     public const TYPE_UNION = 'union';
     public const TYPE_INTERSECTION = 'intersection';
+    public const TYPE_GENERIC = 'T';
     public const TYPE_ANY = 'any';
 
     private ?string $name;
