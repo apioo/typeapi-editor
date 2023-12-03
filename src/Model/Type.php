@@ -182,6 +182,7 @@ class Type implements \JsonSerializable
             'parent' => $this->parent,
             'ref' => $this->ref,
             'template' => $this->template,
+            'required' => $this->required,
             'properties' => $this->properties,
         ], function ($value) {
             return $value !== null;

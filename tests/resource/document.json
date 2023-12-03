@@ -87,7 +87,15 @@
         {
           "name": "age",
           "type": "integer"
+        },
+        {
+          "format": "date-time",
+          "name": "birthday",
+          "type": "string"
         }
+      ],
+      "required": [
+        "name"
       ]
     },
     {
