@@ -39,6 +39,10 @@ class Type implements \JsonSerializable
     private ?string $parent;
     private ?string $ref;
     private ?string $template;
+
+    /**
+     * @var array<string>|null
+     */
     private ?array $required;
 
     /**
@@ -54,6 +58,11 @@ class Type implements \JsonSerializable
         $this->parent = $entity['parent'] ?? null;
         $this->ref = $entity['ref'] ?? null;
         $this->template = $entity['template'] ?? null;
+        if (isset($entity['required']) && is_array($entity['required'])) {
+            $this->required = $entity['required'];
+        } else {
+            $this->required = null;
+        }
         if (isset($entity['properties']) && is_array($entity['properties'])) {
             $this->properties = $this->convertProperties($entity['properties']);
         }
@@ -119,11 +128,17 @@ class Type implements \JsonSerializable
         $this->template = $template;
     }
 
+    /**
+     * @return array<string>|null
+     */
     public function getRequired(): ?array
     {
         return $this->required;
     }
 
+    /**
+     * @param array<string>|null $required
+     */
     public function setRequired(?array $required): void
     {
         $this->required = $required;
