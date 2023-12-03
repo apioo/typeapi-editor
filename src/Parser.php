@@ -279,6 +279,10 @@ class Parser
             $return->setRef($this->parseSchema($type->additionalProperties));
         }
 
+        if (isset($type->required) && is_array($type->required)) {
+            $return->setRequired($type->required);
+        }
+
         return $return;
     }
 

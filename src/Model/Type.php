@@ -39,6 +39,7 @@ class Type implements \JsonSerializable
     private ?string $parent;
     private ?string $ref;
     private ?string $template;
+    private ?array $required;
 
     /**
      * @var array<Property>
@@ -116,6 +117,16 @@ class Type implements \JsonSerializable
     public function setTemplate(?string $template): void
     {
         $this->template = $template;
+    }
+
+    public function getRequired(): ?array
+    {
+        return $this->required;
+    }
+
+    public function setRequired(?array $required): void
+    {
+        $this->required = $required;
     }
 
     /**

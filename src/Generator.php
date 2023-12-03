@@ -230,6 +230,10 @@ class Generator
                 }
                 $result->properties = $props;
             }
+
+            if ($type->getRequired() !== null) {
+                $result->required = $type->getRequired();
+            }
         }
 
         return $result;
