@@ -23,6 +23,7 @@ namespace TypeAPI\Editor;
 use TypeAPI\Editor\Exception\GeneratorException;
 use TypeAPI\Editor\Model\Document;
 use TypeAPI\Editor\Model\Operation;
+use TypeAPI\Editor\Model\Security;
 use TypeAPI\Editor\Model\Type;
 use TypeAPI\Editor\Model\Property;
 
@@ -42,8 +43,16 @@ class Generator
     {
         $schema = new \stdClass();
 
-        if (!empty($baseUrl)) {
+        $documentBaseUrl = $document->getBaseUrl();
+        if (!empty($documentBaseUrl)) {
+            $schema->baseUrl = $documentBaseUrl;
+        } elseif (!empty($baseUrl)) {
             $schema->baseUrl = $baseUrl;
+        }
+
+        $security = $document->getSecurity();
+        if ($security instanceof Security) {
+            $schema->security = $security;
         }
 
         $import = $this->generateImport($document->getImports());

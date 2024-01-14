@@ -29,6 +29,7 @@ use TypeAPI\Editor\Model\Error;
 use TypeAPI\Editor\Model\Import;
 use TypeAPI\Editor\Model\Operation;
 use TypeAPI\Editor\Model\Property;
+use TypeAPI\Editor\Model\Security;
 use TypeAPI\Editor\Model\Type;
 
 /**
@@ -54,6 +55,16 @@ class Parser
      */
     public function parse(\stdClass $data): Document
     {
+        $baseUrl = null;
+        if (isset($data->baseUrl) && is_string($data->baseUrl)) {
+            $baseUrl = $data->baseUrl;
+        }
+
+        $security = null;
+        if (isset($data->security) && $data->security instanceof \stdClass) {
+            $security = new Security((array) $data->security);
+        }
+
         $imports = [];
         // @TODO handle import
 
@@ -79,7 +90,7 @@ class Parser
             }
         }
 
-        return new Document($imports, $operations, $types, $root);
+        return new Document($imports, $operations, $types, $root, $baseUrl, $security);
     }
 
     /**

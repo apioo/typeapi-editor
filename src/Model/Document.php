@@ -46,13 +46,17 @@ class Document implements \JsonSerializable
     private array $types;
 
     private ?int $root;
+    private ?string $baseUrl;
+    private ?Security $security;
 
-    public function __construct(?array $imports = null, ?array $operations = null, ?array $types = null, ?int $root = null)
+    public function __construct(?array $imports = null, ?array $operations = null, ?array $types = null, ?int $root = null, ?string $baseUrl = null, ?Security $security = null)
     {
         $this->imports = $this->convertImports($imports ?? []);
         $this->operations = $this->convertOperations($operations ?? []);
         $this->types = $this->convertTypes($types ?? []);
         $this->root = $root;
+        $this->baseUrl = $baseUrl;
+        $this->security = $security;
     }
 
     public function getImports(): ?array
@@ -121,6 +125,16 @@ class Document implements \JsonSerializable
         return $this->root;
     }
 
+    public function getBaseUrl(): ?string
+    {
+        return $this->baseUrl;
+    }
+
+    public function getSecurity(): ?Security
+    {
+        return $this->security;
+    }
+
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -128,6 +142,8 @@ class Document implements \JsonSerializable
             'operations' => $this->operations,
             'types' => $this->types,
             'root' => $this->root,
+            'baseUrl' => $this->baseUrl,
+            'security' => $this->security,
         ], function ($value) {
             return $value !== null;
         });
@@ -189,12 +205,42 @@ class Document implements \JsonSerializable
 
         if (is_array($document)) {
             if (isset($document['types'])) {
-                return new self($document['imports'] ?? [], $document['operations'] ?? [], $document['types'] ?? [], $document['root'] ?? null);
+                $root = null;
+                if (!empty($document['root'])) {
+                    $root = (int) $document['root'];
+                }
+
+                $baseUrl = null;
+                if (!empty($document['baseUrl'])) {
+                    $baseUrl = $document['baseUrl'];
+                }
+
+                $security = null;
+                if (isset($document['security'])) {
+                    $security = new Security((array) $document['security']);
+                }
+
+                return new self($document['imports'] ?? [], $document['operations'] ?? [], $document['types'], $root, $baseUrl, $security);
             } else {
                 return new self($document);
             }
         } elseif ($document instanceof \stdClass) {
-            return new self($document->imports ?? [], $document->operations ?? [], $document->types ?? [], $document->root ?? null);
+            $root = null;
+            if (!empty($document->root)) {
+                $root = (int) $document->root;
+            }
+
+            $baseUrl = null;
+            if (!empty($document->baseUrl)) {
+                $baseUrl = $document->baseUrl;
+            }
+
+            $security = null;
+            if (isset($document->security)) {
+                $security = new Security((array) $document->security);
+            }
+
+            return new self($document->imports ?? [], $document->operations ?? [], $document->types ?? [], $root, $baseUrl, $security);
         } elseif ($document === null) {
             return new self([]);
         } else {
