@@ -148,9 +148,10 @@ class Generator
             $result->throws = $throws;
         }
 
+        $httpCode = $operation->getHttpCode() ?? 200;
         $return = $operation->getReturn();
-        if ($return !== null) {
-            $result->return = $this->generateResponse($operation->getHttpCode() ?? 200, $return);
+        if ($return !== null && $httpCode !== 204) {
+            $result->return = $this->generateResponse($httpCode, $return);
         }
 
         if ($operation->getStability() !== null) {
