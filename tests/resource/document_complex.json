@@ -17,11 +17,6 @@
           "name": "document",
           "in": "path",
           "type": "string"
-        },
-        {
-          "name": "payload",
-          "in": "body",
-          "type": "Passthru"
         }
       ],
       "throws": [
@@ -38,6 +33,7 @@
           "type": "Message"
         }
       ],
+      "payload": "Passthru",
       "return": "TagChangelog",
       "stability": 1,
       "security": [
@@ -64,11 +60,6 @@
           "name": "document",
           "in": "path",
           "type": "string"
-        },
-        {
-          "name": "payload",
-          "in": "body",
-          "type": "Passthru"
         }
       ],
       "throws": [
@@ -85,6 +76,7 @@
           "type": "Message"
         }
       ],
+      "payload": "Passthru",
       "return": "Message",
       "stability": 1,
       "security": [
@@ -305,11 +297,6 @@
           "name": "document",
           "in": "path",
           "type": "string"
-        },
-        {
-          "name": "payload",
-          "in": "body",
-          "type": "RepositoryCreate"
         }
       ],
       "throws": [
@@ -326,6 +313,7 @@
           "type": "Message"
         }
       ],
+      "payload": "RepositoryCreate",
       "return": "Message",
       "stability": 1,
       "security": [
@@ -471,11 +459,6 @@
           "name": "reaction",
           "in": "path",
           "type": "string"
-        },
-        {
-          "name": "payload",
-          "in": "body",
-          "type": "Passthru"
         }
       ],
       "throws": [
@@ -492,6 +475,7 @@
           "type": "Message"
         }
       ],
+      "payload": "Passthru",
       "return": "Message",
       "stability": 1,
       "security": [
@@ -523,11 +507,6 @@
           "name": "id",
           "in": "path",
           "type": "string"
-        },
-        {
-          "name": "payload",
-          "in": "body",
-          "type": "CommentCreate"
         }
       ],
       "throws": [
@@ -544,6 +523,7 @@
           "type": "Message"
         }
       ],
+      "payload": "CommentCreate",
       "return": "Message",
       "stability": 1,
       "security": [
@@ -682,11 +662,6 @@
           "name": "id",
           "in": "path",
           "type": "string"
-        },
-        {
-          "name": "payload",
-          "in": "body",
-          "type": "Passthru"
         }
       ],
       "throws": [
@@ -703,6 +678,7 @@
           "type": "Message"
         }
       ],
+      "payload": "Passthru",
       "return": "Message",
       "stability": 1,
       "security": [
@@ -729,11 +705,6 @@
           "name": "document",
           "in": "path",
           "type": "string"
-        },
-        {
-          "name": "payload",
-          "in": "body",
-          "type": "PullRequestCreate"
         }
       ],
       "throws": [
@@ -750,6 +721,7 @@
           "type": "Message"
         }
       ],
+      "payload": "PullRequestCreate",
       "return": "Message",
       "stability": 1,
       "security": [
@@ -896,11 +868,6 @@
           "name": "reaction",
           "in": "path",
           "type": "string"
-        },
-        {
-          "name": "payload",
-          "in": "body",
-          "type": "Passthru"
         }
       ],
       "throws": [
@@ -917,6 +884,7 @@
           "type": "Message"
         }
       ],
+      "payload": "Passthru",
       "return": "Message",
       "stability": 1,
       "security": [
@@ -948,11 +916,6 @@
           "name": "id",
           "in": "path",
           "type": "string"
-        },
-        {
-          "name": "payload",
-          "in": "body",
-          "type": "CommentCreate"
         }
       ],
       "throws": [
@@ -969,6 +932,7 @@
           "type": "Message"
         }
       ],
+      "payload": "CommentCreate",
       "return": "Message",
       "stability": 1,
       "security": [
@@ -1102,11 +1066,6 @@
           "name": "document",
           "in": "path",
           "type": "string"
-        },
-        {
-          "name": "payload",
-          "in": "body",
-          "type": "IssueCreate"
         }
       ],
       "throws": [
@@ -1123,6 +1082,7 @@
           "type": "Message"
         }
       ],
+      "payload": "IssueCreate",
       "return": "Message",
       "stability": 1,
       "security": [
@@ -1304,11 +1264,6 @@
           "name": "id",
           "in": "path",
           "type": "string"
-        },
-        {
-          "name": "payload",
-          "in": "body",
-          "type": "Passthru"
         }
       ],
       "throws": [
@@ -1325,6 +1280,7 @@
           "type": "Message"
         }
       ],
+      "payload": "Passthru",
       "return": "Message",
       "stability": 1,
       "security": [
@@ -1351,11 +1307,6 @@
           "name": "document",
           "in": "path",
           "type": "string"
-        },
-        {
-          "name": "payload",
-          "in": "body",
-          "type": "Passthru"
         }
       ],
       "throws": [
@@ -1372,6 +1323,7 @@
           "type": "Message"
         }
       ],
+      "payload": "Passthru",
       "return": "Message",
       "stability": 1,
       "security": [
@@ -1440,11 +1392,6 @@
           "name": "document",
           "in": "path",
           "type": "string"
-        },
-        {
-          "name": "payload",
-          "in": "body",
-          "type": "Passthru"
         }
       ],
       "throws": [
@@ -1461,6 +1408,7 @@
           "type": "Message"
         }
       ],
+      "payload": "Passthru",
       "return": "Message",
       "stability": 1,
       "security": [
@@ -1487,11 +1435,6 @@
           "name": "document",
           "in": "path",
           "type": "string"
-        },
-        {
-          "name": "payload",
-          "in": "body",
-          "type": "DocumentExportRequest"
         }
       ],
       "throws": [
@@ -1508,6 +1451,7 @@
           "type": "Message"
         }
       ],
+      "payload": "DocumentExportRequest",
       "return": "DocumentExportResponse",
       "stability": 1,
       "security": [],
@@ -1532,11 +1476,6 @@
           "name": "document",
           "in": "path",
           "type": "string"
-        },
-        {
-          "name": "payload",
-          "in": "body",
-          "type": "Passthru"
         }
       ],
       "throws": [
@@ -1553,6 +1492,7 @@
           "type": "Message"
         }
       ],
+      "payload": "Passthru",
       "return": "Message",
       "stability": 1,
       "security": [
@@ -1621,11 +1561,6 @@
           "name": "document",
           "in": "path",
           "type": "string"
-        },
-        {
-          "name": "payload",
-          "in": "body",
-          "type": "DocumentMeta"
         }
       ],
       "throws": [
@@ -1642,6 +1577,7 @@
           "type": "Message"
         }
       ],
+      "payload": "DocumentMeta",
       "return": "Message",
       "stability": 1,
       "security": [
@@ -1668,11 +1604,6 @@
           "name": "document",
           "in": "path",
           "type": "string"
-        },
-        {
-          "name": "payload",
-          "in": "body",
-          "type": "DocumentUpdate"
         }
       ],
       "throws": [
@@ -1689,6 +1620,7 @@
           "type": "Message"
         }
       ],
+      "payload": "DocumentUpdate",
       "return": "Message",
       "stability": 1,
       "security": [
@@ -1710,11 +1642,6 @@
           "name": "user",
           "in": "path",
           "type": "string"
-        },
-        {
-          "name": "payload",
-          "in": "body",
-          "type": "DocumentCreate"
         }
       ],
       "throws": [
@@ -1731,6 +1658,7 @@
           "type": "Message"
         }
       ],
+      "payload": "DocumentCreate",
       "return": "Message",
       "stability": 1,
       "security": [

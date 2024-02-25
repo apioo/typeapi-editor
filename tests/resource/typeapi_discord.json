@@ -1,0 +1,291 @@
+{
+  "baseUrl": "https:\/\/discord.com\/api\/v10",
+  "security": {
+    "type": "oauth2",
+    "tokenUrl": "https:\/\/discord.com\/api\/oauth2\/token",
+    "authorizationUrl": "https:\/\/discord.com\/oauth2\/authorize"
+  },
+  "operations": {
+    "channel.message.getAll": {
+      "description": "Retrieves the messages in a channel.",
+      "method": "GET",
+      "path": "\/channels\/:channel_id\/messages",
+      "arguments": {
+        "channel_id": {
+          "in": "path",
+          "schema": {
+            "type": "string"
+          }
+        },
+        "around": {
+          "in": "query",
+          "schema": {
+            "type": "string"
+          }
+        },
+        "before": {
+          "in": "query",
+          "schema": {
+            "type": "string"
+          }
+        },
+        "after": {
+          "in": "query",
+          "schema": {
+            "type": "string"
+          }
+        },
+        "limit": {
+          "in": "query",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      },
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "Message"
+          }
+        }
+      }
+    },
+    "channel.message.get": {
+      "description": "Retrieves a specific message in the channel. Returns a message object on success.",
+      "method": "GET",
+      "path": "\/channels\/:channel_id\/messages\/:message_id",
+      "arguments": {
+        "channel_id": {
+          "in": "path",
+          "schema": {
+            "type": "string"
+          }
+        },
+        "message_id": {
+          "in": "path",
+          "schema": {
+            "type": "string"
+          }
+        }
+      },
+      "return": {
+        "code": 200,
+        "schema": {
+          "$ref": "Message"
+        }
+      }
+    },
+    "channel.message.create": {
+      "description": "Post a message to a guild text or DM channel. Returns a message object. Fires a Message Create Gateway event. See message formatting for more information on how to properly format messages.",
+      "method": "POST",
+      "path": "\/channels\/:channel_id\/messages",
+      "arguments": {
+        "channel_id": {
+          "in": "path",
+          "schema": {
+            "type": "string"
+          }
+        },
+        "payload": {
+          "in": "body",
+          "schema": {
+            "type": "array",
+            "items": {
+              "$ref": "Message"
+            }
+          }
+        }
+      },
+      "throws": [
+        {
+          "code": 400,
+          "schema": {
+            "type": "array",
+            "items": {
+              "$ref": "Message"
+            }
+          }
+        }
+      ],
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "Message"
+          }
+        }
+      }
+    },
+    "channel.message.remove": {
+      "description": "Delete a message. If operating on a guild channel and trying to delete a message that was not sent by the current user, this endpoint requires the MANAGE_MESSAGES permission.",
+      "method": "DELETE",
+      "path": "\/channels\/:channel_id\/messages\/:message_id",
+      "arguments": {
+        "channel_id": {
+          "in": "path",
+          "schema": {
+            "type": "string"
+          }
+        },
+        "message_id": {
+          "in": "path",
+          "schema": {
+            "type": "string"
+          }
+        }
+      },
+      "return": {
+        "code": 204,
+        "schema": {
+          "type": "any"
+        }
+      }
+    },
+    "channel.message.crosspost": {
+      "description": "Crosspost a message in an Announcement Channel to following channels. This endpoint requires the SEND_MESSAGES permission, if the current user sent the message, or additionally the MANAGE_MESSAGES permission, for all other messages, to be present for the current user.",
+      "method": "POST",
+      "path": "\/channels\/:channel_id\/messages\/:message_id\/crosspost",
+      "arguments": {
+        "channel_id": {
+          "in": "path",
+          "schema": {
+            "type": "string"
+          }
+        },
+        "message_id": {
+          "in": "path",
+          "schema": {
+            "type": "string"
+          }
+        }
+      },
+      "return": {
+        "code": 200,
+        "schema": {
+          "$ref": "Message"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Message": {
+      "description": "",
+      "type": "object",
+      "properties": {
+        "content": {
+          "description": "Message contents (up to 2000 characters)",
+          "type": "string"
+        },
+        "nonce": {
+          "description": "Can be used to verify a message was sent (up to 25 characters)",
+          "type": "string"
+        },
+        "tts": {
+          "description": "true if this is a TTS message",
+          "type": "boolean"
+        },
+        "embeds": {
+          "description": "Up to 10 rich embeds (up to 6000 characters)",
+          "type": "array",
+          "items": {
+            "$ref": "Message_Embed"
+          }
+        },
+        "allowed_mentions": {
+          "description": "",
+          "$ref": "Message_Allowed_Mentions"
+        },
+        "message_reference": {
+          "description": "",
+          "type": "string"
+        }
+      }
+    },
+    "Message_Embed": {
+      "description": "",
+      "type": "object",
+      "properties": {
+        "title": {
+          "description": "Title of embed",
+          "type": "string"
+        },
+        "type": {
+          "description": "Type of embed (always \"rich\" for webhook embeds)",
+          "type": "string"
+        },
+        "description": {
+          "description": "Description of embed",
+          "type": "string"
+        },
+        "url": {
+          "description": "Url of embed",
+          "type": "string"
+        },
+        "timestamp": {
+          "description": "Timestamp of embed content",
+          "type": "string"
+        },
+        "color": {
+          "description": "Color code of the embed",
+          "type": "integer"
+        }
+      }
+    },
+    "Message_Allowed_Mentions": {
+      "description": "",
+      "type": "object",
+      "properties": {
+        "parse": {
+          "description": "An array of allowed mention types to parse from the content",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "roles": {
+          "description": "Array of role_ids to mention (Max size of 100)",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "users": {
+          "description": "Array of user_ids to mention (Max size of 100)",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "replied_user": {
+          "description": "For replies, whether to mention the author of the message being replied to (default false)",
+          "type": "boolean"
+        }
+      }
+    },
+    "Message_Reference": {
+      "description": "",
+      "type": "object",
+      "properties": {
+        "message_id": {
+          "description": "Id of the originating message",
+          "type": "string"
+        },
+        "channel_id": {
+          "description": "Id of the originating message's channel",
+          "type": "string"
+        },
+        "guild_id": {
+          "description": "Id of the originating message's guild",
+          "type": "string"
+        },
+        "fail_if_not_exists": {
+          "description": "When sending, whether to error if the referenced message doesn't exist instead of sending as a normal (non-reply) message, default true",
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

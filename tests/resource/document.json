@@ -27,11 +27,6 @@
           "name": "ref_id",
           "in": "query",
           "type": "string"
-        },
-        {
-          "name": "payload",
-          "in": "body",
-          "type": "Product"
         }
       ],
       "throws": [
@@ -40,6 +35,7 @@
           "type": "Error"
         }
       ],
+      "payload": "Product",
       "return": "Customer"
     }
   ],

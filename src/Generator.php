@@ -126,15 +126,36 @@ class Generator
             $result->path = $operation->getHttpPath();
         }
 
+        $args = [];
+        $legacyPayload = null;
         if (count($operation->getArguments()) > 0) {
-            $args = new \stdClass();
             foreach ($operation->getArguments() as $argument) {
-                $args->{$argument->getName()} = $this->generateArgument(
+                if ($argument->getIn() === 'body') {
+                    $legacyPayload = $argument;
+                    continue;
+                }
+
+                $args[$argument->getName()] = $this->generateArgument(
                     $argument->getIn() ?? throw new GeneratorException('Argument no in provided'),
                     $argument->getType() ?? throw new GeneratorException('Argument no type provided')
                 );
             }
-            $result->arguments = $args;
+        }
+
+        $payload = $operation->getPayload();
+        if ($payload !== null && in_array($operation->getHttpMethod(), ['POST', 'PUT', 'PATCH'])) {
+            $args['payload'] = $this->generateArgumentBody(
+                $payload,
+                $operation->getPayloadShape()
+            );
+        } elseif ($legacyPayload !== null) {
+            $args['payload'] = $this->generateArgumentBody(
+                $legacyPayload->getType()
+            );
+        }
+
+        if (count($args) > 0) {
+            $result->arguments = (object) $args;
         }
 
         if (count($operation->getThrows()) > 0) {
@@ -142,16 +163,21 @@ class Generator
             foreach ($operation->getThrows() as $throw) {
                 $throws[] = $this->generateResponse(
                     $throw->getCode() ?? 500,
-                    $throw->getType() ?? throw new GeneratorException('Throw no type provided')
+                    $throw->getType() ?? throw new GeneratorException('Throw no type provided'),
+                    $throw->getTypeShape()
                 );
             }
             $result->throws = $throws;
         }
 
         $httpCode = $operation->getHttpCode() ?? 200;
-        $return = $operation->getReturn();
-        if ($return !== null && $httpCode !== 204) {
-            $result->return = $this->generateResponse($httpCode, $return);
+        if ($httpCode === 204) {
+            $result->return = $this->generateResponse($httpCode, '');
+        } else {
+            $return = $operation->getReturn();
+            if ($return !== null) {
+                $result->return = $this->generateResponse($httpCode, $return, $operation->getReturnShape());
+            }
         }
 
         if ($operation->getStability() !== null) {
@@ -175,31 +201,59 @@ class Generator
 
     private function generateArgument(string $in, string $type): object
     {
-        if ($in === 'body') {
+        return (object) [
+            'in' => $in,
+            'schema' => (object) [
+                'type' => $type
+            ],
+        ];
+    }
+
+    private function generateArgumentBody(string $type, ?string $typeShape = null): object
+    {
+        return (object) [
+            'in' => 'body',
+            'schema' => $this->getTypeShape($type, $typeShape),
+        ];
+    }
+
+    private function generateResponse(int $httpCode, string $return, ?string $returnShape = null): object
+    {
+        if ($httpCode === 204) {
+            $schema = (object) [
+                'type' => 'any'
+            ];
+        } else {
+            $schema = $this->getTypeShape($return, $returnShape);
+        }
+
+        return (object) [
+            'code' => $httpCode,
+            'schema' => $schema,
+        ];
+    }
+
+    private function getTypeShape(string $type, ?string $typeShape = null): object
+    {
+        if ($typeShape === Type::TYPE_ARRAY) {
             return (object) [
-                'in' => $in,
-                'schema' => (object) [
+                'type' => 'array',
+                'items' => (object) [
+                    '$ref' => $type
+                ],
+            ];
+        } elseif ($typeShape === Type::TYPE_MAP) {
+            return (object) [
+                'type' => 'object',
+                'additionalProperties' => (object) [
                     '$ref' => $type
                 ],
             ];
         } else {
             return (object) [
-                'in' => $in,
-                'schema' => (object) [
-                    'type' => $type
-                ],
+                '$ref' => $type
             ];
         }
-    }
-
-    private function generateResponse(int $httpCode, string $return): object
-    {
-        return (object) [
-            'code' => $httpCode,
-            'schema' => (object) [
-                '$ref' => $return
-            ],
-        ];
     }
 
     private function generateType(Type $type): \stdClass

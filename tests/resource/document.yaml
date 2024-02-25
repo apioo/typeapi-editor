@@ -20,12 +20,10 @@ operations:
       - name: ref_id
         in: query
         type: string
-      - name: payload
-        in: body
-        type: Product
     throws:
       - code: 500
         type: Error
+    payload: Product
     return: Customer
 types:
   - name: Collection

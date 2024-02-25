@@ -31,11 +31,13 @@ class Error implements \JsonSerializable
 {
     private ?int $code;
     private ?string $type;
+    private ?string $typeShape;
 
     public function __construct(array $throw)
     {
         $this->code = $throw['code'] ?? null;
         $this->type = $throw['type'] ?? null;
+        $this->typeShape = $throw['typeShape'] ?? null;
     }
 
     public function getCode(): ?int
@@ -58,11 +60,22 @@ class Error implements \JsonSerializable
         $this->type = $type;
     }
 
+    public function getTypeShape(): ?string
+    {
+        return $this->typeShape;
+    }
+
+    public function setTypeShape(?string $typeShape): void
+    {
+        $this->typeShape = $typeShape;
+    }
+
     public function jsonSerialize(): array
     {
         return array_filter([
             'code' => $this->code,
             'type' => $this->type,
+            'typeShape' => $this->typeShape,
         ], function ($value) {
             return $value !== null;
         });

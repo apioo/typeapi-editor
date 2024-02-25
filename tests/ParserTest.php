@@ -49,6 +49,14 @@ class ParserTest extends TestCase
         $this->assertJsonStringEqualsJsonString($expect, \json_encode($actual));
     }
 
+    public function testParseDiscord()
+    {
+        $actual = (new Parser(new SchemaManager()))->parseFile(__DIR__ . '/resource/typeapi_discord.json');
+        $expect = file_get_contents(__DIR__ . '/resource/document_discord.json');
+
+        $this->assertJsonStringEqualsJsonString($expect, \json_encode($actual));
+    }
+
     public function testParseSchema()
     {
         $actual = (new Parser(new SchemaManager()))->parseFile(__DIR__ . '/resource/typeschema.json');

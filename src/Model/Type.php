@@ -31,6 +31,7 @@ class Type implements \JsonSerializable
 {
     public const TYPE_OBJECT = 'object';
     public const TYPE_MAP = 'map';
+    public const TYPE_ARRAY = 'array';
     public const TYPE_REFERENCE = 'reference';
 
     private ?string $name;

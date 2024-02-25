@@ -144,12 +144,28 @@ class Parser
             $return->setHttpPath($operation->path);
         }
 
+        $payload = null;
+        $payloadShape = null;
         if (isset($operation->arguments) && $operation->arguments instanceof \stdClass) {
             $arguments = [];
-            foreach (get_object_vars($operation->arguments) as $name => $argument) {
-                $arguments[] = $this->parseArgument($name, $argument);
+            foreach (get_object_vars($operation->arguments) as $name => $rawArgument) {
+                $shape = null;
+                $argument = $this->parseArgument($name, $rawArgument, $shape);
+                if ($argument->getIn() === 'body') {
+                    $payload = $argument->getType();
+                    $payloadShape = $shape;
+                } else {
+                    $arguments[] = $argument;
+                }
             }
             $return->setArguments($arguments);
+        }
+
+        if ($payload !== null) {
+            $return->setPayload($payload);
+            if ($payloadShape !== null) {
+                $return->setPayloadShape($payloadShape);
+            }
         }
 
         if (isset($operation->throws) && is_array($operation->throws)) {
@@ -165,8 +181,16 @@ class Parser
                 $return->setHttpCode($operation->return->code);
             }
 
-            if (isset($operation->return->schema) && $operation->return->schema instanceof \stdClass) {
-                $return->setReturn($this->parseSchema($operation->return->schema));
+            if ($return->getHttpCode() === 204) {
+                $return->setReturn(null);
+            } else {
+                if (isset($operation->return->schema) && $operation->return->schema instanceof \stdClass) {
+                    $shape = null;
+                    $return->setReturn($this->parseSchema($operation->return->schema, $shape));
+                    if ($shape !== null) {
+                        $return->setReturnShape($shape);
+                    }
+                }
             }
         }
 
@@ -193,7 +217,7 @@ class Parser
         return $return;
     }
 
-    private function parseArgument(string $name, \stdClass $argument): Argument
+    private function parseArgument(string $name, \stdClass $argument, ?string &$shape = null): Argument
     {
         $in = $argument->in ?? null;
         if (!is_string($in)) {
@@ -205,7 +229,7 @@ class Parser
         $return->setIn($in);
 
         if (isset($argument->schema) && $argument->schema instanceof \stdClass) {
-            $return->setType($this->parseSchema($argument->schema));
+            $return->setType($this->parseSchema($argument->schema, $shape));
         } else {
             throw new ParserException('Provided argument schema not available');
         }
@@ -227,7 +251,11 @@ class Parser
         $return->setCode($code);
 
         if (isset($throw->schema) && $throw->schema instanceof \stdClass) {
-            $return->setType($this->parseSchema($throw->schema));
+            $shape = null;
+            $return->setType($this->parseSchema($throw->schema, $shape));
+            if ($shape !== null) {
+                $return->setTypeShape($shape);
+            }
         } else {
             throw new ParserException('Provided throw schema not available');
         }
@@ -235,12 +263,20 @@ class Parser
         return $return;
     }
 
-    private function parseSchema(\stdClass $schema): string
+    private function parseSchema(\stdClass $schema, ?string &$shape = null): string
     {
         if (isset($schema->{'$ref'}) && is_string($schema->{'$ref'})) {
             return $schema->{'$ref'};
         } elseif (isset($schema->type) && is_string($schema->type)) {
-            return $schema->type;
+            if ($schema->type === 'object' && isset($schema->additionalProperties) && $schema->additionalProperties instanceof \stdClass) {
+                $shape = 'map';
+                return $this->parseSchema($schema->additionalProperties);
+            } elseif ($schema->type === 'array' && isset($schema->items) && $schema->items instanceof \stdClass) {
+                $shape = 'array';
+                return $this->parseSchema($schema->items);
+            } else {
+                return $schema->type;
+            }
         } elseif (isset($schema->{'$generic'}) && is_string($schema->{'$generic'})) {
             return 'T';
         } else {

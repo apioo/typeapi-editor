@@ -38,11 +38,14 @@ class Operation implements \JsonSerializable
      * @var array<Argument>
      */
     private array $arguments = [];
+    private ?string $payload;
+    private ?string $payloadShape;
     /**
      * @var array<Error>
      */
     private array $throws = [];
     private ?string $return;
+    private ?string $returnShape;
     private ?int $stability;
     private ?array $security;
     private ?bool $authorization;
@@ -55,7 +58,10 @@ class Operation implements \JsonSerializable
         $this->httpMethod = $operation['httpMethod'] ?? null;
         $this->httpPath = $operation['httpPath'] ?? null;
         $this->httpCode = $operation['httpCode'] ?? null;
+        $this->payload = $operation['payload'] ?? null;
+        $this->payloadShape = $operation['payloadShape'] ?? null;
         $this->return = $operation['return'] ?? null;
+        $this->returnShape = $operation['returnShape'] ?? null;
         $this->stability = $operation['stability'] ?? null;
         $this->security = $operation['security'] ?? null;
         $this->authorization = $operation['authorization'] ?? null;
@@ -149,6 +155,26 @@ class Operation implements \JsonSerializable
         return null;
     }
 
+    public function getPayload(): ?string
+    {
+        return $this->payload;
+    }
+
+    public function setPayload(?string $payload): void
+    {
+        $this->payload = $payload;
+    }
+
+    public function getPayloadShape(): ?string
+    {
+        return $this->payloadShape;
+    }
+
+    public function setPayloadShape(?string $payloadShape): void
+    {
+        $this->payloadShape = $payloadShape;
+    }
+
     /**
      * @return array<Error>
      */
@@ -186,6 +212,16 @@ class Operation implements \JsonSerializable
     public function setReturn(?string $return): void
     {
         $this->return = $return;
+    }
+
+    public function getReturnShape(): ?string
+    {
+        return $this->returnShape;
+    }
+
+    public function setReturnShape(?string $returnShape): void
+    {
+        $this->returnShape = $returnShape;
     }
 
     public function getStability(): ?int
@@ -237,8 +273,11 @@ class Operation implements \JsonSerializable
             'httpPath' => $this->httpPath,
             'httpCode' => $this->httpCode,
             'arguments' => $this->arguments,
+            'payload' => $this->payload,
+            'payloadShape' => $this->payloadShape,
             'throws' => $this->throws,
             'return' => $this->return,
+            'returnShape' => $this->returnShape,
             'stability' => $this->stability,
             'security' => $this->security,
             'authorization' => $this->authorization,
