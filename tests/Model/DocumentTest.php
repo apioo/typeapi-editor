@@ -59,7 +59,7 @@ class DocumentTest extends TestCase
         $this->assertInstanceOf(Operation::class, $operation);
         $this->assertEquals('test.execute', $operation->getName());
         $this->assertEquals('Executes a test operation', $operation->getDescription());
-        $this->assertEquals(3, count($operation->getArguments()));
+        $this->assertEquals(2, count($operation->getArguments()));
         $this->assertEquals(1, count($operation->getThrows()));
 
         $this->assertEquals(7, count($document->getTypes()));
