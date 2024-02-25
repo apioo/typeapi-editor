@@ -135,7 +135,12 @@ class Generator
                     continue;
                 }
 
-                $args[$argument->getName()] = $this->generateArgument(
+                $name = $argument->getName();
+                if (empty($name)) {
+                    continue;
+                }
+
+                $args[$name] = $this->generateArgument(
                     $argument->getIn() ?? throw new GeneratorException('Argument no in provided'),
                     $argument->getType() ?? throw new GeneratorException('Argument no type provided')
                 );
@@ -149,9 +154,10 @@ class Generator
                 $operation->getPayloadShape()
             );
         } elseif ($legacyPayload !== null) {
-            $args['payload'] = $this->generateArgumentBody(
-                $legacyPayload->getType()
-            );
+            $payloadType = $legacyPayload->getType();
+            if (!empty($payloadType)) {
+                $args['payload'] = $this->generateArgumentBody($payloadType);
+            }
         }
 
         if (count($args) > 0) {
