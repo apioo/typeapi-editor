@@ -207,11 +207,11 @@ class Generator
 
     private function generateArgument(string $in, string $type): object
     {
+        $schema = $this->resolveType([$type]);
+
         return (object) [
             'in' => $in,
-            'schema' => (object) [
-                'type' => $type
-            ],
+            'schema' => $schema,
         ];
     }
 

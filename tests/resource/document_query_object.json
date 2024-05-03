@@ -1,0 +1,60 @@
+{
+  "imports": [],
+  "operations": [
+    {
+      "name": "my.test",
+      "description": "",
+      "httpMethod": "GET",
+      "httpPath": "/foo/:id",
+      "httpCode": 200,
+      "arguments": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string"
+        },
+        {
+          "name": "collection",
+          "in": "query",
+          "type": "Query_Params"
+        }
+      ],
+      "throws": [],
+      "return": "Record"
+    }
+  ],
+  "types": [
+    {
+      "type": "object",
+      "name": "Query_Params",
+      "description": "",
+      "properties": [
+        {
+          "name": "startIndex",
+          "description": "",
+          "type": "integer"
+        },
+        {
+          "name": "count",
+          "description": "",
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "type": "object",
+      "name": "Record",
+      "description": "",
+      "properties": [
+        {
+          "name": "fields",
+          "description": "",
+          "type": "map",
+          "refs": [
+            "any"
+          ]
+        }
+      ]
+    }
+  ]
+}

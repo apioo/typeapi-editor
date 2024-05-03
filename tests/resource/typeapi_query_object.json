@@ -1,0 +1,58 @@
+{
+  "operations": {
+    "my.test": {
+      "description": "",
+      "method": "GET",
+      "path": "/foo/:id",
+      "arguments": {
+        "id": {
+          "in": "path",
+          "schema": {
+            "type": "string"
+          }
+        },
+        "collection": {
+          "in": "query",
+          "schema": {
+            "$ref": "Query_Params"
+          }
+        }
+      },
+      "return": {
+        "code": 200,
+        "schema": {
+          "$ref": "Record"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Query_Params": {
+      "description": "",
+      "type": "object",
+      "properties": {
+        "startIndex": {
+          "description": "",
+          "type": "integer"
+        },
+        "count": {
+          "description": "",
+          "type": "integer"
+        }
+      }
+    },
+    "Record": {
+      "description": "",
+      "type": "object",
+      "properties": {
+        "fields": {
+          "description": "",
+          "type": "object",
+          "additionalProperties": {
+            "type": "any"
+          }
+        }
+      }
+    }
+  }
+}
