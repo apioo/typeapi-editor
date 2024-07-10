@@ -43,7 +43,13 @@ class Security implements \JsonSerializable
         $this->in = $security['in'] ?? null;
         $this->tokenUrl = $security['tokenUrl'] ?? null;
         $this->authorizationUrl = $security['authorizationUrl'] ?? null;
-        $this->scopes = $security['scopes'] ?? null;
+
+        $scopes = $security['scopes'] ?? null;
+        if ($scopes instanceof \stdClass) {
+            $scopes = array_keys((array) $scopes);
+        }
+
+        $this->scopes = $scopes;
     }
 
     public function getType(): ?string
