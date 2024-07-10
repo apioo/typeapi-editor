@@ -34,7 +34,7 @@ class Security implements \JsonSerializable
     private ?string $in;
     private ?string $tokenUrl;
     private ?string $authorizationUrl;
-    private ?string $scopes;
+    private ?array $scopes;
 
     public function __construct(array $security)
     {
@@ -96,12 +96,12 @@ class Security implements \JsonSerializable
         $this->authorizationUrl = $authorizationUrl;
     }
 
-    public function getScopes(): ?string
+    public function getScopes(): ?array
     {
         return $this->scopes;
     }
 
-    public function setScopes(?string $scopes): void
+    public function setScopes(?array $scopes): void
     {
         $this->scopes = $scopes;
     }
