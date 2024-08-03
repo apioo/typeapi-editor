@@ -206,7 +206,7 @@ class Document implements \JsonSerializable
         if (is_array($document)) {
             if (isset($document['types'])) {
                 $root = null;
-                if (!empty($document['root'])) {
+                if (isset($document['root'])) {
                     $root = (int) $document['root'];
                 }
 
@@ -226,7 +226,7 @@ class Document implements \JsonSerializable
             }
         } elseif ($document instanceof \stdClass) {
             $root = null;
-            if (!empty($document->root)) {
+            if (isset($document->root)) {
                 $root = (int) $document->root;
             }
 
