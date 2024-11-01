@@ -59,7 +59,7 @@ class Property implements \JsonSerializable
         $this->deprecated = $property['deprecated'] ?? null;
         $this->reference = $property['reference'] ?? null;
         $this->generic = $property['generic'] ?? null;
-        $this->template = $property['template'] ?? null;
+        $this->template = isset($property['template']) ? (array) $property['template'] : null;
     }
 
     public function getName(): ?string
