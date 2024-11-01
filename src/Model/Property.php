@@ -36,7 +36,6 @@ class Property implements \JsonSerializable
     public const TYPE_INTEGER = 'integer';
     public const TYPE_NUMBER = 'number';
     public const TYPE_BOOLEAN = 'boolean';
-    public const TYPE_REFERENCE = 'reference';
     public const TYPE_ANY = 'any';
     public const TYPE_GENERIC = 'generic';
 
