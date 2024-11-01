@@ -1,4 +1,33 @@
 {
+  "operations": {
+    "my.test": {
+      "description": "",
+      "method": "GET",
+      "path": "\/foo\/:id",
+      "arguments": {
+        "id": {
+          "in": "path",
+          "schema": {
+            "type": "string"
+          }
+        },
+        "collection": {
+          "in": "query",
+          "schema": {
+            "type": "reference",
+            "target": "Query_Params"
+          }
+        }
+      },
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "Record"
+        }
+      }
+    }
+  },
   "definitions": {
     "Query_Params": {
       "description": "",
@@ -26,35 +55,6 @@
           }
         }
       }
-    }
-  },
-  "operations": {
-    "my.test": {
-      "method": "GET",
-      "path": "\/foo\/:id",
-      "return": {
-        "code": 200,
-        "schema": {
-          "type": "reference",
-          "target": "Record"
-        }
-      },
-      "arguments": {
-        "id": {
-          "in": "path",
-          "schema": {
-            "type": "string"
-          }
-        },
-        "collection": {
-          "in": "query",
-          "schema": {
-            "type": "reference",
-            "target": "Query_Params"
-          }
-        }
-      },
-      "description": ""
     }
   }
 }

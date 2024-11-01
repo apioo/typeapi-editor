@@ -1,5 +1,4 @@
 {
-    "definitions": {},
     "baseUrl": "https:\/\/api.fusio-project.org",
     "security": {
         "type": "oauth2",
@@ -9,5 +8,6 @@
             "bar"
         ]
     },
-    "operations": {}
+    "operations": {},
+    "definitions": {}
 }
