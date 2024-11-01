@@ -40,6 +40,8 @@ class Generator
 {
     /**
      * Generates a TypeSchema specification based on the document
+     *
+     * @throws GeneratorException
      */
     public function generate(Document $document, ?string $baseUrl = null): string
     {
@@ -73,7 +75,12 @@ class Generator
         $definitions = new Record();
         $types = $document->getTypes();
         foreach ($types as $type) {
-            $definitions->put($type->getName(), $this->generateDefinitionType($type));
+            $typeName = $type->getName();
+            if (empty($typeName)) {
+                continue;
+            }
+
+            $definitions->put($typeName, $this->generateDefinitionType($type));
         }
         $schema->setDefinitions($definitions);
 
@@ -97,6 +104,7 @@ class Generator
             return null;
         }
 
+        /** @var Record<string> $result */
         $result = new Record();
         foreach ($imports as $import) {
             $alias = $import->getAlias() ?? null;
@@ -303,11 +311,11 @@ class Generator
         if ($type->getType() === Type::TYPE_MAP) {
             $result = new Model\MapDefinitionType();
             $result->setType('map');
-            $result->setSchema($this->resolveReferenceType($type->getReference(), $type->getTemplate()));
+            $result->setSchema($this->resolveReferenceType($type->getReference()));
         } elseif ($type->getType() === Type::TYPE_ARRAY) {
             $result = new Model\ArrayDefinitionType();
             $result->setType('array');
-            $result->setSchema($this->resolveReferenceType($type->getReference(), $type->getTemplate()));
+            $result->setSchema($this->resolveReferenceType($type->getReference()));
         } else {
             $result = new Model\StructDefinitionType();
             $result->setType('struct');
