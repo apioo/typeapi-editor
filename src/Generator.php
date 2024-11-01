@@ -20,12 +20,14 @@
 
 namespace TypeAPI\Editor;
 
+use PSX\Record\Record;
 use TypeAPI\Editor\Exception\GeneratorException;
 use TypeAPI\Editor\Model\Document;
 use TypeAPI\Editor\Model\Operation;
+use TypeAPI\Editor\Model\Property;
 use TypeAPI\Editor\Model\Security;
 use TypeAPI\Editor\Model\Type;
-use TypeAPI\Editor\Model\Property;
+use TypeAPI\Model;
 
 /**
  * Generator which transforms a document provided from an editor to an actual TypeSchema specification
@@ -41,92 +43,128 @@ class Generator
      */
     public function generate(Document $document, ?string $baseUrl = null): string
     {
-        $schema = new \stdClass();
+        $schema = new Model\TypeAPI();
 
         $documentBaseUrl = $document->getBaseUrl();
         if (!empty($documentBaseUrl)) {
-            $schema->baseUrl = $documentBaseUrl;
+            $schema->setBaseUrl($documentBaseUrl);
         } elseif (!empty($baseUrl)) {
-            $schema->baseUrl = $baseUrl;
+            $schema->setBaseUrl($baseUrl);
         }
 
-        $security = $document->getSecurity();
-        if ($security instanceof Security) {
-            $schema->security = $security;
+        $security = $this->generateSecurity($document->getSecurity());
+        if ($security instanceof Model\Security) {
+            $schema->setSecurity($security);
         }
 
         $import = $this->generateImport($document->getImports());
-        if (!empty($import)) {
-            $schema->{'$import'} = $import;
+        if ($import instanceof Record) {
+            $schema->setImport($import);
         }
 
-        $operations = new \stdClass();
+        /** @var Record<Model\Operation> $operations */
+        $operations = new Record();
         foreach ($document->getOperations() as $operation) {
-            $operations->{$operation->getName()} = $this->generateOperation($operation);
+            $operations->put($operation->getName(), $this->generateOperation($operation));
         }
-        $schema->operations = $operations;
+        $schema->setOperations($operations);
 
-        $definitions = new \stdClass();
+        /** @var Record<Model\DefinitionType> $definitions */
+        $definitions = new Record();
         $types = $document->getTypes();
         foreach ($types as $type) {
-            $definitions->{$type->getName()} = $this->generateType($type);
+            $definitions->put($type->getName(), $this->generateDefinitionType($type));
         }
-        $schema->definitions = $definitions;
+        $schema->setDefinitions($definitions);
 
         $root = $document->getRoot();
         if ($root !== null && isset($types[$document->getRoot()])) {
             $rootType = $types[$root] ?? null;
             if ($rootType instanceof Type) {
-                $schema->{'$ref'} = $rootType->getName();
+                $schema->setRoot($rootType->getName());
             }
         }
 
         return \json_encode($schema, \JSON_PRETTY_PRINT);
     }
 
-    private function generateImport(?array $imports): array
+    /**
+     * @return Record<string>|null
+     */
+    private function generateImport(?array $imports): ?Record
     {
         if (empty($imports)) {
-            return [];
+            return null;
         }
 
-        $import = [];
-        foreach ($imports as $include) {
-            $alias = $include->getAlias() ?? null;
-            $user = $include->getDocument()->user->name ?? null;
-            $document = $include->getDocument()->name ?? null;
-            $version = $include->getVersion() ?? null;
+        $result = new Record();
+        foreach ($imports as $import) {
+            $alias = $import->getAlias() ?? null;
+            $user = $import->getDocument()->user->name ?? null;
+            $document = $import->getDocument()->name ?? null;
+            $version = $import->getVersion() ?? null;
 
             if (empty($alias) || empty($user) || empty($document) || empty($version)) {
                 continue;
             }
 
-            $import[$alias] = 'typehub://' . $user . ':' . $document . '@' . $version;
+            $result->put($alias, 'typehub://' . $user . ':' . $document . '@' . $version);
         }
 
-        return $import;
+        return $result;
+    }
+
+    private function generateSecurity(?Security $security): ?Model\Security
+    {
+        if (empty($security)) {
+            return null;
+        }
+
+        if ($security->getType() === 'httpBasic') {
+            $return = new Model\SecurityHttpBasic();
+            $return->setType('httpBasic');
+        } elseif ($security->getType() === 'httpBearer') {
+            $return = new Model\SecurityHttpBearer();
+            $return->setType('httpBearer');
+        } elseif ($security->getType() === 'apiKey') {
+            $return = new Model\SecurityApiKey();
+            $return->setType('apiKey');
+            $return->setIn($security->getIn());
+            $return->setName($security->getName());
+        } elseif ($security->getType() === 'oauth2') {
+            $return = new Model\SecurityOAuth();
+            $return->setType('oauth2');
+            $return->setTokenUrl($security->getTokenUrl());
+            $return->setAuthorizationUrl($security->getAuthorizationUrl());
+            $return->setScopes($security->getScopes());
+        } else {
+            return null;
+        }
+
+        return $return;
     }
 
     /**
      * @throws GeneratorException
      */
-    private function generateOperation(Operation $operation): \stdClass
+    private function generateOperation(Operation $operation): Model\Operation
     {
-        $result = new \stdClass();
+        $result = new Model\Operation();
 
         if ($operation->getDescription() !== null) {
-            $result->description = $operation->getDescription();
+            $result->setDescription($operation->getDescription());
         }
 
         if ($operation->getHttpMethod() !== null) {
-            $result->method = $operation->getHttpMethod();
+            $result->setMethod($operation->getHttpMethod());
         }
 
         if ($operation->getHttpPath() !== null) {
-            $result->path = $operation->getHttpPath();
+            $result->setPath($operation->getHttpPath());
         }
 
-        $args = [];
+        /** @var Record<Model\Argument> $args */
+        $args = new Record();
         $legacyPayload = null;
         if (count($operation->getArguments()) > 0) {
             foreach ($operation->getArguments() as $argument) {
@@ -140,28 +178,28 @@ class Generator
                     continue;
                 }
 
-                $args[$name] = $this->generateArgument(
+                $args->put($name, $this->generateArgument(
                     $argument->getIn() ?? throw new GeneratorException('Argument no in provided'),
                     $argument->getType() ?? throw new GeneratorException('Argument no type provided')
-                );
+                ));
             }
         }
 
         $payload = $operation->getPayload();
         if ($payload !== null && in_array($operation->getHttpMethod(), ['POST', 'PUT', 'PATCH'])) {
-            $args['payload'] = $this->generateArgumentBody(
+            $args->put('payload', $this->generateArgumentBody(
                 $payload,
                 $operation->getPayloadShape()
-            );
+            ));
         } elseif ($legacyPayload !== null) {
             $payloadType = $legacyPayload->getType();
             if (!empty($payloadType)) {
-                $args['payload'] = $this->generateArgumentBody($payloadType);
+                $args->put('payload', $this->generateArgumentBody($payloadType));
             }
         }
 
-        if (count($args) > 0) {
-            $result->arguments = (object) $args;
+        if (!$args->isEmpty()) {
+            $result->setArguments($args);
         }
 
         if (count($operation->getThrows()) > 0) {
@@ -173,257 +211,229 @@ class Generator
                     $throw->getTypeShape()
                 );
             }
-            $result->throws = $throws;
+            $result->setThrows($throws);
         }
 
         $httpCode = $operation->getHttpCode() ?? 200;
         if ($httpCode === 204) {
-            $result->return = $this->generateResponse($httpCode, '');
+            $result->setReturn($this->generateResponse($httpCode, ''));
         } else {
             $return = $operation->getReturn();
             if ($return !== null) {
-                $result->return = $this->generateResponse($httpCode, $return, $operation->getReturnShape());
+                $result->setReturn($this->generateResponse($httpCode, $return, $operation->getReturnShape()));
             }
         }
 
         if ($operation->getStability() !== null) {
-            $result->stability = $operation->getStability();
+            $result->setStability($operation->getStability());
         }
 
         if ($operation->getSecurity() !== null) {
-            $result->security = $operation->getSecurity();
+            $result->setSecurity($operation->getSecurity());
         }
 
         if ($operation->getAuthorization() !== null) {
-            $result->authorization = $operation->getAuthorization();
+            $result->setAuthorization($operation->getAuthorization());
         }
 
         if ($operation->getTags() !== null) {
-            $result->tags = $operation->getTags();
+            $result->setTags($operation->getTags());
         }
 
         return $result;
     }
 
-    private function generateArgument(string $in, string $type): object
+    private function generateArgument(string $in, string $type): Model\Argument
     {
-        $schema = $this->resolveType([$type]);
-
-        return (object) [
-            'in' => $in,
-            'schema' => $schema,
-        ];
+        $result = new Model\Argument();
+        $result->setIn($in);
+        $result->setSchema($this->resolveReferenceType($type));
+        return $result;
     }
 
-    private function generateArgumentBody(string $type, ?string $typeShape = null): object
+    private function generateArgumentBody(string $type, ?string $typeShape = null): Model\Argument
     {
-        return (object) [
-            'in' => 'body',
-            'schema' => $this->getTypeShape($type, $typeShape),
-        ];
+        $result = new Model\Argument();
+        $result->setIn('body');
+        $result->setSchema($this->getTypeShape($type, $typeShape));
+        return $result;
     }
 
-    private function generateResponse(int $httpCode, string $return, ?string $returnShape = null): object
+    private function generateResponse(int $httpCode, string $return, ?string $returnShape = null): Model\Response
     {
         if ($httpCode === 204) {
-            $schema = (object) [
-                'type' => 'any'
-            ];
+            $schema = new Model\AnyPropertyType();
+            $schema->setType('any');
         } else {
             $schema = $this->getTypeShape($return, $returnShape);
         }
 
-        return (object) [
-            'code' => $httpCode,
-            'schema' => $schema,
-        ];
+        $result = new Model\Response();
+        $result->setCode($httpCode);
+        $result->setSchema($schema);
+        return $result;
     }
 
-    private function getTypeShape(string $type, ?string $typeShape = null): object
+    private function getTypeShape(string $type, ?string $typeShape = null): Model\PropertyType
     {
+        $reference = new Model\ReferencePropertyType();
+        $reference->setType('reference');
+        $reference->setTarget($type);
+
         if ($typeShape === Type::TYPE_ARRAY) {
-            return (object) [
-                'type' => 'array',
-                'items' => (object) [
-                    '$ref' => $type
-                ],
-            ];
+            $return = new Model\ArrayPropertyType();
+            $return->setType('array');
+            $return->setSchema($reference);
+            return $return;
         } elseif ($typeShape === Type::TYPE_MAP) {
-            return (object) [
-                'type' => 'object',
-                'additionalProperties' => (object) [
-                    '$ref' => $type
-                ],
-            ];
+            $return = new Model\MapPropertyType();
+            $return->setType('map');
+            $return->setSchema($reference);
+            return $return;
         } else {
-            return (object) [
-                '$ref' => $type
-            ];
+            return $reference;
         }
     }
 
-    private function generateType(Type $type): \stdClass
+    /**
+     * @throws GeneratorException
+     */
+    private function generateDefinitionType(Type $type): Model\DefinitionType
     {
-        $result = new \stdClass();
-
-        if ($type->getDescription() !== null) {
-            $result->description = $type->getDescription();
-        }
-
-        if ($type->getType() === Type::TYPE_REFERENCE) {
-            $result->{'$ref'} = $type->getRef();
-
-            if ($type->getTemplate() !== null) {
-                $result->{'$template'} = (object) [
-                    'T' => $type->getTemplate()
-                ];
-            }
-        } else if ($type->getType() === Type::TYPE_MAP) {
-            $result->type = 'object';
-            $result->additionalProperties = new \stdClass();
-
-            $props = $this->resolveType([$type->getRef()]);
-            foreach ($props as $key => $value) {
-                $result->additionalProperties->{$key} = $value;
-            }
+        if ($type->getType() === Type::TYPE_MAP) {
+            $result = new Model\MapDefinitionType();
+            $result->setType('map');
+            $result->setSchema($this->resolveReferenceType($type->getReference(), $type->getTemplate()));
+        } elseif ($type->getType() === Type::TYPE_ARRAY) {
+            $result = new Model\ArrayDefinitionType();
+            $result->setType('array');
+            $result->setSchema($this->resolveReferenceType($type->getReference(), $type->getTemplate()));
         } else {
-            $result->type = 'object';
+            $result = new Model\StructDefinitionType();
+            $result->setType('struct');
 
             if ($type->getParent() !== null) {
-                $result->{'$extends'} = $type->getParent();
+                $parent = new Model\ReferencePropertyType();
+                $parent->setType('reference');
+                $parent->setTarget($type->getParent());
+                $template = $type->getTemplate();
+                if (!empty($template)) {
+                    $parent->setTemplate(Record::from($template));
+                }
+                $result->setParent($parent);
             }
 
             if (count($type->getProperties()) > 0) {
-                $props = new \stdClass();
+                /** @var Record<Model\PropertyType> $props */
+                $props = new Record();
                 foreach ($type->getProperties() as $property) {
-                    $props->{$property->getName()} = $this->generateProperty($property);
-                }
-                $result->properties = $props;
-            }
+                    $name = $property->getName();
+                    if (empty($name)) {
+                        continue;
+                    }
 
-            if ($type->getRequired() !== null) {
-                $result->required = $type->getRequired();
+                    $props->put($name, $this->generatePropertyType($property));
+                }
+                $result->setProperties($props);
             }
+        }
+
+        if ($type->getDescription() !== null) {
+            $result->setDescription($type->getDescription());
         }
 
         return $result;
     }
 
-    private function generateProperty(Property $property): \stdClass
+    /**
+     * @throws GeneratorException
+     */
+    private function generatePropertyType(Property $property): Model\PropertyType
     {
-        $result = new \stdClass();
-
-        if ($property->getDescription() !== null) {
-            $result->description = $property->getDescription();
-        }
-
-        if ($property->getNullable() !== null) {
-            $result->nullable = $property->getNullable();
-        }
-
-        if ($property->getDeprecated() !== null) {
-            $result->deprecated = $property->getDeprecated();
-        }
-
-        if ($property->getReadonly() !== null) {
-            $result->readonly = $property->getReadonly();
-        }
-
-        $refs = $property->getRefs() ?? [];
-        
         if ($property->getType() === Property::TYPE_OBJECT) {
-            $props = $this->resolveType($refs);
-            foreach ($props as $key => $value) {
-                $result->{$key} = $value;
-            }
+            $result = new Model\ReferencePropertyType();
+            $result->setType('reference');
+            $result->setTarget($property->getReference());
         } elseif ($property->getType() === Property::TYPE_MAP) {
-            $result->type = 'object';
-            $result->additionalProperties = $this->resolveType($refs);
+            $result = new Model\MapPropertyType();
+            $result->setType('map');
+            $result->setSchema($this->resolveReferenceType($property->getReference(), $property->getGeneric(), $property->getFormat()));
         } elseif ($property->getType() === Property::TYPE_ARRAY) {
-            $result->type = 'array';
-            $result->items = $this->resolveType($refs);
+            $result = new Model\ArrayPropertyType();
+            $result->setType('array');
+            $result->setSchema($this->resolveReferenceType($property->getReference(), $property->getGeneric(), $property->getFormat()));
         } elseif ($property->getType() === Property::TYPE_STRING) {
-            $result->type = 'string';
+            $result = new Model\StringPropertyType();
+            $result->setType('string');
+
             if ($property->getFormat() !== null) {
-                $result->format = $property->getFormat();
-            }
-            if ($property->getPattern() !== null) {
-                $result->pattern = $property->getPattern();
-            }
-            if ($property->getMinLength() !== null) {
-                $result->minLength = $property->getMinLength();
-            }
-            if ($property->getMaxLength() !== null) {
-                $result->maxLength = $property->getMaxLength();
+                $result->setFormat($property->getFormat());
             }
         } elseif ($property->getType() === Property::TYPE_INTEGER) {
-            $result->type = 'integer';
-            if ($property->getMinimum() !== null) {
-                $result->minimum = $property->getMinimum();
-            }
-            if ($property->getMaximum() !== null) {
-                $result->maximum = $property->getMaximum();
-            }
+            $result = new Model\IntegerPropertyType();
+            $result->setType('integer');
         } elseif ($property->getType() === Property::TYPE_NUMBER) {
-            $result->type = 'number';
-            if ($property->getMinimum() !== null) {
-                $result->minimum = $property->getMinimum();
-            }
-            if ($property->getMaximum() !== null) {
-                $result->maximum = $property->getMaximum();
-            }
+            $result = new Model\NumberPropertyType();
+            $result->setType('number');
         } elseif ($property->getType() === Property::TYPE_BOOLEAN) {
-            $result->type = 'boolean';
+            $result = new Model\BooleanPropertyType();
+            $result->setType('boolean');
         } elseif ($property->getType() === Property::TYPE_ANY) {
-            $result->type = 'any';
-        } elseif ($property->getType() === Property::TYPE_UNION) {
-            $result->oneOf = [];
-            foreach ($refs as $ref) {
-                $result->oneOf[] = $this->resolveType([$ref]);
-            }
-        } elseif ($property->getType() === Property::TYPE_INTERSECTION) {
-            $result->allOf = [];
-            foreach ($refs as $ref) {
-                $result->allOf[] = $this->resolveType([$ref]);
-            }
+            $result = new Model\AnyPropertyType();
+            $result->setType('any');
+        } elseif ($property->getType() === Property::TYPE_GENERIC) {
+            $result = new Model\GenericPropertyType();
+            $result->setType('generic');
+            $result->setName($property->getGeneric());
+        } else {
+            throw new GeneratorException('Provided an invalid property type');
+        }
+
+        if ($property->getDescription() !== null) {
+            $result->setDescription($property->getDescription());
         }
 
         return $result;
     }
 
-    private function resolveType(?array $refs): object
+    /**
+     * @throws GeneratorException
+     */
+    private function resolveReferenceType(?string $reference, ?string $generic = null, ?string $format = null): Model\PropertyType
     {
-        if (empty($refs)) {
-            throw new GeneratorException('Type must contain a reference');
+        if (empty($reference)) {
+            throw new GeneratorException('Reference must contain a string');
         }
 
-        if (count($refs) === 1) {
-            $ref = reset($refs);
-            if (in_array($ref, ['string', 'integer', 'number', 'boolean', 'any'])) {
-                return (object)[
-                    'type' => $ref
-                ];
-            } elseif ($ref === 'T') {
-                return (object) [
-                    '$generic' => 'T'
-                ];
-            } else {
-                return (object) [
-                    '$ref' => $ref
-                ];
+        if ($reference === 'string') {
+            $return = new Model\StringPropertyType();
+            $return->setType('string');
+            if (!empty($format)) {
+                $return->setFormat($format);
             }
-        } elseif (count($refs) > 1) {
-            $types = [];
-            foreach ($refs as $ref) {
-                $types[] = $this->resolveType([$ref]);
-            }
-
-            return (object) [
-                'oneOf' => $types
-            ];
+        } elseif ($reference === 'integer') {
+            $return = new Model\IntegerPropertyType();
+            $return->setType('integer');
+        } elseif ($reference === 'number') {
+            $return = new Model\NumberPropertyType();
+            $return->setType('number');
+        } elseif ($reference === 'boolean') {
+            $return = new Model\BooleanPropertyType();
+            $return->setType('boolean');
+        } elseif ($reference === 'any') {
+            $return = new Model\AnyPropertyType();
+            $return->setType('any');
+        } elseif ($reference === 'generic') {
+            $return = new Model\GenericPropertyType();
+            $return->setType('generic');
+            $return->setName($generic);
         } else {
-            throw new GeneratorException('Type must contain a reference');
+            $return = new Model\ReferencePropertyType();
+            $return->setType('reference');
+            $return->setTarget($reference);
         }
+
+        return $return;
     }
 }
 

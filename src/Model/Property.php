@@ -29,47 +29,38 @@ namespace TypeAPI\Editor\Model;
  */
 class Property implements \JsonSerializable
 {
+    public const TYPE_OBJECT = 'object';
+    public const TYPE_MAP = 'map';
+    public const TYPE_ARRAY = 'array';
     public const TYPE_STRING = 'string';
     public const TYPE_INTEGER = 'integer';
     public const TYPE_NUMBER = 'number';
     public const TYPE_BOOLEAN = 'boolean';
-    public const TYPE_OBJECT = 'object';
-    public const TYPE_MAP = 'map';
-    public const TYPE_ARRAY = 'array';
-    public const TYPE_UNION = 'union';
-    public const TYPE_INTERSECTION = 'intersection';
-    public const TYPE_GENERIC = 'T';
+    public const TYPE_REFERENCE = 'reference';
     public const TYPE_ANY = 'any';
+    public const TYPE_GENERIC = 'generic';
 
     private ?string $name;
     private ?string $description;
     private ?string $type;
     private ?string $format;
-    private ?string $pattern;
-    private ?int $minLength;
-    private ?int $maxLength;
-    private ?int $minimum;
-    private ?int $maximum;
     private ?bool $deprecated;
-    private ?bool $nullable;
-    private ?bool $readonly;
-    private ?array $refs;
+    private ?string $reference;
+    private ?string $generic;
+    private ?array $template;
 
     public function __construct(array $property)
     {
+        $property = $this->byLayer($property);
+
         $this->name = $property['name'] ?? null;
         $this->description = $property['description'] ?? null;
         $this->type = $property['type'] ?? null;
         $this->format = $property['format'] ?? null;
-        $this->pattern = $property['pattern'] ?? null;
-        $this->minLength = $property['minLength'] ?? null;
-        $this->maxLength = $property['maxLength'] ?? null;
-        $this->minimum = $property['minimum'] ?? null;
-        $this->maximum = $property['maximum'] ?? null;
         $this->deprecated = $property['deprecated'] ?? null;
-        $this->nullable = $property['nullable'] ?? null;
-        $this->readonly = $property['readonly'] ?? null;
-        $this->refs = $property['refs'] ?? null;
+        $this->reference = $property['reference'] ?? null;
+        $this->generic = $property['generic'] ?? null;
+        $this->template = $property['template'] ?? null;
     }
 
     public function getName(): ?string
@@ -112,99 +103,39 @@ class Property implements \JsonSerializable
         $this->format = $format;
     }
 
-    public function getPattern(): ?string
-    {
-        return $this->pattern;
-    }
-
-    public function setPattern(?string $pattern): void
-    {
-        $this->pattern = $pattern;
-    }
-
-    public function getMinLength(): ?int
-    {
-        return $this->minLength;
-    }
-
-    public function setMinLength(?int $minLength): void
-    {
-        $this->minLength = $minLength;
-    }
-
-    public function getMaxLength(): ?int
-    {
-        return $this->maxLength;
-    }
-
-    public function setMaxLength(?int $maxLength): void
-    {
-        $this->maxLength = $maxLength;
-    }
-
-    public function getMinimum(): ?int
-    {
-        return $this->minimum;
-    }
-
-    public function setMinimum(?int $minimum): void
-    {
-        $this->minimum = $minimum;
-    }
-
-    public function getMaximum(): ?int
-    {
-        return $this->maximum;
-    }
-
-    public function setMaximum(?int $maximum): void
-    {
-        $this->maximum = $maximum;
-    }
-
-    public function getDeprecated(): ?bool
-    {
-        return $this->deprecated;
-    }
-
     public function setDeprecated(?bool $deprecated): void
     {
         $this->deprecated = $deprecated;
     }
 
-    public function getNullable(): ?bool
+    public function getReference(): ?string
     {
-        return $this->nullable;
+        return $this->reference;
     }
 
-    public function setNullable(?bool $nullable): void
+    public function setReference(?string $reference): void
     {
-        $this->nullable = $nullable;
+        $this->reference = $reference;
     }
 
-    public function getReadonly(): ?bool
+    public function getGeneric(): ?string
     {
-        return $this->readonly;
+        return $this->generic;
     }
 
-    public function setReadonly(?bool $readonly): void
+    public function setGeneric(?string $generic): void
     {
-        $this->readonly = $readonly;
+        $this->generic = $generic;
     }
 
-    public function getRefs(): ?array
+    public function getTemplate(): ?array
     {
-        return $this->refs;
+        return $this->template;
     }
 
-    public function setRefs(?array $refs): void
+    public function setTemplate(?array $template): void
     {
-        $this->refs = $refs;
-    }
-
-    public function getFirstRef(): ?string
-    {
-        return !empty($this->refs) ? reset($this->refs) : null;
+        $this->template = $template;
     }
 
     public function jsonSerialize(): array
@@ -214,17 +145,28 @@ class Property implements \JsonSerializable
             'description' => $this->description,
             'type' => $this->type,
             'format' => $this->format,
-            'pattern' => $this->pattern,
-            'minLength' => $this->minLength,
-            'maxLength' => $this->maxLength,
-            'minimum' => $this->minimum,
-            'maximum' => $this->maximum,
             'deprecated' => $this->deprecated,
-            'nullable' => $this->nullable,
-            'readonly' => $this->readonly,
-            'refs' => $this->refs,
+            'reference' => $this->reference,
+            'generic' => $this->generic,
+            'template' => $this->template,
         ], function ($value) {
             return $value !== null;
         });
+    }
+
+    private function byLayer(array $property): array
+    {
+        if (isset($property['refs']) && is_array($property['refs']) && count($property['refs']) > 0) {
+            if ($property['refs'][0] === 'T') {
+                if ($property['type'] === 'map' || $property['type'] === 'array') {
+                    $property['reference'] = 'generic';
+                    $property['generic'] = 'T';
+                }
+            } else {
+                $property['reference'] = $property['refs'][0];
+            }
+        }
+
+        return $property;
     }
 }

@@ -1,35 +1,8 @@
 {
-  "operations": {
-    "my.test": {
-      "description": "",
-      "method": "GET",
-      "path": "/foo/:id",
-      "arguments": {
-        "id": {
-          "in": "path",
-          "schema": {
-            "type": "string"
-          }
-        },
-        "collection": {
-          "in": "query",
-          "schema": {
-            "$ref": "Query_Params"
-          }
-        }
-      },
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "Record"
-        }
-      }
-    }
-  },
   "definitions": {
     "Query_Params": {
       "description": "",
-      "type": "object",
+      "type": "struct",
       "properties": {
         "startIndex": {
           "description": "",
@@ -43,16 +16,45 @@
     },
     "Record": {
       "description": "",
-      "type": "object",
+      "type": "struct",
       "properties": {
         "fields": {
           "description": "",
-          "type": "object",
-          "additionalProperties": {
+          "type": "map",
+          "schema": {
             "type": "any"
           }
         }
       }
+    }
+  },
+  "operations": {
+    "my.test": {
+      "method": "GET",
+      "path": "\/foo\/:id",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "Record"
+        }
+      },
+      "arguments": {
+        "id": {
+          "in": "path",
+          "schema": {
+            "type": "string"
+          }
+        },
+        "collection": {
+          "in": "query",
+          "schema": {
+            "type": "reference",
+            "target": "Query_Params"
+          }
+        }
+      },
+      "description": ""
     }
   }
 }

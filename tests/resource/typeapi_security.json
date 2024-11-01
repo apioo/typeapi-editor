@@ -1,10 +1,13 @@
 {
-    "baseUrl": "https://api.fusio-project.org",
+    "definitions": {},
+    "baseUrl": "https:\/\/api.fusio-project.org",
     "security": {
         "type": "oauth2",
-        "tokenUrl": "https://api.fusio-project.org/authorization/token",
-        "scopes": ["foo", "bar"]
+        "tokenUrl": "https:\/\/api.fusio-project.org\/authorization\/token",
+        "scopes": [
+            "foo",
+            "bar"
+        ]
     },
-    "definitions": {},
     "operations": {}
 }

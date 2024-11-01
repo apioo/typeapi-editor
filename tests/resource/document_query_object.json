@@ -25,7 +25,7 @@
   ],
   "types": [
     {
-      "type": "object",
+      "type": "struct",
       "name": "Query_Params",
       "description": "",
       "properties": [
@@ -42,7 +42,7 @@
       ]
     },
     {
-      "type": "object",
+      "type": "struct",
       "name": "Record",
       "description": "",
       "properties": [
@@ -50,9 +50,7 @@
           "name": "fields",
           "description": "",
           "type": "map",
-          "refs": [
-            "any"
-          ]
+          "reference": "any"
         }
       ]
     }

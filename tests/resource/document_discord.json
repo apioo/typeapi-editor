@@ -135,7 +135,7 @@
   "types": [
     {
       "name": "Message",
-      "type": "object",
+      "type": "struct",
       "description": "",
       "properties": [
         {
@@ -157,17 +157,13 @@
           "name": "embeds",
           "description": "Up to 10 rich embeds (up to 6000 characters)",
           "type": "array",
-          "refs": [
-            "Message_Embed"
-          ]
+          "reference": "Message_Embed"
         },
         {
           "name": "allowed_mentions",
           "description": "",
           "type": "object",
-          "refs": [
-            "Message_Allowed_Mentions"
-          ]
+          "reference": "Message_Allowed_Mentions"
         },
         {
           "name": "message_reference",
@@ -178,7 +174,7 @@
     },
     {
       "name": "Message_Embed",
-      "type": "object",
+      "type": "struct",
       "description": "",
       "properties": [
         {
@@ -215,32 +211,26 @@
     },
     {
       "name": "Message_Allowed_Mentions",
-      "type": "object",
+      "type": "struct",
       "description": "",
       "properties": [
         {
           "name": "parse",
           "description": "An array of allowed mention types to parse from the content",
           "type": "array",
-          "refs": [
-            "string"
-          ]
+          "reference": "string"
         },
         {
           "name": "roles",
           "description": "Array of role_ids to mention (Max size of 100)",
           "type": "array",
-          "refs": [
-            "string"
-          ]
+          "reference": "string"
         },
         {
           "name": "users",
           "description": "Array of user_ids to mention (Max size of 100)",
           "type": "array",
-          "refs": [
-            "string"
-          ]
+          "reference": "string"
         },
         {
           "name": "replied_user",
@@ -251,7 +241,7 @@
     },
     {
       "name": "Message_Reference",
-      "type": "object",
+      "type": "struct",
       "description": "",
       "properties": [
         {

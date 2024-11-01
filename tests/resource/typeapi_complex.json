@@ -1,9 +1,15 @@
 {
   "operations": {
     "tag.changelog": {
-      "description": "Generates the changelog for the current release",
       "method": "POST",
       "path": "\/document\/:user\/:document\/changelog",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "TagChangelog"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -20,7 +26,8 @@
         "payload": {
           "in": "body",
           "schema": {
-            "$ref": "Passthru"
+            "type": "reference",
+            "target": "Passthru"
           }
         }
       },
@@ -28,28 +35,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "TagChangelog"
-        }
-      },
+      "description": "Generates the changelog for the current release",
       "stability": 1,
       "security": [
         "tag"
@@ -60,9 +65,15 @@
       ]
     },
     "tag.create": {
-      "description": "Creates a new tag",
       "method": "POST",
       "path": "\/document\/:user\/:document\/tag",
+      "return": {
+        "code": 201,
+        "schema": {
+          "type": "reference",
+          "target": "Message"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -79,7 +90,8 @@
         "payload": {
           "in": "body",
           "schema": {
-            "$ref": "Passthru"
+            "type": "reference",
+            "target": "Passthru"
           }
         }
       },
@@ -87,28 +99,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 201,
-        "schema": {
-          "$ref": "Message"
-        }
-      },
+      "description": "Creates a new tag",
       "stability": 1,
       "security": [
         "tag"
@@ -119,9 +129,15 @@
       ]
     },
     "tag.get": {
-      "description": "Returns a tag",
       "method": "GET",
       "path": "\/document\/:user\/:document\/tag\/:id",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "Tag"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -146,28 +162,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "Tag"
-        }
-      },
+      "description": "Returns a tag",
       "stability": 1,
       "security": [],
       "authorization": true,
@@ -176,9 +190,15 @@
       ]
     },
     "tag.getAll": {
-      "description": "Returns all tags for a document",
       "method": "GET",
       "path": "\/document\/:user\/:document\/tag",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "TagCollection"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -215,28 +235,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "TagCollection"
-        }
-      },
+      "description": "Returns all tags for a document",
       "stability": 1,
       "security": [],
       "authorization": true,
@@ -245,9 +263,15 @@
       ]
     },
     "star.getAll": {
-      "description": "Returns all stared documents for the current user",
       "method": "GET",
       "path": "\/star",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "DocumentCollection"
+        }
+      },
       "arguments": {
         "startIndex": {
           "in": "query",
@@ -272,28 +296,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "DocumentCollection"
-        }
-      },
+      "description": "Returns all stared documents for the current user",
       "stability": 1,
       "security": [
         "star"
@@ -304,9 +326,15 @@
       ]
     },
     "repository.delete": {
-      "description": "Removes a repository",
       "method": "DELETE",
       "path": "\/document\/:user\/:document\/repository\/:id",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "Message"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -331,28 +359,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "Message"
-        }
-      },
+      "description": "Removes a repository",
       "stability": 1,
       "security": [
         "repository"
@@ -363,9 +389,15 @@
       ]
     },
     "repository.create": {
-      "description": "Creates a new repository",
       "method": "POST",
       "path": "\/document\/:user\/:document\/repository",
+      "return": {
+        "code": 201,
+        "schema": {
+          "type": "reference",
+          "target": "Message"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -382,7 +414,8 @@
         "payload": {
           "in": "body",
           "schema": {
-            "$ref": "RepositoryCreate"
+            "type": "reference",
+            "target": "RepositoryCreate"
           }
         }
       },
@@ -390,28 +423,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 201,
-        "schema": {
-          "$ref": "Message"
-        }
-      },
+      "description": "Creates a new repository",
       "stability": 1,
       "security": [
         "repository"
@@ -422,9 +453,15 @@
       ]
     },
     "repository.get": {
-      "description": "Returns a repository",
       "method": "GET",
       "path": "\/document\/:user\/:document\/repository\/:id",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "Repository"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -449,28 +486,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "Repository"
-        }
-      },
+      "description": "Returns a repository",
       "stability": 1,
       "security": [
         "repository"
@@ -481,9 +516,15 @@
       ]
     },
     "repository.getAll": {
-      "description": "Returns all configured repositories",
       "method": "GET",
       "path": "\/document\/:user\/:document\/repository",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "RepositoryCollection"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -520,28 +561,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "RepositoryCollection"
-        }
-      },
+      "description": "Returns all configured repositories",
       "stability": 1,
       "security": [
         "repository"
@@ -552,9 +591,15 @@
       ]
     },
     "pull_request.reactComment": {
-      "description": "Reacts to a comment",
       "method": "POST",
       "path": "\/document\/:user\/:document\/pull_request\/:id\/comment\/:comment\/:reaction",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "Message"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -589,7 +634,8 @@
         "payload": {
           "in": "body",
           "schema": {
-            "$ref": "Passthru"
+            "type": "reference",
+            "target": "Passthru"
           }
         }
       },
@@ -597,28 +643,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "Message"
-        }
-      },
+      "description": "Reacts to a comment",
       "stability": 1,
       "security": [
         "pull_request"
@@ -629,9 +673,15 @@
       ]
     },
     "pull_request.createComment": {
-      "description": "Creates a new issue comment",
       "method": "POST",
       "path": "\/document\/:user\/:document\/pull_request\/:id\/comment",
+      "return": {
+        "code": 201,
+        "schema": {
+          "type": "reference",
+          "target": "Message"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -654,7 +704,8 @@
         "payload": {
           "in": "body",
           "schema": {
-            "$ref": "CommentCreate"
+            "type": "reference",
+            "target": "CommentCreate"
           }
         }
       },
@@ -662,28 +713,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 201,
-        "schema": {
-          "$ref": "Message"
-        }
-      },
+      "description": "Creates a new issue comment",
       "stability": 1,
       "security": [
         "pull_request"
@@ -694,9 +743,15 @@
       ]
     },
     "pull_request.getAllComments": {
-      "description": "Shows all pull request comments",
       "method": "GET",
       "path": "\/document\/:user\/:document\/pull_request\/:id\/comment",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "CommentCollection"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -739,28 +794,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "CommentCollection"
-        }
-      },
+      "description": "Shows all pull request comments",
       "stability": 1,
       "security": [],
       "authorization": true,
@@ -769,9 +822,15 @@
       ]
     },
     "pull_request.delete": {
-      "description": "Removes a pull request",
       "method": "DELETE",
       "path": "\/document\/:user\/:document\/pull_request\/:id",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "Message"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -796,28 +855,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "Message"
-        }
-      },
+      "description": "Removes a pull request",
       "stability": 1,
       "security": [
         "pull_request"
@@ -828,9 +885,15 @@
       ]
     },
     "pull_request.update": {
-      "description": "Merges a pull request",
       "method": "PUT",
       "path": "\/document\/:user\/:document\/pull_request\/:id",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "Message"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -853,7 +916,8 @@
         "payload": {
           "in": "body",
           "schema": {
-            "$ref": "Passthru"
+            "type": "reference",
+            "target": "Passthru"
           }
         }
       },
@@ -861,28 +925,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "Message"
-        }
-      },
+      "description": "Merges a pull request",
       "stability": 1,
       "security": [
         "pull_request"
@@ -893,9 +955,15 @@
       ]
     },
     "pull_request.create": {
-      "description": "Creates a new pull request",
       "method": "POST",
       "path": "\/document\/:user\/:document\/pull_request",
+      "return": {
+        "code": 201,
+        "schema": {
+          "type": "reference",
+          "target": "Message"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -912,7 +980,8 @@
         "payload": {
           "in": "body",
           "schema": {
-            "$ref": "PullRequestCreate"
+            "type": "reference",
+            "target": "PullRequestCreate"
           }
         }
       },
@@ -920,28 +989,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 201,
-        "schema": {
-          "$ref": "Message"
-        }
-      },
+      "description": "Creates a new pull request",
       "stability": 1,
       "security": [
         "pull_request"
@@ -952,9 +1019,15 @@
       ]
     },
     "pull_request.get": {
-      "description": "Returns an pull request",
       "method": "GET",
       "path": "\/document\/:user\/:document\/pull_request\/:id",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "PullRequest"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -979,28 +1052,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "PullRequest"
-        }
-      },
+      "description": "Returns an pull request",
       "stability": 1,
       "security": [],
       "authorization": true,
@@ -1009,9 +1080,15 @@
       ]
     },
     "pull_request.getAll": {
-      "description": "Returns all issues",
       "method": "GET",
       "path": "\/document\/:user\/:document\/pull_request",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "PullRequestCollection"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -1054,28 +1131,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "PullRequestCollection"
-        }
-      },
+      "description": "Returns all issues",
       "stability": 1,
       "security": [],
       "authorization": true,
@@ -1084,9 +1159,15 @@
       ]
     },
     "issue.reactComment": {
-      "description": "Reacts to a comment",
       "method": "POST",
       "path": "\/document\/:user\/:document\/issue\/:id\/comment\/:comment\/:reaction",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "Message"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -1121,7 +1202,8 @@
         "payload": {
           "in": "body",
           "schema": {
-            "$ref": "Passthru"
+            "type": "reference",
+            "target": "Passthru"
           }
         }
       },
@@ -1129,28 +1211,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "Message"
-        }
-      },
+      "description": "Reacts to a comment",
       "stability": 1,
       "security": [
         "issue"
@@ -1161,9 +1241,15 @@
       ]
     },
     "issue.createComment": {
-      "description": "Creates a new issue comment",
       "method": "POST",
       "path": "\/document\/:user\/:document\/issue\/:id\/comment",
+      "return": {
+        "code": 201,
+        "schema": {
+          "type": "reference",
+          "target": "Message"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -1186,7 +1272,8 @@
         "payload": {
           "in": "body",
           "schema": {
-            "$ref": "CommentCreate"
+            "type": "reference",
+            "target": "CommentCreate"
           }
         }
       },
@@ -1194,28 +1281,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 201,
-        "schema": {
-          "$ref": "Message"
-        }
-      },
+      "description": "Creates a new issue comment",
       "stability": 1,
       "security": [
         "issue"
@@ -1226,9 +1311,15 @@
       ]
     },
     "issue.getAllComments": {
-      "description": "Shows all issue comments",
       "method": "GET",
       "path": "\/document\/:user\/:document\/issue\/:id\/comment",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "CommentCollection"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -1271,28 +1362,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "CommentCollection"
-        }
-      },
+      "description": "Shows all issue comments",
       "stability": 1,
       "security": [],
       "authorization": true,
@@ -1301,9 +1390,15 @@
       ]
     },
     "issue.delete": {
-      "description": "Removes an issue",
       "method": "DELETE",
       "path": "\/document\/:user\/:document\/issue\/:id",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "Message"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -1328,28 +1423,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "Message"
-        }
-      },
+      "description": "Removes an issue",
       "stability": 1,
       "security": [
         "issue"
@@ -1360,9 +1453,15 @@
       ]
     },
     "issue.create": {
-      "description": "Creates a new issue",
       "method": "POST",
       "path": "\/document\/:user\/:document\/issue",
+      "return": {
+        "code": 201,
+        "schema": {
+          "type": "reference",
+          "target": "Message"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -1379,7 +1478,8 @@
         "payload": {
           "in": "body",
           "schema": {
-            "$ref": "IssueCreate"
+            "type": "reference",
+            "target": "IssueCreate"
           }
         }
       },
@@ -1387,28 +1487,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 201,
-        "schema": {
-          "$ref": "Message"
-        }
-      },
+      "description": "Creates a new issue",
       "stability": 1,
       "security": [
         "issue"
@@ -1419,9 +1517,15 @@
       ]
     },
     "issue.get": {
-      "description": "Returns an issue",
       "method": "GET",
       "path": "\/document\/:user\/:document\/issue\/:id",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "Issue"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -1446,28 +1550,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "Issue"
-        }
-      },
+      "description": "Returns an issue",
       "stability": 1,
       "security": [],
       "authorization": true,
@@ -1476,9 +1578,15 @@
       ]
     },
     "issue.getAll": {
-      "description": "Returns all issues",
       "method": "GET",
       "path": "\/document\/:user\/:document\/issue",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "IssueCollection"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -1521,28 +1629,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "IssueCollection"
-        }
-      },
+      "description": "Returns all issues",
       "stability": 1,
       "security": [],
       "authorization": true,
@@ -1551,9 +1657,15 @@
       ]
     },
     "explore.getAll": {
-      "description": "Returns trending documents",
       "method": "GET",
       "path": "\/explore",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "DocumentCollection"
+        }
+      },
       "arguments": {
         "startIndex": {
           "in": "query",
@@ -1578,28 +1690,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "DocumentCollection"
-        }
-      },
+      "description": "Returns trending documents",
       "stability": 1,
       "security": [],
       "authorization": true,
@@ -1608,9 +1718,15 @@
       ]
     },
     "document.revert": {
-      "description": "Reverts your document to this commit",
       "method": "POST",
       "path": "\/document\/:user\/:document\/revert\/:id",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "Message"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -1633,7 +1749,8 @@
         "payload": {
           "in": "body",
           "schema": {
-            "$ref": "Passthru"
+            "type": "reference",
+            "target": "Passthru"
           }
         }
       },
@@ -1641,28 +1758,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "Message"
-        }
-      },
+      "description": "Reverts your document to this commit",
       "stability": 1,
       "security": [
         "document"
@@ -1673,9 +1788,15 @@
       ]
     },
     "document.reset": {
-      "description": "Reverts your document to the latest source",
       "method": "POST",
       "path": "\/document\/:user\/:document\/reset",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "Message"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -1692,7 +1813,8 @@
         "payload": {
           "in": "body",
           "schema": {
-            "$ref": "Passthru"
+            "type": "reference",
+            "target": "Passthru"
           }
         }
       },
@@ -1700,28 +1822,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "Message"
-        }
-      },
+      "description": "Reverts your document to the latest source",
       "stability": 1,
       "security": [
         "document"
@@ -1732,9 +1852,15 @@
       ]
     },
     "document.fork": {
-      "description": "Export this document",
       "method": "GET",
       "path": "\/document\/:user\/:document\/fork",
+      "return": {
+        "code": 201,
+        "schema": {
+          "type": "reference",
+          "target": "Message"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -1753,28 +1879,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 201,
-        "schema": {
-          "$ref": "Message"
-        }
-      },
+      "description": "Export this document",
       "stability": 1,
       "security": [
         "document"
@@ -1785,9 +1909,15 @@
       ]
     },
     "document.import": {
-      "description": "Import a TypeSchema document",
       "method": "POST",
       "path": "\/document\/:user\/:document\/import",
+      "return": {
+        "code": 201,
+        "schema": {
+          "type": "reference",
+          "target": "Message"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -1804,7 +1934,8 @@
         "payload": {
           "in": "body",
           "schema": {
-            "$ref": "Passthru"
+            "type": "reference",
+            "target": "Passthru"
           }
         }
       },
@@ -1812,28 +1943,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 201,
-        "schema": {
-          "$ref": "Message"
-        }
-      },
+      "description": "Import a TypeSchema document",
       "stability": 1,
       "security": [
         "document"
@@ -1844,9 +1973,15 @@
       ]
     },
     "document.export": {
-      "description": "Export this document",
       "method": "POST",
       "path": "\/document\/:user\/:document\/export",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "DocumentExportResponse"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -1863,7 +1998,8 @@
         "payload": {
           "in": "body",
           "schema": {
-            "$ref": "DocumentExportRequest"
+            "type": "reference",
+            "target": "DocumentExportRequest"
           }
         }
       },
@@ -1871,28 +2007,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "DocumentExportResponse"
-        }
-      },
+      "description": "Export this document",
       "stability": 1,
       "security": [],
       "authorization": true,
@@ -1901,9 +2035,15 @@
       ]
     },
     "document.star": {
-      "description": "Stars this document",
       "method": "POST",
       "path": "\/document\/:user\/:document\/star",
+      "return": {
+        "code": 201,
+        "schema": {
+          "type": "reference",
+          "target": "Message"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -1920,7 +2060,8 @@
         "payload": {
           "in": "body",
           "schema": {
-            "$ref": "Passthru"
+            "type": "reference",
+            "target": "Passthru"
           }
         }
       },
@@ -1928,28 +2069,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 201,
-        "schema": {
-          "$ref": "Message"
-        }
-      },
+      "description": "Stars this document",
       "stability": 1,
       "security": [
         "document"
@@ -1960,9 +2099,15 @@
       ]
     },
     "document.delete": {
-      "description": "Removes a document",
       "method": "DELETE",
       "path": "\/document\/:user\/:document",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "Message"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -1981,28 +2126,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "Message"
-        }
-      },
+      "description": "Removes a document",
       "stability": 1,
       "security": [
         "document"
@@ -2013,9 +2156,15 @@
       ]
     },
     "document.meta": {
-      "description": "Updates the meta data of an document",
       "method": "PUT",
       "path": "\/document\/:user\/:document\/meta",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "Message"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -2032,7 +2181,8 @@
         "payload": {
           "in": "body",
           "schema": {
-            "$ref": "DocumentMeta"
+            "type": "reference",
+            "target": "DocumentMeta"
           }
         }
       },
@@ -2040,28 +2190,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "Message"
-        }
-      },
+      "description": "Updates the meta data of an document",
       "stability": 1,
       "security": [
         "document"
@@ -2072,9 +2220,15 @@
       ]
     },
     "document.update": {
-      "description": "Updates a document",
       "method": "PUT",
       "path": "\/document\/:user\/:document",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "Message"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -2091,7 +2245,8 @@
         "payload": {
           "in": "body",
           "schema": {
-            "$ref": "DocumentUpdate"
+            "type": "reference",
+            "target": "DocumentUpdate"
           }
         }
       },
@@ -2099,28 +2254,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "Message"
-        }
-      },
+      "description": "Updates a document",
       "stability": 1,
       "security": [
         "document"
@@ -2131,9 +2284,15 @@
       ]
     },
     "document.create": {
-      "description": "Creates a new document",
       "method": "POST",
       "path": "\/document\/:user",
+      "return": {
+        "code": 201,
+        "schema": {
+          "type": "reference",
+          "target": "Message"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -2144,7 +2303,8 @@
         "payload": {
           "in": "body",
           "schema": {
-            "$ref": "DocumentCreate"
+            "type": "reference",
+            "target": "DocumentCreate"
           }
         }
       },
@@ -2152,28 +2312,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 201,
-        "schema": {
-          "$ref": "Message"
-        }
-      },
+      "description": "Creates a new document",
       "stability": 1,
       "security": [
         "document"
@@ -2184,9 +2342,15 @@
       ]
     },
     "document.showPreview": {
-      "description": "Returns a document preview",
       "method": "GET",
       "path": "\/document\/:user\/:document\/preview",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "DocumentPreview"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -2211,16 +2375,12 @@
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "DocumentPreview"
-        }
-      },
+      "description": "Returns a document preview",
       "stability": 1,
       "security": [],
       "authorization": true,
@@ -2229,9 +2389,15 @@
       ]
     },
     "document.get": {
-      "description": "Returns a document",
       "method": "GET",
       "path": "\/document\/:user\/:document",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "Document"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -2256,16 +2422,12 @@
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "Document"
-        }
-      },
+      "description": "Returns a document",
       "stability": 1,
       "security": [],
       "authorization": true,
@@ -2274,9 +2436,15 @@
       ]
     },
     "document.getAll": {
-      "description": "Returns all documents",
       "method": "GET",
       "path": "\/document\/:user",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "DocumentCollection"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -2307,28 +2475,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "DocumentCollection"
-        }
-      },
+      "description": "Returns all documents",
       "stability": 1,
       "security": [],
       "authorization": true,
@@ -2337,9 +2503,15 @@
       ]
     },
     "commit.get": {
-      "description": "Returns a commit",
       "method": "GET",
       "path": "\/document\/:user\/:document\/commit\/:id",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "Commit"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -2364,28 +2536,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "Commit"
-        }
-      },
+      "description": "Returns a commit",
       "stability": 1,
       "security": [],
       "authorization": true,
@@ -2394,9 +2564,15 @@
       ]
     },
     "commit.getAll": {
-      "description": "Returns all commits for a document",
       "method": "GET",
       "path": "\/document\/:user\/:document\/commit",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "CommitCollection"
+        }
+      },
       "arguments": {
         "user": {
           "in": "path",
@@ -2433,28 +2609,26 @@
         {
           "code": 400,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 404,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         },
         {
           "code": 500,
           "schema": {
-            "$ref": "Message"
+            "type": "reference",
+            "target": "Message"
           }
         }
       ],
-      "return": {
-        "code": 200,
-        "schema": {
-          "$ref": "CommitCollection"
-        }
-      },
+      "description": "Returns all commits for a document",
       "stability": 1,
       "security": [],
       "authorization": true,
@@ -2463,15 +2637,16 @@
       ]
     },
     "meta.getAbout": {
-      "description": "",
       "method": "GET",
       "path": "\/",
       "return": {
         "code": 200,
         "schema": {
-          "$ref": "About"
+          "type": "reference",
+          "target": "About"
         }
       },
+      "description": "",
       "stability": 1,
       "security": [],
       "authorization": true,
@@ -2480,7 +2655,7 @@
   },
   "definitions": {
     "About": {
-      "type": "object",
+      "type": "struct",
       "properties": {
         "apiVersion": {
           "type": "string"
@@ -2514,35 +2689,37 @@
         },
         "categories": {
           "type": "array",
-          "items": {
+          "schema": {
             "type": "string"
           }
         },
         "scopes": {
           "type": "array",
-          "items": {
+          "schema": {
             "type": "string"
           }
         },
         "apps": {
-          "$ref": "AboutApps"
+          "type": "reference",
+          "target": "AboutApps"
         },
         "links": {
           "type": "array",
-          "items": {
-            "$ref": "AboutLink"
+          "schema": {
+            "type": "reference",
+            "target": "AboutLink"
           }
         }
       }
     },
     "AboutApps": {
-      "type": "object",
-      "additionalProperties": {
+      "type": "map",
+      "schema": {
         "type": "string"
       }
     },
     "AboutLink": {
-      "type": "object",
+      "type": "struct",
       "properties": {
         "rel": {
           "type": "string"
@@ -2553,7 +2730,7 @@
       }
     },
     "Collection": {
-      "type": "object",
+      "type": "struct",
       "properties": {
         "totalResults": {
           "type": "integer"
@@ -2566,26 +2743,29 @@
         },
         "entry": {
           "type": "array",
-          "items": {
-            "$generic": "T"
+          "schema": {
+            "type": "generic",
+            "name": "T"
           }
         }
       }
     },
     "Comment": {
-      "type": "object",
+      "type": "struct",
       "properties": {
         "id": {
           "type": "integer"
         },
         "user": {
-          "$ref": "User"
+          "type": "reference",
+          "target": "User"
         },
         "status": {
           "type": "integer"
         },
         "reaction": {
-          "$ref": "CommentReactions"
+          "type": "reference",
+          "target": "CommentReactions"
         },
         "comment": {
           "type": "string"
@@ -2601,17 +2781,24 @@
       }
     },
     "CommentCollection": {
-      "$ref": "Collection",
-      "$template": {
-        "T": "Comment"
+      "type": "struct",
+      "parent": {
+        "type": "reference",
+        "target": "Collection",
+        "template": {
+          "T": "Comment"
+        }
       }
     },
     "CommentCreate": {
-      "type": "object",
-      "$extends": "Comment"
+      "type": "struct",
+      "parent": {
+        "type": "reference",
+        "target": "Comment"
+      }
     },
     "CommentReactions": {
-      "type": "object",
+      "type": "struct",
       "properties": {
         "like": {
           "type": "integer"
@@ -2640,19 +2827,22 @@
       }
     },
     "Commit": {
-      "type": "object",
+      "type": "struct",
       "properties": {
         "id": {
           "type": "integer"
         },
         "document": {
-          "$ref": "Document"
+          "type": "reference",
+          "target": "Document"
         },
         "user": {
-          "$ref": "User"
+          "type": "reference",
+          "target": "User"
         },
         "previous": {
-          "$ref": "CommitPrevious"
+          "type": "reference",
+          "target": "CommitPrevious"
         },
         "message": {
           "type": "string"
@@ -2670,13 +2860,17 @@
       }
     },
     "CommitCollection": {
-      "$ref": "Collection",
-      "$template": {
-        "T": "Commit"
+      "type": "struct",
+      "parent": {
+        "type": "reference",
+        "target": "Collection",
+        "template": {
+          "T": "Commit"
+        }
       }
     },
     "CommitPrevious": {
-      "type": "object",
+      "type": "struct",
       "properties": {
         "id": {
           "type": "integer"
@@ -2697,16 +2891,18 @@
       }
     },
     "Document": {
-      "type": "object",
+      "type": "struct",
       "properties": {
         "id": {
           "type": "integer"
         },
         "user": {
-          "$ref": "User"
+          "type": "reference",
+          "target": "User"
         },
         "source": {
-          "$ref": "Document"
+          "type": "reference",
+          "target": "Document"
         },
         "status": {
           "type": "integer"
@@ -2725,7 +2921,7 @@
         },
         "keywords": {
           "type": "array",
-          "items": {
+          "schema": {
             "type": "string"
           }
         },
@@ -2749,13 +2945,17 @@
       }
     },
     "DocumentCollection": {
-      "$ref": "Collection",
-      "$template": {
-        "T": "Document"
+      "type": "struct",
+      "parent": {
+        "type": "reference",
+        "target": "Collection",
+        "template": {
+          "T": "Document"
+        }
       }
     },
     "DocumentCreate": {
-      "type": "object",
+      "type": "struct",
       "properties": {
         "name": {
           "type": "string"
@@ -2781,7 +2981,7 @@
       }
     },
     "DocumentExportRequest": {
-      "type": "object",
+      "type": "struct",
       "properties": {
         "version": {
           "type": "string"
@@ -2792,7 +2992,7 @@
       }
     },
     "DocumentExportResponse": {
-      "type": "object",
+      "type": "struct",
       "properties": {
         "href": {
           "type": "string"
@@ -2800,7 +3000,7 @@
       }
     },
     "DocumentMeta": {
-      "type": "object",
+      "type": "struct",
       "properties": {
         "description": {
           "type": "string"
@@ -2820,30 +3020,32 @@
       }
     },
     "DocumentPreview": {
-      "type": "object",
+      "type": "struct",
       "properties": {
         "repositories": {
           "type": "array",
-          "items": {
-            "$ref": "Repository"
+          "schema": {
+            "type": "reference",
+            "target": "Repository"
           }
         },
         "tags": {
           "type": "array",
-          "items": {
-            "$ref": "Tag"
+          "schema": {
+            "type": "reference",
+            "target": "Tag"
           }
         },
         "types": {
           "type": "array",
-          "items": {
+          "schema": {
             "type": "string"
           }
         }
       }
     },
     "DocumentUpdate": {
-      "type": "object",
+      "type": "struct",
       "properties": {
         "spec": {
           "type": "any"
@@ -2851,16 +3053,18 @@
       }
     },
     "Issue": {
-      "type": "object",
+      "type": "struct",
       "properties": {
         "id": {
           "type": "integer"
         },
         "user": {
-          "$ref": "User"
+          "type": "reference",
+          "target": "User"
         },
         "document": {
-          "$ref": "Document"
+          "type": "reference",
+          "target": "Document"
         },
         "status": {
           "type": "integer"
@@ -2879,13 +3083,17 @@
       }
     },
     "IssueCollection": {
-      "$ref": "Collection",
-      "$template": {
-        "T": "Issue"
+      "type": "struct",
+      "parent": {
+        "type": "reference",
+        "target": "Collection",
+        "template": {
+          "T": "Issue"
+        }
       }
     },
     "IssueCreate": {
-      "type": "object",
+      "type": "struct",
       "properties": {
         "title": {
           "type": "string"
@@ -2896,7 +3104,7 @@
       }
     },
     "Message": {
-      "type": "object",
+      "type": "struct",
       "properties": {
         "success": {
           "type": "boolean"
@@ -2908,13 +3116,13 @@
     },
     "Passthru": {
       "description": "No schema information available",
-      "type": "object",
-      "additionalProperties": {
+      "type": "map",
+      "schema": {
         "type": "any"
       }
     },
     "PullRequest": {
-      "type": "object",
+      "type": "struct",
       "properties": {
         "id": {
           "type": "integer"
@@ -2923,13 +3131,16 @@
           "type": "integer"
         },
         "source": {
-          "$ref": "Document"
+          "type": "reference",
+          "target": "Document"
         },
         "target": {
-          "$ref": "Document"
+          "type": "reference",
+          "target": "Document"
         },
         "user": {
-          "$ref": "User"
+          "type": "reference",
+          "target": "User"
         },
         "title": {
           "type": "string"
@@ -2945,13 +3156,17 @@
       }
     },
     "PullRequestCollection": {
-      "$ref": "Collection",
-      "$template": {
-        "T": "PullRequest"
+      "type": "struct",
+      "parent": {
+        "type": "reference",
+        "target": "Collection",
+        "template": {
+          "T": "PullRequest"
+        }
       }
     },
     "PullRequestCreate": {
-      "type": "object",
+      "type": "struct",
       "properties": {
         "title": {
           "type": "string"
@@ -2962,16 +3177,18 @@
       }
     },
     "Repository": {
-      "type": "object",
+      "type": "struct",
       "properties": {
         "id": {
           "type": "integer"
         },
         "user": {
-          "$ref": "User"
+          "type": "reference",
+          "target": "User"
         },
         "document": {
-          "$ref": "Document"
+          "type": "reference",
+          "target": "Document"
         },
         "generator": {
           "type": "string"
@@ -3005,26 +3222,35 @@
       }
     },
     "RepositoryCollection": {
-      "$ref": "Collection",
-      "$template": {
-        "T": "Repository"
+      "type": "struct",
+      "parent": {
+        "type": "reference",
+        "target": "Collection",
+        "template": {
+          "T": "Repository"
+        }
       }
     },
     "RepositoryCreate": {
-      "type": "object",
-      "$extends": "Repository"
+      "type": "struct",
+      "parent": {
+        "type": "reference",
+        "target": "Repository"
+      }
     },
     "Tag": {
-      "type": "object",
+      "type": "struct",
       "properties": {
         "id": {
           "type": "string"
         },
         "document": {
-          "$ref": "Document"
+          "type": "reference",
+          "target": "Document"
         },
         "user": {
-          "$ref": "User"
+          "type": "reference",
+          "target": "User"
         },
         "version": {
           "type": "string"
@@ -3042,7 +3268,7 @@
       }
     },
     "TagChangelog": {
-      "type": "object",
+      "type": "struct",
       "properties": {
         "master": {
           "type": "any"
@@ -3055,20 +3281,24 @@
         },
         "changelog": {
           "type": "array",
-          "items": {
+          "schema": {
             "type": "string"
           }
         }
       }
     },
     "TagCollection": {
-      "$ref": "Collection",
-      "$template": {
-        "T": "Tag"
+      "type": "struct",
+      "parent": {
+        "type": "reference",
+        "target": "Collection",
+        "template": {
+          "T": "Tag"
+        }
       }
     },
     "User": {
-      "type": "object",
+      "type": "struct",
       "properties": {
         "id": {
           "type": "integer"

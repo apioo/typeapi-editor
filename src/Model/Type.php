@@ -29,44 +29,40 @@ namespace TypeAPI\Editor\Model;
  */
 class Type implements \JsonSerializable
 {
-    public const TYPE_OBJECT = 'object';
+    public const TYPE_STRUCT = 'struct';
     public const TYPE_MAP = 'map';
     public const TYPE_ARRAY = 'array';
-    public const TYPE_REFERENCE = 'reference';
 
     private ?string $name;
     private ?string $type;
     private ?string $description;
+    private ?bool $deprecated;
     private ?string $parent;
-    private ?string $ref;
-    private ?string $template;
-
-    /**
-     * @var array<string>|null
-     */
-    private ?array $required;
-
+    private ?bool $base;
     /**
      * @var array<Property>
      */
-    private array $properties = [];
+    private array $properties;
+    private ?string $discriminator;
+    private ?array $mapping;
+    private ?array $template;
+    private ?string $reference;
 
-    public function __construct(array $entity)
+    public function __construct(array $type)
     {
-        $this->name = $entity['name'] ?? null;
-        $this->type = $entity['type'] ?? null;
-        $this->description = $entity['description'] ?? null;
-        $this->parent = $entity['parent'] ?? null;
-        $this->ref = $entity['ref'] ?? null;
-        $this->template = $entity['template'] ?? null;
-        if (isset($entity['required']) && is_array($entity['required'])) {
-            $this->required = $entity['required'];
-        } else {
-            $this->required = null;
-        }
-        if (isset($entity['properties']) && is_array($entity['properties'])) {
-            $this->properties = $this->convertProperties($entity['properties']);
-        }
+        $type = $this->bcLayer($type);
+
+        $this->name = $type['name'] ?? null;
+        $this->type = $type['type'] ?? null;
+        $this->description = $type['description'] ?? null;
+        $this->deprecated = $type['deprecated'] ?? null;
+        $this->parent = $type['parent'] ?? null;
+        $this->base = $type['base'] ?? null;
+        $this->properties = $this->convertProperties($type['properties'] ?? null);
+        $this->discriminator = $type['discriminator'] ?? null;
+        $this->mapping = isset($type['mapping']) ? (array) $type['mapping'] : null;
+        $this->template = isset($type['template']) ? (array) $type['template'] : null;
+        $this->reference = $type['reference'] ?? null;
     }
 
     public function getName(): ?string
@@ -99,6 +95,16 @@ class Type implements \JsonSerializable
         $this->description = $description;
     }
 
+    public function getDeprecated(): ?bool
+    {
+        return $this->deprecated;
+    }
+
+    public function setDeprecated(?bool $deprecated): void
+    {
+        $this->deprecated = $deprecated;
+    }
+
     public function getParent(): ?string
     {
         return $this->parent;
@@ -109,40 +115,14 @@ class Type implements \JsonSerializable
         $this->parent = $parent;
     }
 
-    public function getRef(): ?string
+    public function getBase(): ?bool
     {
-        return $this->ref;
+        return $this->base;
     }
 
-    public function setRef(?string $ref): void
+    public function setBase(?bool $base): void
     {
-        $this->ref = $ref;
-    }
-
-    public function getTemplate(): ?string
-    {
-        return $this->template;
-    }
-
-    public function setTemplate(?string $template): void
-    {
-        $this->template = $template;
-    }
-
-    /**
-     * @return array<string>|null
-     */
-    public function getRequired(): ?array
-    {
-        return $this->required;
-    }
-
-    /**
-     * @param array<string>|null $required
-     */
-    public function setRequired(?array $required): void
-    {
-        $this->required = $required;
+        $this->base = $base;
     }
 
     /**
@@ -174,24 +154,71 @@ class Type implements \JsonSerializable
         return null;
     }
 
+    public function getDiscriminator(): ?string
+    {
+        return $this->discriminator;
+    }
+
+    public function setDiscriminator(?string $discriminator): void
+    {
+        $this->discriminator = $discriminator;
+    }
+
+    public function getMapping(): ?array
+    {
+        return $this->mapping;
+    }
+
+    public function setMapping(?array $mapping): void
+    {
+        $this->mapping = $mapping;
+    }
+
+    public function getTemplate(): ?array
+    {
+        return $this->template;
+    }
+
+    public function setTemplate(?array $template): void
+    {
+        $this->template = $template;
+    }
+
+    public function getReference(): ?string
+    {
+        return $this->reference;
+    }
+
+    public function setReference(?string $reference): void
+    {
+        $this->reference = $reference;
+    }
+
     public function jsonSerialize(): array
     {
         return array_filter([
             'name' => $this->name,
             'type' => $this->type,
             'description' => $this->description,
+            'deprecated' => $this->deprecated,
             'parent' => $this->parent,
-            'ref' => $this->ref,
-            'template' => $this->template,
-            'required' => $this->required,
+            'base' => $this->base,
             'properties' => $this->properties,
+            'discriminator' => $this->discriminator,
+            'mapping' => $this->mapping,
+            'template' => $this->template,
+            'reference' => $this->reference,
         ], function ($value) {
             return $value !== null;
         });
     }
 
-    private function convertProperties(array $properties): array
+    private function convertProperties(?array $properties): array
     {
+        if ($properties === null) {
+            return [];
+        }
+
         $result = [];
         foreach ($properties as $property) {
             if ($property instanceof \stdClass) {
@@ -202,5 +229,31 @@ class Type implements \JsonSerializable
         }
 
         return $result;
+    }
+
+    private function bcLayer(array $type): array
+    {
+        if (isset($type['template']) && is_string($type['template'])) {
+            $type['template'] = ['T' => $type['template']];
+        }
+
+        if (isset($type['type']) && $type['type'] === 'object') {
+            $type['type'] = 'struct';
+        }
+
+        if (isset($type['type']) && $type['type'] === 'reference') {
+            $type['type'] = 'struct';
+            if (isset($type['ref'])) {
+                $type['parent'] = $type['ref'];
+                unset($type['ref']);
+            }
+        } else {
+            if (isset($type['ref'])) {
+                $type['reference'] = $type['ref'];
+                unset($type['ref']);
+            }
+        }
+
+        return $type;
     }
 }

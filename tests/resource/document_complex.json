@@ -1911,7 +1911,7 @@
   "types": [
     {
       "name": "About",
-      "type": "object",
+      "type": "struct",
       "properties": [
         {
           "name": "apiVersion",
@@ -1956,42 +1956,34 @@
         {
           "name": "categories",
           "type": "array",
-          "refs": [
-            "string"
-          ]
+          "reference": "string"
         },
         {
           "name": "scopes",
           "type": "array",
-          "refs": [
-            "string"
-          ]
+          "reference": "string"
         },
         {
           "name": "apps",
           "type": "object",
-          "refs": [
-            "AboutApps"
-          ]
+          "reference": "AboutApps"
         },
         {
           "name": "links",
           "type": "array",
-          "refs": [
-            "AboutLink"
-          ]
+          "reference": "AboutLink"
         }
       ]
     },
     {
       "name": "AboutApps",
       "type": "map",
-      "ref": "string",
+      "reference": "string",
       "properties": []
     },
     {
       "name": "AboutLink",
-      "type": "object",
+      "type": "struct",
       "properties": [
         {
           "name": "rel",
@@ -2005,7 +1997,7 @@
     },
     {
       "name": "Collection",
-      "type": "object",
+      "type": "struct",
       "properties": [
         {
           "name": "totalResults",
@@ -2022,15 +2014,14 @@
         {
           "name": "entry",
           "type": "array",
-          "refs": [
-            "T"
-          ]
+          "reference": "generic",
+          "generic": "T"
         }
       ]
     },
     {
       "name": "Comment",
-      "type": "object",
+      "type": "struct",
       "properties": [
         {
           "name": "id",
@@ -2039,9 +2030,7 @@
         {
           "name": "user",
           "type": "object",
-          "refs": [
-            "User"
-          ]
+          "reference": "User"
         },
         {
           "name": "status",
@@ -2050,9 +2039,7 @@
         {
           "name": "reaction",
           "type": "object",
-          "refs": [
-            "CommentReactions"
-          ]
+          "reference": "CommentReactions"
         },
         {
           "name": "comment",
@@ -2072,20 +2059,22 @@
     },
     {
       "name": "CommentCollection",
-      "type": "reference",
-      "ref": "Collection",
-      "template": "Comment",
+      "type": "struct",
+      "parent": "Collection",
+      "template": {
+        "T": "Comment"
+      },
       "properties": []
     },
     {
       "name": "CommentCreate",
-      "type": "object",
+      "type": "struct",
       "parent": "Comment",
       "properties": []
     },
     {
       "name": "CommentReactions",
-      "type": "object",
+      "type": "struct",
       "properties": [
         {
           "name": "like",
@@ -2123,7 +2112,7 @@
     },
     {
       "name": "Commit",
-      "type": "object",
+      "type": "struct",
       "properties": [
         {
           "name": "id",
@@ -2132,23 +2121,17 @@
         {
           "name": "document",
           "type": "object",
-          "refs": [
-            "Document"
-          ]
+          "reference": "Document"
         },
         {
           "name": "user",
           "type": "object",
-          "refs": [
-            "User"
-          ]
+          "reference": "User"
         },
         {
           "name": "previous",
           "type": "object",
-          "refs": [
-            "CommitPrevious"
-          ]
+          "reference": "CommitPrevious"
         },
         {
           "name": "message",
@@ -2171,14 +2154,16 @@
     },
     {
       "name": "CommitCollection",
-      "type": "reference",
-      "ref": "Collection",
-      "template": "Commit",
+      "type": "struct",
+      "parent": "Collection",
+      "template": {
+        "T": "Commit"
+      },
       "properties": []
     },
     {
       "name": "CommitPrevious",
-      "type": "object",
+      "type": "struct",
       "properties": [
         {
           "name": "id",
@@ -2205,7 +2190,7 @@
     },
     {
       "name": "Document",
-      "type": "object",
+      "type": "struct",
       "properties": [
         {
           "name": "id",
@@ -2214,16 +2199,12 @@
         {
           "name": "user",
           "type": "object",
-          "refs": [
-            "User"
-          ]
+          "reference": "User"
         },
         {
           "name": "source",
           "type": "object",
-          "refs": [
-            "Document"
-          ]
+          "reference": "Document"
         },
         {
           "name": "status",
@@ -2248,9 +2229,7 @@
         {
           "name": "keywords",
           "type": "array",
-          "refs": [
-            "string"
-          ]
+          "reference": "string"
         },
         {
           "name": "homepage",
@@ -2278,14 +2257,16 @@
     },
     {
       "name": "DocumentCollection",
-      "type": "reference",
-      "ref": "Collection",
-      "template": "Document",
+      "type": "struct",
+      "parent": "Collection",
+      "template": {
+        "T": "Document"
+      },
       "properties": []
     },
     {
       "name": "DocumentCreate",
-      "type": "object",
+      "type": "struct",
       "properties": [
         {
           "name": "name",
@@ -2319,7 +2300,7 @@
     },
     {
       "name": "DocumentExportRequest",
-      "type": "object",
+      "type": "struct",
       "properties": [
         {
           "name": "version",
@@ -2333,7 +2314,7 @@
     },
     {
       "name": "DocumentExportResponse",
-      "type": "object",
+      "type": "struct",
       "properties": [
         {
           "name": "href",
@@ -2343,7 +2324,7 @@
     },
     {
       "name": "DocumentMeta",
-      "type": "object",
+      "type": "struct",
       "properties": [
         {
           "name": "description",
@@ -2369,34 +2350,28 @@
     },
     {
       "name": "DocumentPreview",
-      "type": "object",
+      "type": "struct",
       "properties": [
         {
           "name": "repositories",
           "type": "array",
-          "refs": [
-            "Repository"
-          ]
+          "reference": "Repository"
         },
         {
           "name": "tags",
           "type": "array",
-          "refs": [
-            "Tag"
-          ]
+          "reference": "Tag"
         },
         {
           "name": "types",
           "type": "array",
-          "refs": [
-            "string"
-          ]
+          "reference": "string"
         }
       ]
     },
     {
       "name": "DocumentUpdate",
-      "type": "object",
+      "type": "struct",
       "properties": [
         {
           "name": "spec",
@@ -2406,7 +2381,7 @@
     },
     {
       "name": "Issue",
-      "type": "object",
+      "type": "struct",
       "properties": [
         {
           "name": "id",
@@ -2415,16 +2390,12 @@
         {
           "name": "user",
           "type": "object",
-          "refs": [
-            "User"
-          ]
+          "reference": "User"
         },
         {
           "name": "document",
           "type": "object",
-          "refs": [
-            "Document"
-          ]
+          "reference": "Document"
         },
         {
           "name": "status",
@@ -2448,14 +2419,16 @@
     },
     {
       "name": "IssueCollection",
-      "type": "reference",
-      "ref": "Collection",
-      "template": "Issue",
+      "type": "struct",
+      "parent": "Collection",
+      "template": {
+        "T": "Issue"
+      },
       "properties": []
     },
     {
       "name": "IssueCreate",
-      "type": "object",
+      "type": "struct",
       "properties": [
         {
           "name": "title",
@@ -2469,7 +2442,7 @@
     },
     {
       "name": "Message",
-      "type": "object",
+      "type": "struct",
       "properties": [
         {
           "name": "success",
@@ -2485,12 +2458,12 @@
       "name": "Passthru",
       "type": "map",
       "description": "No schema information available",
-      "ref": "any",
+      "reference": "any",
       "properties": []
     },
     {
       "name": "PullRequest",
-      "type": "object",
+      "type": "struct",
       "properties": [
         {
           "name": "id",
@@ -2503,23 +2476,17 @@
         {
           "name": "source",
           "type": "object",
-          "refs": [
-            "Document"
-          ]
+          "reference": "Document"
         },
         {
           "name": "target",
           "type": "object",
-          "refs": [
-            "Document"
-          ]
+          "reference": "Document"
         },
         {
           "name": "user",
           "type": "object",
-          "refs": [
-            "User"
-          ]
+          "reference": "User"
         },
         {
           "name": "title",
@@ -2539,14 +2506,16 @@
     },
     {
       "name": "PullRequestCollection",
-      "type": "reference",
-      "ref": "Collection",
-      "template": "PullRequest",
+      "type": "struct",
+      "parent": "Collection",
+      "template": {
+        "T": "PullRequest"
+      },
       "properties": []
     },
     {
       "name": "PullRequestCreate",
-      "type": "object",
+      "type": "struct",
       "properties": [
         {
           "name": "title",
@@ -2560,7 +2529,7 @@
     },
     {
       "name": "Repository",
-      "type": "object",
+      "type": "struct",
       "properties": [
         {
           "name": "id",
@@ -2569,16 +2538,12 @@
         {
           "name": "user",
           "type": "object",
-          "refs": [
-            "User"
-          ]
+          "reference": "User"
         },
         {
           "name": "document",
           "type": "object",
-          "refs": [
-            "Document"
-          ]
+          "reference": "Document"
         },
         {
           "name": "generator",
@@ -2622,20 +2587,22 @@
     },
     {
       "name": "RepositoryCollection",
-      "type": "reference",
-      "ref": "Collection",
-      "template": "Repository",
+      "type": "struct",
+      "parent": "Collection",
+      "template": {
+        "T": "Repository"
+      },
       "properties": []
     },
     {
       "name": "RepositoryCreate",
-      "type": "object",
+      "type": "struct",
       "parent": "Repository",
       "properties": []
     },
     {
       "name": "Tag",
-      "type": "object",
+      "type": "struct",
       "properties": [
         {
           "name": "id",
@@ -2644,16 +2611,12 @@
         {
           "name": "document",
           "type": "object",
-          "refs": [
-            "Document"
-          ]
+          "reference": "Document"
         },
         {
           "name": "user",
           "type": "object",
-          "refs": [
-            "User"
-          ]
+          "reference": "User"
         },
         {
           "name": "version",
@@ -2676,7 +2639,7 @@
     },
     {
       "name": "TagChangelog",
-      "type": "object",
+      "type": "struct",
       "properties": [
         {
           "name": "master",
@@ -2693,22 +2656,22 @@
         {
           "name": "changelog",
           "type": "array",
-          "refs": [
-            "string"
-          ]
+          "reference": "string"
         }
       ]
     },
     {
       "name": "TagCollection",
-      "type": "reference",
-      "ref": "Collection",
-      "template": "Tag",
+      "type": "struct",
+      "parent": "Collection",
+      "template": {
+        "T": "Tag"
+      },
       "properties": []
     },
     {
       "name": "User",
-      "type": "object",
+      "type": "struct",
       "properties": [
         {
           "name": "id",

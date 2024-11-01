@@ -22,8 +22,6 @@ namespace TypeAPI\Editor\Tests;
 
 use PHPUnit\Framework\TestCase;
 use PSX\Schema\SchemaManager;
-use TypeAPI\Editor\Generator;
-use TypeAPI\Editor\Model\Document;
 use TypeAPI\Editor\Parser;
 
 /**
@@ -63,14 +61,6 @@ class ParserTest extends TestCase
     {
         $actual = (new Parser(new SchemaManager()))->parseFile(__DIR__ . '/resource/typeapi_query_object.json');
         $expect = file_get_contents(__DIR__ . '/resource/document_query_object.json');
-
-        $this->assertJsonStringEqualsJsonString($expect, \json_encode($actual));
-    }
-
-    public function testParseSchema()
-    {
-        $actual = (new Parser(new SchemaManager()))->parseFile(__DIR__ . '/resource/typeschema.json');
-        $expect = file_get_contents(__DIR__ . '/resource/document_typeschema.json');
 
         $this->assertJsonStringEqualsJsonString($expect, \json_encode($actual));
     }
