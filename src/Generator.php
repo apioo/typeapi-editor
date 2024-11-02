@@ -45,6 +45,14 @@ class Generator
      */
     public function generate(Document $document, ?string $baseUrl = null): string
     {
+        return \json_encode($this->toModel($document, $baseUrl), \JSON_PRETTY_PRINT);
+    }
+
+    /**
+     * @throws GeneratorException
+     */
+    public function toModel(Document $document, ?string $baseUrl = null): Model\TypeAPI
+    {
         $schema = new Model\TypeAPI();
 
         $documentBaseUrl = $document->getBaseUrl();
@@ -92,7 +100,7 @@ class Generator
             }
         }
 
-        return \json_encode($schema, \JSON_PRETTY_PRINT);
+        return $schema;
     }
 
     /**
