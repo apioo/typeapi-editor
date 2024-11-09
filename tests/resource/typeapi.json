@@ -102,8 +102,25 @@
                 }
             }
         },
+        "Product_Base": {
+            "type": "struct",
+            "base": true,
+            "discriminator": "type",
+            "mapping": {
+                "Product": "product"
+            },
+            "properties": {
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
         "Product": {
             "type": "struct",
+            "parent": {
+                "target": "Product_Base",
+                "type": "reference"
+            },
             "properties": {
                 "name": {
                     "type": "string"

@@ -93,8 +93,24 @@
       ]
     },
     {
+      "name": "Product_Base",
+      "type": "struct",
+      "base": true,
+      "properties": [
+        {
+          "name": "type",
+          "type": "string"
+        }
+      ],
+      "discriminator": "type",
+      "mapping": {
+        "Product": "product"
+      }
+    },
+    {
       "name": "Product",
       "type": "struct",
+      "parent": "Product_Base",
       "properties": [
         {
           "name": "name",

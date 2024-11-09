@@ -351,6 +351,16 @@ class Parser
             }
         }
 
+        $discriminator = $this->getString($type, ['discriminator']);
+        if (!empty($discriminator)) {
+            $return->setDiscriminator($discriminator);
+        }
+
+        $mapping = $this->getObject($type, ['mapping']);
+        if ($mapping instanceof \stdClass) {
+            $return->setMapping((array) $mapping);
+        }
+
         $properties = $this->getObject($type, ['properties']);
         if ($properties instanceof \stdClass) {
             $props = [];

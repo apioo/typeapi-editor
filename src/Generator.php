@@ -339,6 +339,21 @@ class Generator
                 $result->setParent($parent);
             }
 
+            $base = $type->getBase();
+            if (is_bool($base)) {
+                $result->setBase($base);
+            }
+
+            $discriminator = $type->getDiscriminator();
+            if (!empty($discriminator)) {
+                $result->setDiscriminator($discriminator);
+            }
+
+            $mapping = $type->getMapping();
+            if (is_array($mapping)) {
+                $result->setMapping(Record::from($mapping));
+            }
+
             if (count($type->getProperties()) > 0) {
                 /** @var Record<Model\PropertyType> $props */
                 $props = new Record();

@@ -62,7 +62,7 @@ class DocumentTest extends TestCase
         $this->assertEquals(2, count($operation->getArguments()));
         $this->assertEquals(1, count($operation->getThrows()));
 
-        $this->assertEquals(7, count($document->getTypes()));
+        $this->assertEquals(8, count($document->getTypes()));
 
         $type = $document->getType($document->indexOfType('Product'));
         $this->assertInstanceOf(Type::class, $type);
