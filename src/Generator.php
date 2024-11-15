@@ -417,7 +417,7 @@ class Generator
             $result->setType('generic');
             $result->setName($property->getGeneric());
         } else {
-            throw new GeneratorException('Provided an invalid property type');
+            throw new GeneratorException('Provided an invalid property type: ' . $property->getType());
         }
 
         if ($property->getDescription() !== null) {
