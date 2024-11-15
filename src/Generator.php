@@ -417,7 +417,13 @@ class Generator
             $result->setType('generic');
             $result->setName($property->getGeneric());
         } else {
-            throw new GeneratorException('Provided an invalid property type: ' . $property->getType());
+            // BC layer
+            if ($property->getType() === 'union') {
+                $result = new Model\AnyPropertyType();
+                $result->setType('any');
+            } else {
+                throw new GeneratorException('Provided an invalid property type: ' . $property->getType());
+            }
         }
 
         if ($property->getDescription() !== null) {
