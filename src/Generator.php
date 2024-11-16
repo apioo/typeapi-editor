@@ -23,6 +23,7 @@ namespace TypeAPI\Editor;
 use PSX\Record\Record;
 use TypeAPI\Editor\Exception\GeneratorException;
 use TypeAPI\Editor\Model\Document;
+use TypeAPI\Editor\Model\Import;
 use TypeAPI\Editor\Model\Operation;
 use TypeAPI\Editor\Model\Property;
 use TypeAPI\Editor\Model\Security;
@@ -104,6 +105,7 @@ class Generator
     }
 
     /**
+     * @param array<Import>|null $imports
      * @return Record<string>|null
      */
     private function generateImport(?array $imports): ?Record
@@ -116,15 +118,13 @@ class Generator
         $result = new Record();
         foreach ($imports as $import) {
             $alias = $import->getAlias() ?? null;
-            $user = $import->getDocument()->user->name ?? null;
-            $document = $import->getDocument()->name ?? null;
-            $version = $import->getVersion() ?? null;
+            $url = $import->getUrl() ?? null;
 
-            if (empty($alias) || empty($user) || empty($document) || empty($version)) {
+            if (empty($alias) || empty($url)) {
                 continue;
             }
 
-            $result->put($alias, 'typehub://' . $user . ':' . $document . '@' . $version);
+            $result->put($alias, $url);
         }
 
         return $result;

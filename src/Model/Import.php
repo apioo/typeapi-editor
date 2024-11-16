@@ -30,14 +30,14 @@ namespace TypeAPI\Editor\Model;
 class Import implements \JsonSerializable
 {
     private ?string $alias;
-    private ?string $version;
-    private ?object $document;
+    private ?string $url;
+    private ?array $types;
 
     public function __construct(array $import)
     {
         $this->alias = $import['alias'] ?? null;
-        $this->version = $import['version'] ?? null;
-        $this->document = $import['document'] ?? null;
+        $this->url = $import['url'] ?? null;
+        $this->types = $this->convertTypes($import['types'] ?? []);
     }
 
     public function getAlias(): ?string
@@ -50,32 +50,48 @@ class Import implements \JsonSerializable
         $this->alias = $alias;
     }
 
-    public function getVersion(): ?string
+    public function getUrl(): ?string
     {
-        return $this->version;
+        return $this->url;
     }
 
-    public function setVersion(?string $version): void
+    public function setUrl(?string $url): void
     {
-        $this->version = $version;
+        $this->url = $url;
     }
 
-    public function getDocument(): ?object
+    public function getTypes(): ?array
     {
-        return $this->document;
+        return $this->types;
     }
 
-    public function setDocument(?object $document): void
+    public function setTypes(?array $types): void
     {
-        $this->document = $document;
+        $this->types = $types;
     }
 
     public function jsonSerialize(): array
     {
         return [
             'alias' => $this->alias,
-            'version' => $this->version,
-            'document' => $this->document,
+            'url' => $this->url,
+            'types' => $this->types,
         ];
+    }
+
+    private function convertTypes(array $types): array
+    {
+        $result = [];
+        foreach ($types as $type) {
+            if ($type instanceof \stdClass) {
+                $result[] = new Type((array) $type);
+            } elseif (is_array($type)) {
+                $result[] = new Type($type);
+            } elseif ($type instanceof Type) {
+                $result[] = $type;
+            }
+        }
+
+        return $result;
     }
 }

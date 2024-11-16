@@ -20,7 +20,9 @@
 
 namespace TypeAPI\Editor;
 
+use PSX\Schema\Exception\InvalidSchemaException;
 use PSX\Schema\SchemaManagerInterface;
+use PSX\Schema\SchemaSource;
 use TypeAPI\Editor\Exception\ParserException;
 use TypeAPI\Editor\Model\Argument;
 use TypeAPI\Editor\Model\Document;
@@ -83,11 +85,27 @@ class Parser
         }
 
         $imports = [];
-        // @TODO handle import
+        if (isset($data->import) && $data->import instanceof \stdClass) {
+            foreach (get_object_vars($data->import) as $name => $import) {
+                if (!is_string($import)) {
+                    continue;
+                }
+
+                try {
+                    $imports[] = $this->parseImport($name, $import);
+                } catch (InvalidSchemaException $e) {
+                    throw new ParserException('Could not parse import ' . $name . ', got: ' . $e->getMessage(), previous: $e);
+                }
+            }
+        }
 
         $operations = [];
         if (isset($data->operations) && $data->operations instanceof \stdClass) {
             foreach (get_object_vars($data->operations) as $name => $operation) {
+                if (!$operation instanceof \stdClass) {
+                    continue;
+                }
+
                 $operations[] = $this->parseOperation($name, $operation);
             }
         }
@@ -99,6 +117,10 @@ class Parser
         $index = 0;
         if (isset($data->definitions) && $data->definitions instanceof \stdClass) {
             foreach (get_object_vars($data->definitions) as $name => $type) {
+                if (!$type instanceof \stdClass) {
+                    continue;
+                }
+
                 if ($rootRef === $name) {
                     $root = $index;
                 }
@@ -135,12 +157,23 @@ class Parser
         return $this->parseJson(file_get_contents($file));
     }
 
-    private function parseImport(string $name, \stdClass $import): Import
+    /**
+     * @throws ParserException
+     * @throws InvalidSchemaException
+     */
+    private function parseImport(string $name, string $url): Import
     {
         $return = new Import([]);
         $return->setAlias($name);
-        //$import->setVersion();
-        //$import->setDocument();
+        $return->setUrl($url);
+
+        $types = [];
+        $schema = $this->schemaManager->getSchema(SchemaSource::fromString($url));
+        foreach ($schema->getDefinitions()->getTypes() as $name => $type) {
+            $types[] = $this->parseDefinitionType($name, (object) $type->toArray());
+        }
+
+        $return->setTypes($types);
 
         return $return;
     }
