@@ -170,7 +170,12 @@ class Parser
         $types = [];
         $schema = $this->schemaManager->getSchema(SchemaSource::fromString($url));
         foreach ($schema->getDefinitions()->getTypes() as $name => $type) {
-            $types[] = $this->parseDefinitionType($name, (object) $type->toArray());
+            $object = new \stdClass();
+            foreach ($type->toArray() as $key => $value) {
+                $object->{$key} = $value;
+            }
+
+            $types[] = $this->parseDefinitionType($name, $object);
         }
 
         $return->setTypes($types);
