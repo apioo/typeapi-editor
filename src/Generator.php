@@ -28,7 +28,8 @@ use TypeAPI\Editor\Model\Operation;
 use TypeAPI\Editor\Model\Property;
 use TypeAPI\Editor\Model\Security;
 use TypeAPI\Editor\Model\Type;
-use TypeAPI\Model;
+use TypeAPI\Model as TypeAPIModel;
+use TypeSchema\Model as TypeSchemaModel;
 
 /**
  * Generator which transforms a document provided from an editor to an actual TypeSchema specification
@@ -52,9 +53,9 @@ class Generator
     /**
      * @throws GeneratorException
      */
-    public function toModel(Document $document, ?string $baseUrl = null): Model\TypeAPI
+    public function toModel(Document $document, ?string $baseUrl = null): TypeAPIModel\TypeAPI
     {
-        $schema = new Model\TypeAPI();
+        $schema = new TypeAPIModel\TypeAPI();
 
         $documentBaseUrl = $document->getBaseUrl();
         if (!empty($documentBaseUrl)) {
@@ -64,7 +65,7 @@ class Generator
         }
 
         $security = $this->generateSecurity($document->getSecurity());
-        if ($security instanceof Model\Security) {
+        if ($security instanceof TypeAPIModel\Security) {
             $schema->setSecurity($security);
         }
 
@@ -73,14 +74,14 @@ class Generator
             $schema->setImport($import);
         }
 
-        /** @var Record<Model\Operation> $operations */
+        /** @var Record<TypeAPIModel\Operation> $operations */
         $operations = new Record();
         foreach ($document->getOperations() as $operation) {
             $operations->put($operation->getName(), $this->generateOperation($operation));
         }
         $schema->setOperations($operations);
 
-        /** @var Record<Model\DefinitionType> $definitions */
+        /** @var Record<TypeSchemaModel\DefinitionType> $definitions */
         $definitions = new Record();
         $types = $document->getTypes();
         foreach ($types as $type) {
@@ -130,25 +131,25 @@ class Generator
         return $result;
     }
 
-    private function generateSecurity(?Security $security): ?Model\Security
+    private function generateSecurity(?Security $security): ?TypeAPIModel\Security
     {
         if (empty($security)) {
             return null;
         }
 
         if ($security->getType() === 'httpBasic') {
-            $return = new Model\SecurityHttpBasic();
+            $return = new TypeAPIModel\SecurityHttpBasic();
             $return->setType('httpBasic');
         } elseif ($security->getType() === 'httpBearer') {
-            $return = new Model\SecurityHttpBearer();
+            $return = new TypeAPIModel\SecurityHttpBearer();
             $return->setType('httpBearer');
         } elseif ($security->getType() === 'apiKey') {
-            $return = new Model\SecurityApiKey();
+            $return = new TypeAPIModel\SecurityApiKey();
             $return->setType('apiKey');
             $return->setIn($security->getIn());
             $return->setName($security->getName());
         } elseif ($security->getType() === 'oauth2') {
-            $return = new Model\SecurityOAuth();
+            $return = new TypeAPIModel\SecurityOAuth();
             $return->setType('oauth2');
             $return->setTokenUrl($security->getTokenUrl());
             $return->setAuthorizationUrl($security->getAuthorizationUrl());
@@ -163,9 +164,9 @@ class Generator
     /**
      * @throws GeneratorException
      */
-    private function generateOperation(Operation $operation): Model\Operation
+    private function generateOperation(Operation $operation): TypeAPIModel\Operation
     {
-        $result = new Model\Operation();
+        $result = new TypeAPIModel\Operation();
 
         if ($operation->getDescription() !== null) {
             $result->setDescription($operation->getDescription());
@@ -179,7 +180,7 @@ class Generator
             $result->setPath($operation->getHttpPath());
         }
 
-        /** @var Record<Model\Argument> $args */
+        /** @var Record<TypeAPIModel\Argument> $args */
         $args = new Record();
         $legacyPayload = null;
         if (count($operation->getArguments()) > 0) {
@@ -252,57 +253,53 @@ class Generator
             $result->setAuthorization($operation->getAuthorization());
         }
 
-        if ($operation->getTags() !== null) {
-            $result->setTags($operation->getTags());
-        }
-
         return $result;
     }
 
-    private function generateArgument(string $in, string $type): Model\Argument
+    private function generateArgument(string $in, string $type): TypeAPIModel\Argument
     {
-        $result = new Model\Argument();
+        $result = new TypeAPIModel\Argument();
         $result->setIn($in);
         $result->setSchema($this->resolveReferenceType($type));
         return $result;
     }
 
-    private function generateArgumentBody(string $type, ?string $typeShape = null): Model\Argument
+    private function generateArgumentBody(string $type, ?string $typeShape = null): TypeAPIModel\Argument
     {
-        $result = new Model\Argument();
+        $result = new TypeAPIModel\Argument();
         $result->setIn('body');
         $result->setSchema($this->getTypeShape($type, $typeShape));
         return $result;
     }
 
-    private function generateResponse(int $httpCode, string $return, ?string $returnShape = null): Model\Response
+    private function generateResponse(int $httpCode, string $return, ?string $returnShape = null): TypeAPIModel\Response
     {
         if ($httpCode === 204) {
-            $schema = new Model\AnyPropertyType();
+            $schema = new TypeSchemaModel\AnyPropertyType();
             $schema->setType('any');
         } else {
             $schema = $this->getTypeShape($return, $returnShape);
         }
 
-        $result = new Model\Response();
+        $result = new TypeAPIModel\Response();
         $result->setCode($httpCode);
         $result->setSchema($schema);
         return $result;
     }
 
-    private function getTypeShape(string $type, ?string $typeShape = null): Model\PropertyType
+    private function getTypeShape(string $type, ?string $typeShape = null): TypeSchemaModel\PropertyType
     {
-        $reference = new Model\ReferencePropertyType();
+        $reference = new TypeSchemaModel\ReferencePropertyType();
         $reference->setType('reference');
         $reference->setTarget($type);
 
         if ($typeShape === Type::TYPE_ARRAY) {
-            $return = new Model\ArrayPropertyType();
+            $return = new TypeSchemaModel\ArrayPropertyType();
             $return->setType('array');
             $return->setSchema($reference);
             return $return;
         } elseif ($typeShape === Type::TYPE_MAP) {
-            $return = new Model\MapPropertyType();
+            $return = new TypeSchemaModel\MapPropertyType();
             $return->setType('map');
             $return->setSchema($reference);
             return $return;
@@ -314,22 +311,22 @@ class Generator
     /**
      * @throws GeneratorException
      */
-    private function generateDefinitionType(Type $type): Model\DefinitionType
+    private function generateDefinitionType(Type $type): TypeSchemaModel\DefinitionType
     {
         if ($type->getType() === Type::TYPE_MAP) {
-            $result = new Model\MapDefinitionType();
+            $result = new TypeSchemaModel\MapDefinitionType();
             $result->setType('map');
             $result->setSchema($this->resolveReferenceType($type->getReference()));
         } elseif ($type->getType() === Type::TYPE_ARRAY) {
-            $result = new Model\ArrayDefinitionType();
+            $result = new TypeSchemaModel\ArrayDefinitionType();
             $result->setType('array');
             $result->setSchema($this->resolveReferenceType($type->getReference()));
         } else {
-            $result = new Model\StructDefinitionType();
+            $result = new TypeSchemaModel\StructDefinitionType();
             $result->setType('struct');
 
             if ($type->getParent() !== null) {
-                $parent = new Model\ReferencePropertyType();
+                $parent = new TypeSchemaModel\ReferencePropertyType();
                 $parent->setType('reference');
                 $parent->setTarget($type->getParent());
                 $template = $type->getTemplate();
@@ -355,7 +352,7 @@ class Generator
             }
 
             if (count($type->getProperties()) > 0) {
-                /** @var Record<Model\PropertyType> $props */
+                /** @var Record<TypeSchemaModel\PropertyType> $props */
                 $props = new Record();
                 foreach ($type->getProperties() as $property) {
                     $name = $property->getName();
@@ -379,47 +376,47 @@ class Generator
     /**
      * @throws GeneratorException
      */
-    private function generatePropertyType(Property $property): Model\PropertyType
+    private function generatePropertyType(Property $property): TypeSchemaModel\PropertyType
     {
         if ($property->getType() === Property::TYPE_OBJECT) {
-            $result = new Model\ReferencePropertyType();
+            $result = new TypeSchemaModel\ReferencePropertyType();
             $result->setType('reference');
             $result->setTarget($property->getReference());
         } elseif ($property->getType() === Property::TYPE_MAP) {
-            $result = new Model\MapPropertyType();
+            $result = new TypeSchemaModel\MapPropertyType();
             $result->setType('map');
             $result->setSchema($this->resolveReferenceType($property->getReference(), $property->getGeneric(), $property->getFormat()));
         } elseif ($property->getType() === Property::TYPE_ARRAY) {
-            $result = new Model\ArrayPropertyType();
+            $result = new TypeSchemaModel\ArrayPropertyType();
             $result->setType('array');
             $result->setSchema($this->resolveReferenceType($property->getReference(), $property->getGeneric(), $property->getFormat()));
         } elseif ($property->getType() === Property::TYPE_STRING) {
-            $result = new Model\StringPropertyType();
+            $result = new TypeSchemaModel\StringPropertyType();
             $result->setType('string');
 
             if ($property->getFormat() !== null) {
                 $result->setFormat($property->getFormat());
             }
         } elseif ($property->getType() === Property::TYPE_INTEGER) {
-            $result = new Model\IntegerPropertyType();
+            $result = new TypeSchemaModel\IntegerPropertyType();
             $result->setType('integer');
         } elseif ($property->getType() === Property::TYPE_NUMBER) {
-            $result = new Model\NumberPropertyType();
+            $result = new TypeSchemaModel\NumberPropertyType();
             $result->setType('number');
         } elseif ($property->getType() === Property::TYPE_BOOLEAN) {
-            $result = new Model\BooleanPropertyType();
+            $result = new TypeSchemaModel\BooleanPropertyType();
             $result->setType('boolean');
         } elseif ($property->getType() === Property::TYPE_ANY) {
-            $result = new Model\AnyPropertyType();
+            $result = new TypeSchemaModel\AnyPropertyType();
             $result->setType('any');
         } elseif ($property->getType() === Property::TYPE_GENERIC) {
-            $result = new Model\GenericPropertyType();
+            $result = new TypeSchemaModel\GenericPropertyType();
             $result->setType('generic');
             $result->setName($property->getGeneric());
         } else {
             // BC layer
             if ($property->getType() === 'union') {
-                $result = new Model\AnyPropertyType();
+                $result = new TypeSchemaModel\AnyPropertyType();
                 $result->setType('any');
             } else {
                 throw new GeneratorException('Provided an invalid property type: ' . $property->getType());
@@ -436,36 +433,36 @@ class Generator
     /**
      * @throws GeneratorException
      */
-    private function resolveReferenceType(?string $reference, ?string $generic = null, ?string $format = null): Model\PropertyType
+    private function resolveReferenceType(?string $reference, ?string $generic = null, ?string $format = null): TypeSchemaModel\PropertyType
     {
         if (empty($reference)) {
             throw new GeneratorException('Reference must contain a string');
         }
 
         if ($reference === 'string') {
-            $return = new Model\StringPropertyType();
+            $return = new TypeSchemaModel\StringPropertyType();
             $return->setType('string');
             if (!empty($format)) {
                 $return->setFormat($format);
             }
         } elseif ($reference === 'integer') {
-            $return = new Model\IntegerPropertyType();
+            $return = new TypeSchemaModel\IntegerPropertyType();
             $return->setType('integer');
         } elseif ($reference === 'number') {
-            $return = new Model\NumberPropertyType();
+            $return = new TypeSchemaModel\NumberPropertyType();
             $return->setType('number');
         } elseif ($reference === 'boolean') {
-            $return = new Model\BooleanPropertyType();
+            $return = new TypeSchemaModel\BooleanPropertyType();
             $return->setType('boolean');
         } elseif ($reference === 'any') {
-            $return = new Model\AnyPropertyType();
+            $return = new TypeSchemaModel\AnyPropertyType();
             $return->setType('any');
         } elseif ($reference === 'generic') {
-            $return = new Model\GenericPropertyType();
+            $return = new TypeSchemaModel\GenericPropertyType();
             $return->setType('generic');
             $return->setName($generic);
         } else {
-            $return = new Model\ReferencePropertyType();
+            $return = new TypeSchemaModel\ReferencePropertyType();
             $return->setType('reference');
             $return->setTarget($reference);
         }

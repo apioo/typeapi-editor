@@ -59,10 +59,7 @@
       "security": [
         "tag"
       ],
-      "authorization": true,
-      "tags": [
-        "tag"
-      ]
+      "authorization": true
     },
     "tag.create": {
       "description": "Creates a new tag",
@@ -123,10 +120,7 @@
       "security": [
         "tag"
       ],
-      "authorization": true,
-      "tags": [
-        "tag"
-      ]
+      "authorization": true
     },
     "tag.get": {
       "description": "Returns a tag",
@@ -184,10 +178,7 @@
       },
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "tag"
-      ]
+      "authorization": true
     },
     "tag.getAll": {
       "description": "Returns all tags for a document",
@@ -257,10 +248,7 @@
       },
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "tag"
-      ]
+      "authorization": true
     },
     "star.getAll": {
       "description": "Returns all stared documents for the current user",
@@ -320,10 +308,7 @@
       "security": [
         "star"
       ],
-      "authorization": true,
-      "tags": [
-        "star"
-      ]
+      "authorization": true
     },
     "repository.delete": {
       "description": "Removes a repository",
@@ -383,10 +368,7 @@
       "security": [
         "repository"
       ],
-      "authorization": true,
-      "tags": [
-        "repository"
-      ]
+      "authorization": true
     },
     "repository.create": {
       "description": "Creates a new repository",
@@ -447,10 +429,7 @@
       "security": [
         "repository"
       ],
-      "authorization": true,
-      "tags": [
-        "repository"
-      ]
+      "authorization": true
     },
     "repository.get": {
       "description": "Returns a repository",
@@ -510,10 +489,7 @@
       "security": [
         "repository"
       ],
-      "authorization": true,
-      "tags": [
-        "repository"
-      ]
+      "authorization": true
     },
     "repository.getAll": {
       "description": "Returns all configured repositories",
@@ -585,10 +561,7 @@
       "security": [
         "repository"
       ],
-      "authorization": true,
-      "tags": [
-        "repository"
-      ]
+      "authorization": true
     },
     "pull_request.reactComment": {
       "description": "Reacts to a comment",
@@ -667,10 +640,7 @@
       "security": [
         "pull_request"
       ],
-      "authorization": true,
-      "tags": [
-        "pull_request"
-      ]
+      "authorization": true
     },
     "pull_request.createComment": {
       "description": "Creates a new issue comment",
@@ -737,10 +707,7 @@
       "security": [
         "pull_request"
       ],
-      "authorization": true,
-      "tags": [
-        "pull_request"
-      ]
+      "authorization": true
     },
     "pull_request.getAllComments": {
       "description": "Shows all pull request comments",
@@ -816,10 +783,7 @@
       },
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "pull_request"
-      ]
+      "authorization": true
     },
     "pull_request.delete": {
       "description": "Removes a pull request",
@@ -879,10 +843,7 @@
       "security": [
         "pull_request"
       ],
-      "authorization": true,
-      "tags": [
-        "pull_request"
-      ]
+      "authorization": true
     },
     "pull_request.update": {
       "description": "Merges a pull request",
@@ -949,10 +910,7 @@
       "security": [
         "pull_request"
       ],
-      "authorization": true,
-      "tags": [
-        "pull_request"
-      ]
+      "authorization": true
     },
     "pull_request.create": {
       "description": "Creates a new pull request",
@@ -1013,10 +971,7 @@
       "security": [
         "pull_request"
       ],
-      "authorization": true,
-      "tags": [
-        "pull_request"
-      ]
+      "authorization": true
     },
     "pull_request.get": {
       "description": "Returns an pull request",
@@ -1074,10 +1029,7 @@
       },
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "pull_request"
-      ]
+      "authorization": true
     },
     "pull_request.getAll": {
       "description": "Returns all issues",
@@ -1153,10 +1105,7 @@
       },
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "pull_request"
-      ]
+      "authorization": true
     },
     "issue.reactComment": {
       "description": "Reacts to a comment",
@@ -1235,10 +1184,7 @@
       "security": [
         "issue"
       ],
-      "authorization": true,
-      "tags": [
-        "issue"
-      ]
+      "authorization": true
     },
     "issue.createComment": {
       "description": "Creates a new issue comment",
@@ -1305,10 +1251,7 @@
       "security": [
         "issue"
       ],
-      "authorization": true,
-      "tags": [
-        "issue"
-      ]
+      "authorization": true
     },
     "issue.getAllComments": {
       "description": "Shows all issue comments",
@@ -1384,10 +1327,7 @@
       },
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "issue"
-      ]
+      "authorization": true
     },
     "issue.delete": {
       "description": "Removes an issue",
@@ -1447,10 +1387,7 @@
       "security": [
         "issue"
       ],
-      "authorization": true,
-      "tags": [
-        "issue"
-      ]
+      "authorization": true
     },
     "issue.create": {
       "description": "Creates a new issue",
@@ -1511,10 +1448,7 @@
       "security": [
         "issue"
       ],
-      "authorization": true,
-      "tags": [
-        "issue"
-      ]
+      "authorization": true
     },
     "issue.get": {
       "description": "Returns an issue",
@@ -1572,10 +1506,7 @@
       },
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "issue"
-      ]
+      "authorization": true
     },
     "issue.getAll": {
       "description": "Returns all issues",
@@ -1651,10 +1582,7 @@
       },
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "issue"
-      ]
+      "authorization": true
     },
     "explore.getAll": {
       "description": "Returns trending documents",
@@ -1712,10 +1640,7 @@
       },
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "explore"
-      ]
+      "authorization": true
     },
     "document.revert": {
       "description": "Reverts your document to this commit",
@@ -1782,10 +1707,7 @@
       "security": [
         "document"
       ],
-      "authorization": true,
-      "tags": [
-        "document"
-      ]
+      "authorization": true
     },
     "document.reset": {
       "description": "Reverts your document to the latest source",
@@ -1846,10 +1768,7 @@
       "security": [
         "document"
       ],
-      "authorization": true,
-      "tags": [
-        "document"
-      ]
+      "authorization": true
     },
     "document.fork": {
       "description": "Export this document",
@@ -1903,10 +1822,7 @@
       "security": [
         "document"
       ],
-      "authorization": true,
-      "tags": [
-        "document"
-      ]
+      "authorization": true
     },
     "document.import": {
       "description": "Import a TypeSchema document",
@@ -1967,10 +1883,7 @@
       "security": [
         "document"
       ],
-      "authorization": true,
-      "tags": [
-        "document"
-      ]
+      "authorization": true
     },
     "document.export": {
       "description": "Export this document",
@@ -2029,10 +1942,7 @@
       },
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "document"
-      ]
+      "authorization": true
     },
     "document.star": {
       "description": "Stars this document",
@@ -2093,10 +2003,7 @@
       "security": [
         "document"
       ],
-      "authorization": true,
-      "tags": [
-        "document"
-      ]
+      "authorization": true
     },
     "document.delete": {
       "description": "Removes a document",
@@ -2150,10 +2057,7 @@
       "security": [
         "document"
       ],
-      "authorization": true,
-      "tags": [
-        "document"
-      ]
+      "authorization": true
     },
     "document.meta": {
       "description": "Updates the meta data of an document",
@@ -2214,10 +2118,7 @@
       "security": [
         "document"
       ],
-      "authorization": true,
-      "tags": [
-        "document"
-      ]
+      "authorization": true
     },
     "document.update": {
       "description": "Updates a document",
@@ -2278,10 +2179,7 @@
       "security": [
         "document"
       ],
-      "authorization": true,
-      "tags": [
-        "document"
-      ]
+      "authorization": true
     },
     "document.create": {
       "description": "Creates a new document",
@@ -2336,10 +2234,7 @@
       "security": [
         "document"
       ],
-      "authorization": true,
-      "tags": [
-        "document"
-      ]
+      "authorization": true
     },
     "document.showPreview": {
       "description": "Returns a document preview",
@@ -2383,10 +2278,7 @@
       },
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "document"
-      ]
+      "authorization": true
     },
     "document.get": {
       "description": "Returns a document",
@@ -2430,10 +2322,7 @@
       },
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "document"
-      ]
+      "authorization": true
     },
     "document.getAll": {
       "description": "Returns all documents",
@@ -2497,10 +2386,7 @@
       },
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "document"
-      ]
+      "authorization": true
     },
     "commit.get": {
       "description": "Returns a commit",
@@ -2558,10 +2444,7 @@
       },
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "commit"
-      ]
+      "authorization": true
     },
     "commit.getAll": {
       "description": "Returns all commits for a document",
@@ -2631,10 +2514,7 @@
       },
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "commit"
-      ]
+      "authorization": true
     },
     "meta.getAbout": {
       "description": "",
@@ -2649,8 +2529,7 @@
       },
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": []
+      "authorization": true
     }
   },
   "definitions": {

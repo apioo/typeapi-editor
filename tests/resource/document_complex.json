@@ -39,10 +39,7 @@
       "security": [
         "tag"
       ],
-      "authorization": true,
-      "tags": [
-        "tag"
-      ]
+      "authorization": true
     },
     {
       "name": "tag.create",
@@ -82,10 +79,7 @@
       "security": [
         "tag"
       ],
-      "authorization": true,
-      "tags": [
-        "tag"
-      ]
+      "authorization": true
     },
     {
       "name": "tag.get",
@@ -127,10 +121,7 @@
       "return": "Tag",
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "tag"
-      ]
+      "authorization": true
     },
     {
       "name": "tag.getAll",
@@ -182,10 +173,7 @@
       "return": "TagCollection",
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "tag"
-      ]
+      "authorization": true
     },
     {
       "name": "star.getAll",
@@ -229,10 +217,7 @@
       "security": [
         "star"
       ],
-      "authorization": true,
-      "tags": [
-        "star"
-      ]
+      "authorization": true
     },
     {
       "name": "repository.delete",
@@ -276,10 +261,7 @@
       "security": [
         "repository"
       ],
-      "authorization": true,
-      "tags": [
-        "repository"
-      ]
+      "authorization": true
     },
     {
       "name": "repository.create",
@@ -319,10 +301,7 @@
       "security": [
         "repository"
       ],
-      "authorization": true,
-      "tags": [
-        "repository"
-      ]
+      "authorization": true
     },
     {
       "name": "repository.get",
@@ -366,10 +345,7 @@
       "security": [
         "repository"
       ],
-      "authorization": true,
-      "tags": [
-        "repository"
-      ]
+      "authorization": true
     },
     {
       "name": "repository.getAll",
@@ -423,10 +399,7 @@
       "security": [
         "repository"
       ],
-      "authorization": true,
-      "tags": [
-        "repository"
-      ]
+      "authorization": true
     },
     {
       "name": "pull_request.reactComment",
@@ -481,10 +454,7 @@
       "security": [
         "pull_request"
       ],
-      "authorization": true,
-      "tags": [
-        "pull_request"
-      ]
+      "authorization": true
     },
     {
       "name": "pull_request.createComment",
@@ -529,10 +499,7 @@
       "security": [
         "pull_request"
       ],
-      "authorization": true,
-      "tags": [
-        "pull_request"
-      ]
+      "authorization": true
     },
     {
       "name": "pull_request.getAllComments",
@@ -589,10 +556,7 @@
       "return": "CommentCollection",
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "pull_request"
-      ]
+      "authorization": true
     },
     {
       "name": "pull_request.delete",
@@ -636,10 +600,7 @@
       "security": [
         "pull_request"
       ],
-      "authorization": true,
-      "tags": [
-        "pull_request"
-      ]
+      "authorization": true
     },
     {
       "name": "pull_request.update",
@@ -684,10 +645,7 @@
       "security": [
         "pull_request"
       ],
-      "authorization": true,
-      "tags": [
-        "pull_request"
-      ]
+      "authorization": true
     },
     {
       "name": "pull_request.create",
@@ -727,10 +685,7 @@
       "security": [
         "pull_request"
       ],
-      "authorization": true,
-      "tags": [
-        "pull_request"
-      ]
+      "authorization": true
     },
     {
       "name": "pull_request.get",
@@ -772,10 +727,7 @@
       "return": "PullRequest",
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "pull_request"
-      ]
+      "authorization": true
     },
     {
       "name": "pull_request.getAll",
@@ -832,10 +784,7 @@
       "return": "PullRequestCollection",
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "pull_request"
-      ]
+      "authorization": true
     },
     {
       "name": "issue.reactComment",
@@ -890,10 +839,7 @@
       "security": [
         "issue"
       ],
-      "authorization": true,
-      "tags": [
-        "issue"
-      ]
+      "authorization": true
     },
     {
       "name": "issue.createComment",
@@ -938,10 +884,7 @@
       "security": [
         "issue"
       ],
-      "authorization": true,
-      "tags": [
-        "issue"
-      ]
+      "authorization": true
     },
     {
       "name": "issue.getAllComments",
@@ -998,10 +941,7 @@
       "return": "CommentCollection",
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "issue"
-      ]
+      "authorization": true
     },
     {
       "name": "issue.delete",
@@ -1045,10 +985,7 @@
       "security": [
         "issue"
       ],
-      "authorization": true,
-      "tags": [
-        "issue"
-      ]
+      "authorization": true
     },
     {
       "name": "issue.create",
@@ -1088,10 +1025,7 @@
       "security": [
         "issue"
       ],
-      "authorization": true,
-      "tags": [
-        "issue"
-      ]
+      "authorization": true
     },
     {
       "name": "issue.get",
@@ -1133,10 +1067,7 @@
       "return": "Issue",
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "issue"
-      ]
+      "authorization": true
     },
     {
       "name": "issue.getAll",
@@ -1193,10 +1124,7 @@
       "return": "IssueCollection",
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "issue"
-      ]
+      "authorization": true
     },
     {
       "name": "explore.getAll",
@@ -1238,10 +1166,7 @@
       "return": "DocumentCollection",
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "explore"
-      ]
+      "authorization": true
     },
     {
       "name": "document.revert",
@@ -1286,10 +1211,7 @@
       "security": [
         "document"
       ],
-      "authorization": true,
-      "tags": [
-        "document"
-      ]
+      "authorization": true
     },
     {
       "name": "document.reset",
@@ -1329,10 +1251,7 @@
       "security": [
         "document"
       ],
-      "authorization": true,
-      "tags": [
-        "document"
-      ]
+      "authorization": true
     },
     {
       "name": "document.fork",
@@ -1371,10 +1290,7 @@
       "security": [
         "document"
       ],
-      "authorization": true,
-      "tags": [
-        "document"
-      ]
+      "authorization": true
     },
     {
       "name": "document.import",
@@ -1414,10 +1330,7 @@
       "security": [
         "document"
       ],
-      "authorization": true,
-      "tags": [
-        "document"
-      ]
+      "authorization": true
     },
     {
       "name": "document.export",
@@ -1455,10 +1368,7 @@
       "return": "DocumentExportResponse",
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "document"
-      ]
+      "authorization": true
     },
     {
       "name": "document.star",
@@ -1498,10 +1408,7 @@
       "security": [
         "document"
       ],
-      "authorization": true,
-      "tags": [
-        "document"
-      ]
+      "authorization": true
     },
     {
       "name": "document.delete",
@@ -1540,10 +1447,7 @@
       "security": [
         "document"
       ],
-      "authorization": true,
-      "tags": [
-        "document"
-      ]
+      "authorization": true
     },
     {
       "name": "document.meta",
@@ -1583,10 +1487,7 @@
       "security": [
         "document"
       ],
-      "authorization": true,
-      "tags": [
-        "document"
-      ]
+      "authorization": true
     },
     {
       "name": "document.update",
@@ -1626,10 +1527,7 @@
       "security": [
         "document"
       ],
-      "authorization": true,
-      "tags": [
-        "document"
-      ]
+      "authorization": true
     },
     {
       "name": "document.create",
@@ -1664,10 +1562,7 @@
       "security": [
         "document"
       ],
-      "authorization": true,
-      "tags": [
-        "document"
-      ]
+      "authorization": true
     },
     {
       "name": "document.showPreview",
@@ -1701,10 +1596,7 @@
       "return": "DocumentPreview",
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "document"
-      ]
+      "authorization": true
     },
     {
       "name": "document.get",
@@ -1738,10 +1630,7 @@
       "return": "Document",
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "document"
-      ]
+      "authorization": true
     },
     {
       "name": "document.getAll",
@@ -1788,10 +1677,7 @@
       "return": "DocumentCollection",
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "document"
-      ]
+      "authorization": true
     },
     {
       "name": "commit.get",
@@ -1833,10 +1719,7 @@
       "return": "Commit",
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "commit"
-      ]
+      "authorization": true
     },
     {
       "name": "commit.getAll",
@@ -1888,10 +1771,7 @@
       "return": "CommitCollection",
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": [
-        "commit"
-      ]
+      "authorization": true
     },
     {
       "name": "meta.getAbout",
@@ -1904,8 +1784,7 @@
       "return": "About",
       "stability": 1,
       "security": [],
-      "authorization": true,
-      "tags": []
+      "authorization": true
     }
   ],
   "types": [
