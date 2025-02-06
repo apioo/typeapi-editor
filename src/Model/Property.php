@@ -47,6 +47,7 @@ class Property implements \JsonSerializable
     private ?string $reference;
     private ?string $generic;
     private ?array $template;
+    private ?array $metadata;
 
     public function __construct(array $property)
     {
@@ -60,6 +61,7 @@ class Property implements \JsonSerializable
         $this->reference = $property['reference'] ?? null;
         $this->generic = $property['generic'] ?? null;
         $this->template = isset($property['template']) ? (array) $property['template'] : null;
+        $this->metadata = isset($property['metadata']) ? (array) $property['metadata'] : null;
     }
 
     public function getName(): ?string
@@ -137,6 +139,16 @@ class Property implements \JsonSerializable
         $this->template = $template;
     }
 
+    public function getMetadata(): ?array
+    {
+        return $this->metadata;
+    }
+
+    public function setMetadata(?array $metadata): void
+    {
+        $this->metadata = $metadata;
+    }
+
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -148,6 +160,7 @@ class Property implements \JsonSerializable
             'reference' => $this->reference,
             'generic' => $this->generic,
             'template' => $this->template,
+            'metadata' => $this->metadata,
         ], function ($value) {
             return $value !== null;
         });
