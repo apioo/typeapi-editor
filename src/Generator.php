@@ -470,7 +470,7 @@ class Generator
             $return->setName($generic);
         } elseif ($reference === 'map') {
             if (empty($subType)) {
-                throw new GeneratorException('No map type provided');
+                $subType = 'any';
             }
 
             $return = new TypeSchemaModel\MapPropertyType();
@@ -478,7 +478,7 @@ class Generator
             $return->setSchema($this->resolveReferenceType($subType));
         } elseif ($reference === 'array') {
             if (empty($subType)) {
-                throw new GeneratorException('No array type provided');
+                $subType = 'any';
             }
 
             $return = new TypeSchemaModel\ArrayPropertyType();
