@@ -1,0 +1,22 @@
+{
+  "imports": [],
+  "operations": [],
+  "types": [
+    {
+      "name": "Backend_StatisticChart",
+      "type": "struct",
+      "properties": [
+        {
+          "name": "labels",
+          "type": "array",
+          "reference": "string"
+        },
+        {
+          "name": "data",
+          "type": "array",
+          "reference": "array:number"
+        }
+      ]
+    }
+  ]
+}

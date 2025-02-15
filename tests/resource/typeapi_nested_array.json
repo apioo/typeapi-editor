@@ -1,0 +1,25 @@
+{
+  "operations": {},
+  "definitions": {
+    "Backend_StatisticChart": {
+      "type": "struct",
+      "properties": {
+        "labels": {
+          "type": "array",
+          "schema": {
+            "type": "string"
+          }
+        },
+        "data": {
+          "type": "array",
+          "schema": {
+            "type": "array",
+            "schema": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    }
+  }
+}
