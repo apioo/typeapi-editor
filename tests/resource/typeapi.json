@@ -155,6 +155,15 @@
                 "product": {
                     "type": "reference",
                     "target": "Product"
+                },
+                "data": {
+                    "type": "array",
+                    "schema": {
+                        "type": "array",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
                 }
             }
         },

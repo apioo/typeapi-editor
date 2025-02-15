@@ -439,6 +439,11 @@ class Generator
             throw new GeneratorException('Reference must contain a string');
         }
 
+        $subType = null;
+        if (str_contains($reference, ':')) {
+            [$reference, $subType] = explode(':', $reference, 2);
+        }
+
         if ($reference === 'string') {
             $return = new TypeSchemaModel\StringPropertyType();
             $return->setType('string');
@@ -461,6 +466,22 @@ class Generator
             $return = new TypeSchemaModel\GenericPropertyType();
             $return->setType('generic');
             $return->setName($generic);
+        } elseif ($reference === 'map') {
+            if (empty($subType)) {
+                throw new GeneratorException('No map type provided');
+            }
+
+            $return = new TypeSchemaModel\MapPropertyType();
+            $return->setType('map');
+            $return->setSchema($this->resolveReferenceType($subType));
+        } elseif ($reference === 'array') {
+            if (empty($subType)) {
+                throw new GeneratorException('No array type provided');
+            }
+
+            $return = new TypeSchemaModel\ArrayPropertyType();
+            $return->setType('array');
+            $return->setSchema($this->resolveReferenceType($subType));
         } else {
             $return = new TypeSchemaModel\ReferencePropertyType();
             $return->setType('reference');

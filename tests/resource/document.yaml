@@ -92,6 +92,9 @@ types:
       - name: product
         type: object
         reference: Product
+      - name: data
+        type: array
+        reference: array:number
   - name: Error
     type: struct
     properties:

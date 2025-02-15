@@ -532,8 +532,11 @@ class Parser
             $schemaGeneric = '';
             $schemaTypeName = $this->resolvePropertyType($schema, $schemaReference, $schemaGeneric);
 
-            if ($schemaTypeName === 'object') {
+            if ($schemaTypeName === Property::TYPE_OBJECT) {
                 $reference = $schemaReference;
+                $generic = $schemaGeneric;
+            } elseif ($schemaTypeName === Property::TYPE_MAP || $schemaTypeName === Property::TYPE_ARRAY) {
+                $reference = $schemaTypeName . ':' . $schemaReference;
                 $generic = $schemaGeneric;
             } else {
                 $reference = $schemaTypeName;
