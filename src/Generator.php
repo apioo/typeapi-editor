@@ -441,7 +441,9 @@ class Generator
 
         $subType = null;
         if (str_contains($reference, ':')) {
-            [$reference, $subType] = explode(':', $reference, 2);
+            $parts = explode(':', $reference, 2);
+            $reference = $parts[0] ?? null;
+            $subType = $parts[1] ?? null;
         }
 
         if ($reference === 'string') {
