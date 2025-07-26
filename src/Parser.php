@@ -154,7 +154,7 @@ class Parser
             throw new ParserException('File does not exist');
         }
 
-        return $this->parseJson(file_get_contents($file));
+        return $this->parseJson((string) file_get_contents($file));
     }
 
     /**

@@ -20,6 +20,7 @@
 
 namespace TypeAPI\Editor;
 
+use PSX\Json\Parser as JsonParser;
 use PSX\Record\Record;
 use TypeAPI\Editor\Exception\GeneratorException;
 use TypeAPI\Editor\Model\Document;
@@ -47,7 +48,7 @@ class Generator
      */
     public function generate(Document $document, ?string $baseUrl = null): string
     {
-        return \json_encode($this->toModel($document, $baseUrl), \JSON_PRETTY_PRINT);
+        return JsonParser::encode($this->toModel($document, $baseUrl), \JSON_PRETTY_PRINT);
     }
 
     /**
