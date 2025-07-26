@@ -288,6 +288,9 @@ class Parser
 
         if (isset($argument->schema) && $argument->schema instanceof \stdClass) {
             $return->setType($this->resolveType($argument->schema, $shape));
+        } elseif (isset($argument->contentType) && is_string($argument->contentType)) {
+            $return->setType($argument->contentType);
+            $shape = 'mime';
         } else {
             throw new ParserException('Provided argument schema not available');
         }

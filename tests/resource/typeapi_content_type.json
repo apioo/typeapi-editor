@@ -1,0 +1,34 @@
+{
+    "operations": {
+        "my.upload": {
+            "description": "",
+            "method": "POST",
+            "path": "/upload",
+            "arguments": {
+                "payload": {
+                    "in": "body",
+                    "contentType": "multipart/form-data"
+                }
+            },
+            "return": {
+                "code": 200,
+                "schema": {
+                    "type": "reference",
+                    "target": "Message"
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Message": {
+            "description": "",
+            "type": "struct",
+            "properties": {
+                "success": {
+                    "description": "",
+                    "type": "boolean"
+                }
+            }
+        }
+    }
+}

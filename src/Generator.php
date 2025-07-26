@@ -268,22 +268,34 @@ class Generator
     {
         $result = new TypeAPIModel\Argument();
         $result->setIn('body');
-        $result->setSchema($this->getTypeShape($type, $typeShape));
+
+        if ($typeShape === 'mime') {
+            $result->setContentType($type);
+        } else {
+            $result->setSchema($this->getTypeShape($type, $typeShape));
+        }
+
         return $result;
     }
 
     private function generateResponse(int $httpCode, string $return, ?string $returnShape = null): TypeAPIModel\Response
     {
-        if ($httpCode === 204) {
-            $schema = new TypeSchemaModel\AnyPropertyType();
-            $schema->setType('any');
-        } else {
-            $schema = $this->getTypeShape($return, $returnShape);
-        }
-
         $result = new TypeAPIModel\Response();
         $result->setCode($httpCode);
-        $result->setSchema($schema);
+
+        if ($returnShape === 'mime') {
+            $result->setContentType($return);
+        } else {
+            if ($httpCode === 204) {
+                $schema = new TypeSchemaModel\AnyPropertyType();
+                $schema->setType('any');
+            } else {
+                $schema = $this->getTypeShape($return, $returnShape);
+            }
+
+            $result->setSchema($schema);
+        }
+
         return $result;
     }
 

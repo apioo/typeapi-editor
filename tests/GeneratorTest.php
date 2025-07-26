@@ -55,6 +55,17 @@ class GeneratorTest extends TestCase
         $this->assertJsonStringEqualsJsonString($expect, $actual, $actual);
     }
 
+    public function testGenerateContentType()
+    {
+        $json     = \json_decode(file_get_contents(__DIR__ . '/resource/document_content_type.json'));
+        $document = Document::from($json);
+
+        $actual = (new Generator())->generate($document);
+        $expect = file_get_contents(__DIR__ . '/resource/typeapi_content_type.json');
+
+        $this->assertJsonStringEqualsJsonString($expect, $actual, $actual);
+    }
+
     public function testGenerateDiscord()
     {
         $json     = \json_decode(file_get_contents(__DIR__ . '/resource/document_discord.json'));
