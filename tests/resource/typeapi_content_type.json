@@ -12,10 +12,7 @@
             },
             "return": {
                 "code": 200,
-                "schema": {
-                    "type": "reference",
-                    "target": "Message"
-                }
+                "contentType": "application/octet-stream"
             }
         }
     },

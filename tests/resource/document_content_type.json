@@ -11,7 +11,8 @@
       "payload": "multipart/form-data",
       "payloadShape": "mime",
       "throws": [],
-      "return": "Message"
+      "return": "application/octet-stream",
+      "returnShape": "mime"
     }
   ],
   "types": [

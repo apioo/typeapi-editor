@@ -245,6 +245,9 @@ class Parser
                     if ($shape !== null) {
                         $return->setReturnShape($shape);
                     }
+                } elseif (isset($operation->return->contentType) && is_string($operation->return->contentType)) {
+                    $return->setReturn($operation->return->contentType);
+                    $return->setReturnShape('mime');
                 }
             }
         }
