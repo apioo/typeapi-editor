@@ -520,10 +520,6 @@ class Parser
             }
         }
 
-        if (empty($typeName)) {
-            throw new ParserException('Could not resolve property type');
-        }
-
         if ($typeName === 'reference') {
             $typeName = 'object';
         }
