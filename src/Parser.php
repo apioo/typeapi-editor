@@ -562,6 +562,10 @@ class Parser
             throw new ParserException('Invalid property type, allowed: ' . implode(', ', self::PROPERTY_TYPES));
         }
 
+        if ($typeName === null) {
+            throw new ParserException('Could not determine type for property');
+        }
+
         return $typeName;
     }
 
