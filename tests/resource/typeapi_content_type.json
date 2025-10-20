@@ -1,31 +1,31 @@
 {
-    "operations": {
-        "my.upload": {
-            "description": "",
-            "method": "POST",
-            "path": "/upload",
-            "arguments": {
-                "payload": {
-                    "in": "body",
-                    "contentType": "multipart/form-data"
-                }
-            },
-            "return": {
-                "code": 200,
-                "contentType": "application/octet-stream"
-            }
+  "operations": {
+    "my.upload": {
+      "description": "",
+      "method": "POST",
+      "path": "/upload",
+      "arguments": {
+        "payload": {
+          "in": "body",
+          "contentType": "multipart/form-data"
         }
-    },
-    "definitions": {
-        "Message": {
-            "description": "",
-            "type": "struct",
-            "properties": {
-                "success": {
-                    "description": "",
-                    "type": "boolean"
-                }
-            }
-        }
+      },
+      "return": {
+        "code": 200,
+        "contentType": "application/octet-stream"
+      }
     }
+  },
+  "definitions": {
+    "Message": {
+      "description": "",
+      "type": "struct",
+      "properties": {
+        "success": {
+          "description": "",
+          "type": "boolean"
+        }
+      }
+    }
+  }
 }

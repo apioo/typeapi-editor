@@ -68,6 +68,6 @@ class DocumentTest extends TestCase
         $this->assertInstanceOf(Type::class, $type);
         $this->assertEquals('Product', $type->getName());
         $this->assertEquals('struct', $type->getType());
-        $this->assertEquals(3, count($type->getProperties()));
+        $this->assertEquals(4, count($type->getProperties()));
     }
 }

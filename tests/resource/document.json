@@ -83,12 +83,14 @@
         },
         {
           "name": "age",
-          "type": "integer"
+          "type": "integer",
+          "nullable": true
         },
         {
           "format": "date-time",
           "name": "birthday",
-          "type": "string"
+          "type": "string",
+          "deprecated": true
         }
       ]
     },
@@ -119,6 +121,11 @@
         {
           "name": "price",
           "type": "number"
+        },
+        {
+          "name": "category",
+          "type": "string",
+          "default": "basic"
         },
         {
           "name": "groups",

@@ -41,9 +41,11 @@ class Property implements \JsonSerializable
 
     private ?string $name;
     private ?string $description;
+    private ?bool $deprecated;
+    private ?bool $nullable;
     private ?string $type;
     private ?string $format;
-    private ?bool $deprecated;
+    private ?string $default;
     private ?string $reference;
     private ?string $generic;
     private ?array $template;
@@ -55,9 +57,11 @@ class Property implements \JsonSerializable
 
         $this->name = $property['name'] ?? null;
         $this->description = $property['description'] ?? null;
+        $this->deprecated = $property['deprecated'] ?? null;
+        $this->nullable = $property['nullable'] ?? null;
         $this->type = $property['type'] ?? null;
         $this->format = $property['format'] ?? null;
-        $this->deprecated = $property['deprecated'] ?? null;
+        $this->default = $property['default'] ?? null;
         $this->reference = $property['reference'] ?? null;
         $this->generic = $property['generic'] ?? null;
         $this->template = isset($property['template']) ? (array) $property['template'] : null;
@@ -84,6 +88,26 @@ class Property implements \JsonSerializable
         $this->description = $description;
     }
 
+    public function getDeprecated(): ?bool
+    {
+        return $this->deprecated;
+    }
+
+    public function setDeprecated(?bool $deprecated): void
+    {
+        $this->deprecated = $deprecated;
+    }
+
+    public function getNullable(): ?bool
+    {
+        return $this->nullable;
+    }
+
+    public function setNullable(?bool $nullable): void
+    {
+        $this->nullable = $nullable;
+    }
+
     public function getType(): ?string
     {
         return $this->type;
@@ -104,9 +128,14 @@ class Property implements \JsonSerializable
         $this->format = $format;
     }
 
-    public function setDeprecated(?bool $deprecated): void
+    public function getDefault(): ?string
     {
-        $this->deprecated = $deprecated;
+        return $this->default;
+    }
+
+    public function setDefault(?string $default): void
+    {
+        $this->default = $default;
     }
 
     public function getReference(): ?string
@@ -154,10 +183,12 @@ class Property implements \JsonSerializable
         return array_filter([
             'name' => $this->name,
             'description' => $this->description,
+            'nullable' => $this->nullable,
+            'reference' => $this->reference,
             'type' => $this->type,
             'format' => $this->format,
+            'default' => $this->default,
             'deprecated' => $this->deprecated,
-            'reference' => $this->reference,
             'generic' => $this->generic,
             'template' => $this->template,
             'metadata' => $this->metadata,
