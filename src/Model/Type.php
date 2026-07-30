@@ -47,6 +47,7 @@ class Type implements \JsonSerializable
     private ?array $mapping;
     private ?array $template;
     private ?string $reference;
+    private ?array $metadata;
 
     public function __construct(array $type)
     {
@@ -63,6 +64,7 @@ class Type implements \JsonSerializable
         $this->mapping = isset($type['mapping']) ? (array) $type['mapping'] : null;
         $this->template = isset($type['template']) ? (array) $type['template'] : null;
         $this->reference = $type['reference'] ?? null;
+        $this->metadata = isset($type['metadata']) ? (array) $type['metadata'] : null;
     }
 
     public function getName(): ?string
@@ -194,6 +196,16 @@ class Type implements \JsonSerializable
         $this->reference = $reference;
     }
 
+    public function getMetadata(): ?array
+    {
+        return $this->metadata;
+    }
+
+    public function setMetadata(?array $metadata): void
+    {
+        $this->metadata = $metadata;
+    }
+
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -208,6 +220,7 @@ class Type implements \JsonSerializable
             'mapping' => $this->mapping,
             'template' => $this->template,
             'reference' => $this->reference,
+            'metadata' => $this->metadata,
         ], function ($value) {
             return $value !== null;
         });
