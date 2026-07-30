@@ -33,6 +33,9 @@ class Error implements \JsonSerializable
     private ?string $type;
     private ?string $typeShape;
 
+    /**
+     * @param array<string, mixed> $throw
+     */
     public function __construct(array $throw)
     {
         $this->code = $throw['code'] ?? null;
@@ -70,6 +73,9 @@ class Error implements \JsonSerializable
         $this->typeShape = $typeShape;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return array_filter([

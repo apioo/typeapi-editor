@@ -33,7 +33,7 @@ use TypeAPI\Editor\Parser;
  */
 class ParserTest extends TestCase
 {
-    public function testParse()
+    public function testParse(): void
     {
         $actual = (new Parser(new SchemaManager()))->parseFile(__DIR__ . '/resource/typeapi.json');
         $expect = file_get_contents(__DIR__ . '/resource/document.json');
@@ -41,7 +41,7 @@ class ParserTest extends TestCase
         $this->assertJsonStringEqualsJsonString($expect, \json_encode($actual));
     }
 
-    public function testParseComplex()
+    public function testParseComplex(): void
     {
         $actual = (new Parser(new SchemaManager()))->parseFile(__DIR__ . '/resource/typeapi_complex.json');
         $expect = file_get_contents(__DIR__ . '/resource/document_complex.json');
@@ -49,7 +49,7 @@ class ParserTest extends TestCase
         $this->assertJsonStringEqualsJsonString($expect, \json_encode($actual));
     }
 
-    public function testParseContentType()
+    public function testParseContentType(): void
     {
         $actual = (new Parser(new SchemaManager()))->parseFile(__DIR__ . '/resource/typeapi_content_type.json');
         $expect = file_get_contents(__DIR__ . '/resource/document_content_type.json');
@@ -57,7 +57,7 @@ class ParserTest extends TestCase
         $this->assertJsonStringEqualsJsonString($expect, \json_encode($actual));
     }
 
-    public function testParseDiscord()
+    public function testParseDiscord(): void
     {
         $actual = (new Parser(new SchemaManager()))->parseFile(__DIR__ . '/resource/typeapi_discord.json');
         $expect = file_get_contents(__DIR__ . '/resource/document_discord.json');
@@ -65,7 +65,7 @@ class ParserTest extends TestCase
         $this->assertJsonStringEqualsJsonString($expect, \json_encode($actual));
     }
 
-    public function testParseNestedArray()
+    public function testParseNestedArray(): void
     {
         $actual = (new Parser(new SchemaManager()))->parseFile(__DIR__ . '/resource/typeapi_nested_array.json');
         $expect = file_get_contents(__DIR__ . '/resource/document_nested_array.json');
@@ -73,7 +73,7 @@ class ParserTest extends TestCase
         $this->assertJsonStringEqualsJsonString($expect, \json_encode($actual));
     }
 
-    public function testParseQueryObject()
+    public function testParseQueryObject(): void
     {
         $actual = (new Parser(new SchemaManager()))->parseFile(__DIR__ . '/resource/typeapi_query_object.json');
         $expect = file_get_contents(__DIR__ . '/resource/document_query_object.json');
@@ -81,7 +81,7 @@ class ParserTest extends TestCase
         $this->assertJsonStringEqualsJsonString($expect, \json_encode($actual));
     }
 
-    public function testParseSecurity()
+    public function testParseSecurity(): void
     {
         $actual = (new Parser(new SchemaManager()))->parseFile(__DIR__ . '/resource/typeapi_security.json');
         $expect = file_get_contents(__DIR__ . '/resource/document_security.json');

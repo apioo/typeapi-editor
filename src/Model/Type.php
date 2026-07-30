@@ -20,6 +20,8 @@
 
 namespace TypeAPI\Editor\Model;
 
+use stdClass;
+
 /**
  * Type
  *
@@ -40,15 +42,27 @@ class Type implements \JsonSerializable
     private ?string $parent;
     private ?bool $base;
     /**
-     * @var array<Property>
+     * @var list<Property>
      */
     private array $properties;
     private ?string $discriminator;
+    /**
+     * @var array<string, string>|null
+     */
     private ?array $mapping;
+    /**
+     * @var array<string, string>|null
+     */
     private ?array $template;
     private ?string $reference;
+    /**
+     * @var array<string, mixed>|null
+     */
     private ?array $metadata;
 
+    /**
+     * @param array<string, mixed> $type
+     */
     public function __construct(array $type)
     {
         $type = $this->bcLayer($type);
@@ -135,6 +149,9 @@ class Type implements \JsonSerializable
         return $this->properties;
     }
 
+    /**
+     * @param list<Property> $properties
+     */
     public function setProperties(array $properties): void
     {
         $this->properties = $properties;
@@ -166,21 +183,33 @@ class Type implements \JsonSerializable
         $this->discriminator = $discriminator;
     }
 
+    /**
+     * @return array<string, mixed>|null
+     */
     public function getMapping(): ?array
     {
         return $this->mapping;
     }
 
+    /**
+     * @param array<string, mixed>|null $mapping
+     */
     public function setMapping(?array $mapping): void
     {
         $this->mapping = $mapping;
     }
 
+    /**
+     * @return array<string, string>|null
+     */
     public function getTemplate(): ?array
     {
         return $this->template;
     }
 
+    /**
+     * @param array<string, mixed>|null $template
+     */
     public function setTemplate(?array $template): void
     {
         $this->template = $template;
@@ -196,16 +225,25 @@ class Type implements \JsonSerializable
         $this->reference = $reference;
     }
 
+    /**
+     * @return array<string, mixed>|null
+     */
     public function getMetadata(): ?array
     {
         return $this->metadata;
     }
 
+    /**
+     * @param array<string, mixed>|null $metadata
+     */
     public function setMetadata(?array $metadata): void
     {
         $this->metadata = $metadata;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -226,6 +264,10 @@ class Type implements \JsonSerializable
         });
     }
 
+    /**
+     * @param list<stdClass|array<string, mixed>>|null $properties
+     * @return list<Property>
+     */
     private function convertProperties(?array $properties): array
     {
         if ($properties === null) {
@@ -234,7 +276,7 @@ class Type implements \JsonSerializable
 
         $result = [];
         foreach ($properties as $property) {
-            if ($property instanceof \stdClass) {
+            if ($property instanceof stdClass) {
                 $result[] = new Property((array) $property);
             } elseif (is_array($property)) {
                 $result[] = new Property($property);
@@ -244,6 +286,10 @@ class Type implements \JsonSerializable
         return $result;
     }
 
+    /**
+     * @param array<string, mixed> $type
+     * @return array<string, mixed>
+     */
     private function bcLayer(array $type): array
     {
         if (isset($type['template']) && is_string($type['template'])) {

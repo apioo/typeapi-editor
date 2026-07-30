@@ -33,6 +33,9 @@ class Argument implements \JsonSerializable
     private ?string $in;
     private ?string $type;
 
+    /**
+     * @param array<string, mixed> $argument
+     */
     public function __construct(array $argument)
     {
         $this->name = $argument['name'] ?? null;
@@ -70,6 +73,9 @@ class Argument implements \JsonSerializable
         $this->type = $type;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return array_filter([

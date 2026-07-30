@@ -20,6 +20,8 @@
 
 namespace TypeAPI\Editor\Model;
 
+use stdClass;
+
 /**
  * Import
  *
@@ -31,8 +33,14 @@ class Import implements \JsonSerializable
 {
     private ?string $alias;
     private ?string $url;
+    /**
+     * @var list<Type>|null
+     */
     private ?array $types;
 
+    /**
+     * @param array<string, mixed> $import
+     */
     public function __construct(array $import)
     {
         $this->alias = $import['alias'] ?? null;
@@ -60,16 +68,25 @@ class Import implements \JsonSerializable
         $this->url = $url;
     }
 
+    /**
+     * @return list<Type>|null
+     */
     public function getTypes(): ?array
     {
         return $this->types;
     }
 
+    /**
+     * @param list<Type>|null $types
+     */
     public function setTypes(?array $types): void
     {
         $this->types = $types;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return [
@@ -79,11 +96,15 @@ class Import implements \JsonSerializable
         ];
     }
 
+    /**
+     * @param list<stdClass|array<string, mixed>|Type> $types
+     * @return list<Type>
+     */
     private function convertTypes(array $types): array
     {
         $result = [];
         foreach ($types as $type) {
-            if ($type instanceof \stdClass) {
+            if ($type instanceof stdClass) {
                 $result[] = new Type((array) $type);
             } elseif (is_array($type)) {
                 $result[] = new Type($type);

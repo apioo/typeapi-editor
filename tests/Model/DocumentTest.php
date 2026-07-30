@@ -35,7 +35,7 @@ use TypeAPI\Editor\Model\Type;
  */
 class DocumentTest extends TestCase
 {
-    public function testDocumentJson()
+    public function testDocumentJson(): void
     {
         $json     = \json_decode(file_get_contents(__DIR__ . '/../resource/document.json'));
         $document = Document::from($json);
@@ -43,7 +43,7 @@ class DocumentTest extends TestCase
         $this->assertDocument($document);
     }
 
-    public function testDocumentYaml()
+    public function testDocumentYaml(): void
     {
         $yaml     = Yaml::parse(file_get_contents(__DIR__ . '/../resource/document.json'));
         $document = Document::from($yaml);

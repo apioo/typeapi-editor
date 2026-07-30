@@ -12,15 +12,16 @@
     }
   ],
   "require": {
-    "php": ">=8.1",
+    "php": ">=8.4",
     "psx/api": "^7.0",
     "psx/schema": "^7.0",
     "typeapi/model": "^0.1"
   },
   "require-dev": {
-    "phpunit/phpunit": "^10.0",
-    "symfony/yaml": "^6.0|^7.0",
-    "vimeo/psalm": "^6.0"
+    "phpunit/phpunit": "^12.0",
+    "phpstan/phpstan": "^2.1",
+    "rector/rector": "^2.4",
+    "symfony/yaml": "^6.0|^7.0"
   },
   "autoload": {
     "psr-4": {

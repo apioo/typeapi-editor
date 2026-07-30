@@ -48,9 +48,18 @@ class Property implements \JsonSerializable
     private ?string $default;
     private ?string $reference;
     private ?string $generic;
+    /**
+     * @var array<string, string>|null
+     */
     private ?array $template;
+    /**
+     * @var array<string, mixed>|null
+     */
     private ?array $metadata;
 
+    /**
+     * @param array<string, mixed> $property
+     */
     public function __construct(array $property)
     {
         $property = $this->byLayer($property);
@@ -158,26 +167,41 @@ class Property implements \JsonSerializable
         $this->generic = $generic;
     }
 
+    /**
+     * @return array<string, string>|null
+     */
     public function getTemplate(): ?array
     {
         return $this->template;
     }
 
+    /**
+     * @param array<string, string>|null $template
+     */
     public function setTemplate(?array $template): void
     {
         $this->template = $template;
     }
 
+    /**
+     * @return array<string, mixed>|null
+     */
     public function getMetadata(): ?array
     {
         return $this->metadata;
     }
 
+    /**
+     * @param array<string, mixed>|null $metadata
+     */
     public function setMetadata(?array $metadata): void
     {
         $this->metadata = $metadata;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -197,6 +221,10 @@ class Property implements \JsonSerializable
         });
     }
 
+    /**
+     * @param array<string, mixed> $property
+     * @return array<string, mixed>
+     */
     private function byLayer(array $property): array
     {
         if (isset($property['refs']) && is_array($property['refs']) && count($property['refs']) > 0) {

@@ -34,8 +34,14 @@ class Security implements \JsonSerializable
     private ?string $in;
     private ?string $tokenUrl;
     private ?string $authorizationUrl;
+    /**
+     * @var list<string>|null
+     */
     private ?array $scopes;
 
+    /**
+     * @param array<string, mixed> $security
+     */
     public function __construct(array $security)
     {
         $this->type = $security['type'] ?? null;
@@ -102,16 +108,25 @@ class Security implements \JsonSerializable
         $this->authorizationUrl = $authorizationUrl;
     }
 
+    /**
+     * @return list<string>|null
+     */
     public function getScopes(): ?array
     {
         return $this->scopes;
     }
 
+    /**
+     * @param list<string>|null $scopes
+     */
     public function setScopes(?array $scopes): void
     {
         $this->scopes = $scopes;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return array_filter([

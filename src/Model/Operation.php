@@ -20,6 +20,8 @@
 
 namespace TypeAPI\Editor\Model;
 
+use stdClass;
+
 /**
  * Operation
  *
@@ -47,10 +49,19 @@ class Operation implements \JsonSerializable
     private ?string $return;
     private ?string $returnShape;
     private ?int $stability;
+    /**
+     * @var list<string>|null
+     */
     private ?array $security;
     private ?bool $authorization;
+    /**
+     * @var list<string>|null
+     */
     private ?array $tags;
 
+    /**
+     * @param array<string, mixed> $operation
+     */
     public function __construct(array $operation)
     {
         $this->name = $operation['name'] ?? null;
@@ -127,13 +138,16 @@ class Operation implements \JsonSerializable
     }
 
     /**
-     * @return array<Argument>
+     * @return list<Argument>
      */
     public function getArguments(): array
     {
         return $this->arguments;
     }
 
+    /**
+     * @param list<Argument>|null $arguments
+     */
     public function setArguments(?array $arguments): void
     {
         $this->arguments = $arguments;
@@ -176,13 +190,16 @@ class Operation implements \JsonSerializable
     }
 
     /**
-     * @return array<Error>
+     * @return list<Error>
      */
     public function getThrows(): array
     {
         return $this->throws;
     }
 
+    /**
+     * @param list<Error>|null $throws
+     */
     public function setThrows(?array $throws): void
     {
         $this->throws = $throws;
@@ -234,11 +251,17 @@ class Operation implements \JsonSerializable
         $this->stability = $stability;
     }
 
+    /**
+     * @return list<string>|null
+     */
     public function getSecurity(): ?array
     {
         return $this->security;
     }
 
+    /**
+     * @param list<string>|null $security
+     */
     public function setSecurity(?array $security): void
     {
         $this->security = $security;
@@ -254,16 +277,25 @@ class Operation implements \JsonSerializable
         $this->authorization = $authorization;
     }
 
+    /**
+     * @return list<string>|null
+     */
     public function getTags(): ?array
     {
         return $this->tags;
     }
 
+    /**
+     * @param list<string>|null $tags
+     */
     public function setTags(?array $tags): void
     {
         $this->tags = $tags;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -287,11 +319,15 @@ class Operation implements \JsonSerializable
         });
     }
 
+    /**
+     * @param list<stdClass|array<string, mixed>> $arguments
+     * @return list<Argument>
+     */
     private function convertArguments(array $arguments): array
     {
         $result = [];
         foreach ($arguments as $argument) {
-            if ($argument instanceof \stdClass) {
+            if ($argument instanceof stdClass) {
                 $result[] = new Argument((array) $argument);
             } elseif (is_array($argument)) {
                 $result[] = new Argument($argument);
@@ -301,11 +337,15 @@ class Operation implements \JsonSerializable
         return $result;
     }
 
+    /**
+     * @param list<stdClass|array<string, mixed>> $throws
+     * @return list<Error>
+     */
     private function convertThrows(array $throws): array
     {
         $result = [];
         foreach ($throws as $throw) {
-            if ($throw instanceof \stdClass) {
+            if ($throw instanceof stdClass) {
                 $result[] = new Error((array) $throw);
             } elseif (is_array($throw)) {
                 $result[] = new Error($throw);

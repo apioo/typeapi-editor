@@ -33,7 +33,7 @@ use TypeAPI\Editor\Model\Document;
  */
 class GeneratorTest extends TestCase
 {
-    public function testGenerate()
+    public function testGenerate(): void
     {
         $json     = \json_decode(file_get_contents(__DIR__ . '/resource/document.json'));
         $document = Document::from($json);
@@ -44,7 +44,7 @@ class GeneratorTest extends TestCase
         $this->assertJsonStringEqualsJsonString($expect, $actual);
     }
 
-    public function testGenerateComplex()
+    public function testGenerateComplex(): void
     {
         $json     = \json_decode(file_get_contents(__DIR__ . '/resource/document_complex.json'));
         $document = Document::from($json);
@@ -55,7 +55,7 @@ class GeneratorTest extends TestCase
         $this->assertJsonStringEqualsJsonString($expect, $actual, $actual);
     }
 
-    public function testGenerateContentType()
+    public function testGenerateContentType(): void
     {
         $json     = \json_decode(file_get_contents(__DIR__ . '/resource/document_content_type.json'));
         $document = Document::from($json);
@@ -66,7 +66,7 @@ class GeneratorTest extends TestCase
         $this->assertJsonStringEqualsJsonString($expect, $actual, $actual);
     }
 
-    public function testGenerateDiscord()
+    public function testGenerateDiscord(): void
     {
         $json     = \json_decode(file_get_contents(__DIR__ . '/resource/document_discord.json'));
         $document = Document::from($json);
@@ -77,7 +77,7 @@ class GeneratorTest extends TestCase
         $this->assertJsonStringEqualsJsonString($expect, $actual, $actual);
     }
 
-    public function testGenerateNestedArray()
+    public function testGenerateNestedArray(): void
     {
         $json     = \json_decode(file_get_contents(__DIR__ . '/resource/document_nested_array.json'));
         $document = Document::from($json);
@@ -88,7 +88,7 @@ class GeneratorTest extends TestCase
         $this->assertJsonStringEqualsJsonString($expect, $actual);
     }
 
-    public function testGenerateQueryObject()
+    public function testGenerateQueryObject(): void
     {
         $json     = \json_decode(file_get_contents(__DIR__ . '/resource/document_query_object.json'));
         $document = Document::from($json);
@@ -99,7 +99,7 @@ class GeneratorTest extends TestCase
         $this->assertJsonStringEqualsJsonString($expect, $actual, $actual);
     }
 
-    public function testGenerateSecurity()
+    public function testGenerateSecurity(): void
     {
         $json     = \json_decode(file_get_contents(__DIR__ . '/resource/document_security.json'));
         $document = Document::from($json);

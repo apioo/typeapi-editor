@@ -20,6 +20,8 @@
 
 namespace TypeAPI\Editor\Model;
 
+use stdClass;
+
 /**
  * A document represents a TypeSchema in an intermediate format which is used at the editor etc. to properly render a
  * specification. It uses arrays instead of objects so that it possible to explicit modify the property order
@@ -31,17 +33,17 @@ namespace TypeAPI\Editor\Model;
 class Document implements \JsonSerializable
 {
     /**
-     * @var array<Import>
+     * @var list<Import>
      */
     private array $imports;
 
     /**
-     * @var array<Operation>
+     * @var list<Operation>
      */
     private array $operations;
 
     /**
-     * @var array<Type>
+     * @var list<Type>
      */
     private array $types;
 
@@ -49,6 +51,11 @@ class Document implements \JsonSerializable
     private ?string $baseUrl;
     private ?Security $security;
 
+    /**
+     * @param list<stdClass|array<string, mixed>|Import>|null $imports
+     * @param list<stdClass|array<string, mixed>|Operation>|null $operations
+     * @param list<stdClass|array<string, mixed>|Type>|null $types
+     */
     public function __construct(?array $imports = null, ?array $operations = null, ?array $types = null, ?int $root = null, ?string $baseUrl = null, ?Security $security = null)
     {
         $this->imports = $this->convertImports($imports ?? []);
@@ -59,6 +66,9 @@ class Document implements \JsonSerializable
         $this->security = $security;
     }
 
+    /**
+     * @return list<Import>|null
+     */
     public function getImports(): ?array
     {
         return $this->imports;
@@ -75,6 +85,9 @@ class Document implements \JsonSerializable
         return null;
     }
 
+    /**
+     * @return list<Operation>
+     */
     public function getOperations(): array
     {
         return $this->operations;
@@ -135,6 +148,9 @@ class Document implements \JsonSerializable
         return $this->security;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -149,11 +165,15 @@ class Document implements \JsonSerializable
         });
     }
 
+    /**
+     * @param list<stdClass|array<string, mixed>|Import> $imports
+     * @return list<Import>
+     */
     private function convertImports(array $imports): array
     {
         $result = [];
         foreach ($imports as $import) {
-            if ($import instanceof \stdClass) {
+            if ($import instanceof stdClass) {
                 $result[] = new Import((array) $import);
             } elseif (is_array($import)) {
                 $result[] = new Import($import);
@@ -165,11 +185,15 @@ class Document implements \JsonSerializable
         return $result;
     }
 
+    /**
+     * @param list<stdClass|array<string, mixed>|Operation> $operations
+     * @return list<Operation>
+     */
     private function convertOperations(array $operations): array
     {
         $result = [];
         foreach ($operations as $operation) {
-            if ($operation instanceof \stdClass) {
+            if ($operation instanceof stdClass) {
                 $result[] = new Operation((array) $operation);
             } elseif (is_array($operation)) {
                 $result[] = new Operation($operation);
@@ -181,11 +205,15 @@ class Document implements \JsonSerializable
         return $result;
     }
 
+    /**
+     * @param list<stdClass|array<string, mixed>|Type> $types
+     * @return list<Type>
+     */
     private function convertTypes(array $types): array
     {
         $result = [];
         foreach ($types as $type) {
-            if ($type instanceof \stdClass) {
+            if ($type instanceof stdClass) {
                 $result[] = new Type((array) $type);
             } elseif (is_array($type)) {
                 $result[] = new Type($type);
@@ -224,7 +252,7 @@ class Document implements \JsonSerializable
             } else {
                 return new self($document);
             }
-        } elseif ($document instanceof \stdClass) {
+        } elseif ($document instanceof stdClass) {
             $root = null;
             if (isset($document->root)) {
                 $root = (int) $document->root;

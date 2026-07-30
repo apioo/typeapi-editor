@@ -23,6 +23,7 @@ namespace TypeAPI\Editor;
 use PSX\Schema\Exception\InvalidSchemaException;
 use PSX\Schema\SchemaManagerInterface;
 use PSX\Schema\SchemaSource;
+use stdClass;
 use TypeAPI\Editor\Exception\ParserException;
 use TypeAPI\Editor\Model\Argument;
 use TypeAPI\Editor\Model\Document;
@@ -72,7 +73,7 @@ class Parser
      *
      * @throws ParserException
      */
-    public function parse(\stdClass $data): Document
+    public function parse(stdClass $data): Document
     {
         $baseUrl = null;
         if (isset($data->baseUrl) && is_string($data->baseUrl)) {
@@ -80,12 +81,12 @@ class Parser
         }
 
         $security = null;
-        if (isset($data->security) && $data->security instanceof \stdClass) {
+        if (isset($data->security) && $data->security instanceof stdClass) {
             $security = new Security((array) $data->security);
         }
 
         $imports = [];
-        if (isset($data->import) && $data->import instanceof \stdClass) {
+        if (isset($data->import) && $data->import instanceof stdClass) {
             foreach (get_object_vars($data->import) as $name => $import) {
                 if (!is_string($import)) {
                     continue;
@@ -100,9 +101,9 @@ class Parser
         }
 
         $operations = [];
-        if (isset($data->operations) && $data->operations instanceof \stdClass) {
+        if (isset($data->operations) && $data->operations instanceof stdClass) {
             foreach (get_object_vars($data->operations) as $name => $operation) {
-                if (!$operation instanceof \stdClass) {
+                if (!$operation instanceof stdClass) {
                     continue;
                 }
 
@@ -115,9 +116,9 @@ class Parser
 
         $types = [];
         $index = 0;
-        if (isset($data->definitions) && $data->definitions instanceof \stdClass) {
+        if (isset($data->definitions) && $data->definitions instanceof stdClass) {
             foreach (get_object_vars($data->definitions) as $name => $type) {
-                if (!$type instanceof \stdClass) {
+                if (!$type instanceof stdClass) {
                     continue;
                 }
 
@@ -138,7 +139,7 @@ class Parser
     public function parseJson(string $json): Document
     {
         $data = json_decode($json);
-        if (!$data instanceof \stdClass) {
+        if (!$data instanceof stdClass) {
             throw new ParserException('Could not parse json file');
         }
 
@@ -170,7 +171,7 @@ class Parser
         $types = [];
         $schema = $this->schemaManager->getSchema(SchemaSource::fromString($url));
         foreach ($schema->getDefinitions()->getTypes() as $name => $type) {
-            $object = new \stdClass();
+            $object = new stdClass();
             foreach ($type->toArray() as $key => $value) {
                 $object->{$key} = $value;
             }
@@ -186,7 +187,7 @@ class Parser
     /**
      * @throws ParserException
      */
-    private function parseOperation(string $name, \stdClass $operation): Operation
+    private function parseOperation(string $name, stdClass $operation): Operation
     {
         $return = new Operation([]);
         $return->setName($name);
@@ -201,7 +202,7 @@ class Parser
 
         $payload = null;
         $payloadShape = null;
-        if (isset($operation->arguments) && $operation->arguments instanceof \stdClass) {
+        if (isset($operation->arguments) && $operation->arguments instanceof stdClass) {
             $arguments = [];
             foreach (get_object_vars($operation->arguments) as $name => $rawArgument) {
                 $shape = null;
@@ -231,7 +232,7 @@ class Parser
             $return->setThrows($throws);
         }
 
-        if (isset($operation->return) && $operation->return instanceof \stdClass) {
+        if (isset($operation->return) && $operation->return instanceof stdClass) {
             if (isset($operation->return->code) && is_int($operation->return->code)) {
                 $return->setHttpCode($operation->return->code);
             }
@@ -239,7 +240,7 @@ class Parser
             if ($return->getHttpCode() === 204) {
                 $return->setReturn(null);
             } else {
-                if (isset($operation->return->schema) && $operation->return->schema instanceof \stdClass) {
+                if (isset($operation->return->schema) && $operation->return->schema instanceof stdClass) {
                     $shape = null;
                     $return->setReturn($this->resolveType($operation->return->schema, $shape));
                     if ($shape !== null) {
@@ -278,7 +279,7 @@ class Parser
     /**
      * @throws ParserException
      */
-    private function parseArgument(string $name, \stdClass $argument, ?string &$shape = null): Argument
+    private function parseArgument(string $name, stdClass $argument, ?string &$shape = null): Argument
     {
         $in = $argument->in ?? null;
         if (!is_string($in)) {
@@ -289,7 +290,7 @@ class Parser
         $return->setName($name);
         $return->setIn($in);
 
-        if (isset($argument->schema) && $argument->schema instanceof \stdClass) {
+        if (isset($argument->schema) && $argument->schema instanceof stdClass) {
             $return->setType($this->resolveType($argument->schema, $shape));
         } elseif (isset($argument->contentType) && is_string($argument->contentType)) {
             $return->setType($argument->contentType);
@@ -304,7 +305,7 @@ class Parser
     /**
      * @throws ParserException
      */
-    private function parseThrow(\stdClass $throw): Error
+    private function parseThrow(stdClass $throw): Error
     {
         $code = $throw->code ?? null;
         if (!is_int($code)) {
@@ -314,7 +315,7 @@ class Parser
         $return = new Error([]);
         $return->setCode($code);
 
-        if (isset($throw->schema) && $throw->schema instanceof \stdClass) {
+        if (isset($throw->schema) && $throw->schema instanceof stdClass) {
             $shape = null;
             $return->setType($this->resolveType($throw->schema, $shape));
             if ($shape !== null) {
@@ -327,7 +328,7 @@ class Parser
         return $return;
     }
 
-    private function resolveType(\stdClass $schema, ?string &$shape = null): string
+    private function resolveType(stdClass $schema, ?string &$shape = null): string
     {
         $ref = $this->getString($schema, ['target', '$ref']);
         $type = $this->getString($schema, ['type']);
@@ -339,10 +340,10 @@ class Parser
             return $generic;
         } elseif (!empty($type)) {
             $schema = $this->getObject($schema, ['schema', 'items', 'additionalProperties']);
-            if ($schema instanceof \stdClass && ($type === 'object' || $type === 'map')) {
+            if ($schema instanceof stdClass && ($type === 'object' || $type === 'map')) {
                 $shape = 'map';
                 return $this->resolveType($schema);
-            } elseif ($schema instanceof \stdClass && $type === 'array') {
+            } elseif ($schema instanceof stdClass && $type === 'array') {
                 $shape = 'array';
                 return $this->resolveType($schema);
             } else {
@@ -356,7 +357,7 @@ class Parser
     /**
      * @throws ParserException
      */
-    private function parseDefinitionType(string $name, \stdClass $type): Type
+    private function parseDefinitionType(string $name, stdClass $type): Type
     {
         $return = new Type([]);
         $return->setName($name);
@@ -379,18 +380,18 @@ class Parser
 
         $parent = $this->getObject($type, ['parent']);
         $parentString = $this->getString($type, ['parent', '$ref', '$extends', 'extends']);
-        if ($parent instanceof \stdClass && !empty($parentString)) {
+        if ($parent instanceof stdClass && !empty($parentString)) {
             $parent = (object) [
                 'type' => 'object',
                 'target' => $parentString,
             ];
         }
 
-        if ($parent instanceof \stdClass && isset($parent->target) && is_string($parent->target)) {
+        if ($parent instanceof stdClass && isset($parent->target) && is_string($parent->target)) {
             $return->setParent($parent->target);
 
             $template = $this->getObject($parent, ['template', '$template']);
-            if ($template instanceof \stdClass) {
+            if ($template instanceof stdClass) {
                 $return->setTemplate(get_object_vars($template));
             }
         }
@@ -401,12 +402,12 @@ class Parser
         }
 
         $mapping = $this->getObject($type, ['mapping']);
-        if ($mapping instanceof \stdClass) {
+        if ($mapping instanceof stdClass) {
             $return->setMapping((array) $mapping);
         }
 
         $properties = $this->getObject($type, ['properties']);
-        if ($properties instanceof \stdClass) {
+        if ($properties instanceof stdClass) {
             $props = [];
             foreach (get_object_vars($type->properties) as $name => $property) {
                 $props[] = $this->parsePropertyType($name, $property);
@@ -416,7 +417,7 @@ class Parser
         }
 
         $schema = $this->getObject($type, ['schema', 'additionalProperties', 'items']);
-        if ($schema instanceof \stdClass) {
+        if ($schema instanceof stdClass) {
             $return->setReference($this->resolveType($schema));
         }
 
@@ -426,7 +427,7 @@ class Parser
     /**
      * @throws ParserException
      */
-    private function parsePropertyType(string $name, \stdClass $property): Property
+    private function parsePropertyType(string $name, stdClass $property): Property
     {
         $reference = '';
         $generic = '';
@@ -444,7 +445,7 @@ class Parser
         }
 
         $template = $this->getObject($property, ['template', '$template']);
-        if ($template instanceof \stdClass) {
+        if ($template instanceof stdClass) {
             $return->setTemplate(get_object_vars($template));
         }
 
@@ -479,7 +480,7 @@ class Parser
     /**
      * @throws ParserException
      */
-    private function resolveDefinitionType(\stdClass $type): string
+    private function resolveDefinitionType(stdClass $type): string
     {
         $typeName = $this->getString($type, ['type']);
         if (empty($typeName)) {
@@ -516,7 +517,7 @@ class Parser
     /**
      * @throws ParserException
      */
-    private function resolvePropertyType(\stdClass $type, string &$reference, string &$generic): string
+    private function resolvePropertyType(stdClass $type, string &$reference, string &$generic): string
     {
         $typeName = $this->getString($type, ['type']);
         if (empty($typeName)) {
@@ -536,7 +537,7 @@ class Parser
 
         if (in_array($typeName, [Property::TYPE_MAP, Property::TYPE_ARRAY])) {
             $schema = $this->getObject($type, ['schema', 'additionalProperties', 'items']);
-            if (!$schema instanceof \stdClass) {
+            if (!$schema instanceof stdClass) {
                 throw new ParserException('Could not resolve map/array schema type');
             }
 
@@ -579,10 +580,13 @@ class Parser
         return $typeName;
     }
 
-    private function getObject(\stdClass $data, array $keywords = []): ?\stdClass
+    /**
+     * @param list<string> $keywords
+     */
+    private function getObject(stdClass $data, array $keywords = []): ?stdClass
     {
         foreach ($keywords as $keyword) {
-            if (isset($data->{$keyword}) && $data->{$keyword} instanceof \stdClass) {
+            if (isset($data->{$keyword}) && $data->{$keyword} instanceof stdClass) {
                 return $data->{$keyword};
             }
         }
@@ -590,7 +594,10 @@ class Parser
         return null;
     }
 
-    private function getString(\stdClass $data, array $keywords = []): ?string
+    /**
+     * @param list<string> $keywords
+     */
+    private function getString(stdClass $data, array $keywords = []): ?string
     {
         foreach ($keywords as $keyword) {
             if (isset($data->{$keyword}) && is_string($data->{$keyword})) {
@@ -601,7 +608,10 @@ class Parser
         return null;
     }
 
-    private function getBoolean(\stdClass $data, array $keywords = []): ?bool
+    /**
+     * @param list<string> $keywords
+     */
+    private function getBoolean(stdClass $data, array $keywords = []): ?bool
     {
         foreach ($keywords as $keyword) {
             if (isset($data->{$keyword}) && is_bool($data->{$keyword})) {
