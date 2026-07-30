@@ -410,6 +410,10 @@ class Generator
             if ($property->getFormat() !== null) {
                 $result->setFormat($property->getFormat());
             }
+
+            if ($property->getDefault() !== null) {
+                $result->setDefault($property->getDefault());
+            }
         } elseif ($property->getType() === Property::TYPE_INTEGER) {
             $result = new TypeSchemaModel\IntegerPropertyType();
             $result->setType('integer');
@@ -438,6 +442,14 @@ class Generator
 
         if ($property->getDescription() !== null) {
             $result->setDescription($property->getDescription());
+        }
+
+        if ($property->getDeprecated() !== null) {
+            $result->setDeprecated($property->getDeprecated());
+        }
+
+        if ($property->getNullable() !== null) {
+            $result->setNullable($property->getNullable());
         }
 
         return $result;

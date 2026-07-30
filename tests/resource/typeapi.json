@@ -1,182 +1,188 @@
 {
-    "operations": {
-        "test.getAll": {
-            "description": "Returns all entries",
-            "method": "GET",
-            "path": "\/test",
-            "return": {
-                "code": 200,
-                "schema": {
-                    "type": "reference",
-                    "target": "CustomerCollection"
-                }
-            }
-        },
-        "test.execute": {
-            "description": "Executes a test operation",
-            "method": "POST",
-            "path": "\/test",
-            "arguments": {
-                "id": {
-                    "in": "path",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-                "ref_id": {
-                    "in": "query",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-                "payload": {
-                    "in": "body",
-                    "schema": {
-                        "type": "reference",
-                        "target": "Product"
-                    }
-                }
-            },
-            "throws": [
-                {
-                    "code": 500,
-                    "schema": {
-                        "type": "reference",
-                        "target": "Error"
-                    }
-                }
-            ],
-            "return": {
-                "code": 200,
-                "schema": {
-                    "type": "reference",
-                    "target": "Customer"
-                }
-            }
+  "operations": {
+    "test.getAll": {
+      "description": "Returns all entries",
+      "method": "GET",
+      "path": "\/test",
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "CustomerCollection"
         }
+      }
     },
-    "definitions": {
-        "Collection": {
-            "type": "struct",
-            "properties": {
-                "totalResults": {
-                    "type": "integer"
-                },
-                "startIndex": {
-                    "type": "integer"
-                },
-                "itemsPerPage": {
-                    "type": "integer"
-                },
-                "entry": {
-                    "type": "array",
-                    "schema": {
-                        "type": "generic",
-                        "name": "T"
-                    }
-                }
-            }
+    "test.execute": {
+      "description": "Executes a test operation",
+      "method": "POST",
+      "path": "\/test",
+      "arguments": {
+        "id": {
+          "in": "path",
+          "schema": {
+            "type": "string"
+          }
         },
-        "CustomerCollection": {
-            "type": "struct",
-            "parent": {
-                "type": "reference",
-                "target": "Collection",
-                "template": {
-                    "T": "Customer"
-                }
-            }
+        "ref_id": {
+          "in": "query",
+          "schema": {
+            "type": "string"
+          }
         },
-        "Customer": {
-            "type": "struct",
-            "properties": {
-                "name": {
-                    "type": "string"
-                },
-                "age": {
-                    "type": "integer"
-                },
-                "birthday": {
-                    "type": "string",
-                    "format": "date-time"
-                }
-            }
-        },
-        "Product_Base": {
-            "type": "struct",
-            "base": true,
-            "discriminator": "type",
-            "mapping": {
-                "Product": "product"
-            },
-            "properties": {
-                "type": {
-                    "type": "string"
-                }
-            }
-        },
-        "Product": {
-            "type": "struct",
-            "parent": {
-                "target": "Product_Base",
-                "type": "reference"
-            },
-            "properties": {
-                "name": {
-                    "type": "string"
-                },
-                "price": {
-                    "type": "number"
-                },
-                "groups": {
-                    "type": "array",
-                    "schema": {
-                        "type": "reference",
-                        "target": "Group"
-                    }
-                }
-            }
-        },
-        "Group": {
-            "type": "struct",
-            "properties": {
-                "name": {
-                    "type": "string"
-                }
-            }
-        },
-        "Contract": {
-            "type": "struct",
-            "properties": {
-                "customer": {
-                    "type": "reference",
-                    "target": "Customer"
-                },
-                "product": {
-                    "type": "reference",
-                    "target": "Product"
-                },
-                "data": {
-                    "type": "array",
-                    "schema": {
-                        "type": "array",
-                        "schema": {
-                            "type": "number"
-                        }
-                    }
-                }
-            }
-        },
-        "Error": {
-            "type": "struct",
-            "properties": {
-                "success": {
-                    "type": "boolean"
-                },
-                "message": {
-                    "type": "string"
-                }
-            }
+        "payload": {
+          "in": "body",
+          "schema": {
+            "type": "reference",
+            "target": "Product"
+          }
         }
+      },
+      "throws": [
+        {
+          "code": 500,
+          "schema": {
+            "type": "reference",
+            "target": "Error"
+          }
+        }
+      ],
+      "return": {
+        "code": 200,
+        "schema": {
+          "type": "reference",
+          "target": "Customer"
+        }
+      }
     }
+  },
+  "definitions": {
+    "Collection": {
+      "type": "struct",
+      "properties": {
+        "totalResults": {
+          "type": "integer"
+        },
+        "startIndex": {
+          "type": "integer"
+        },
+        "itemsPerPage": {
+          "type": "integer"
+        },
+        "entry": {
+          "type": "array",
+          "schema": {
+            "type": "generic",
+            "name": "T"
+          }
+        }
+      }
+    },
+    "CustomerCollection": {
+      "type": "struct",
+      "parent": {
+        "type": "reference",
+        "target": "Collection",
+        "template": {
+          "T": "Customer"
+        }
+      }
+    },
+    "Customer": {
+      "type": "struct",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "age": {
+          "type": "integer",
+          "nullable": true
+        },
+        "birthday": {
+          "type": "string",
+          "format": "date-time",
+          "deprecated": true
+        }
+      }
+    },
+    "Product_Base": {
+      "type": "struct",
+      "base": true,
+      "discriminator": "type",
+      "mapping": {
+        "Product": "product"
+      },
+      "properties": {
+        "type": {
+          "type": "string"
+        }
+      }
+    },
+    "Product": {
+      "type": "struct",
+      "parent": {
+        "target": "Product_Base",
+        "type": "reference"
+      },
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number"
+        },
+        "category": {
+          "type": "string",
+          "default": "basic"
+        },
+        "groups": {
+          "type": "array",
+          "schema": {
+            "type": "reference",
+            "target": "Group"
+          }
+        }
+      }
+    },
+    "Group": {
+      "type": "struct",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "Contract": {
+      "type": "struct",
+      "properties": {
+        "customer": {
+          "type": "reference",
+          "target": "Customer"
+        },
+        "product": {
+          "type": "reference",
+          "target": "Product"
+        },
+        "data": {
+          "type": "array",
+          "schema": {
+            "type": "array",
+            "schema": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "Error": {
+      "type": "struct",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  }
 }

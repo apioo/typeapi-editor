@@ -453,14 +453,24 @@ class Parser
             $return->setDescription($description);
         }
 
+        $deprecated = $this->getBoolean($property, ['deprecated']);
+        if ($deprecated !== null) {
+            $return->setDeprecated($deprecated);
+        }
+
+        $nullable = $this->getBoolean($property, ['nullable']);
+        if ($nullable !== null) {
+            $return->setNullable($nullable);
+        }
+
         $format = $this->getString($property, ['format']);
         if ($format !== null) {
             $return->setFormat($format);
         }
 
-        $deprecated = $this->getBoolean($property, ['deprecated']);
-        if ($deprecated !== null) {
-            $return->setDeprecated($deprecated);
+        $default = $this->getString($property, ['default']);
+        if ($default !== null) {
+            $return->setDefault($default);
         }
 
         return $return;
