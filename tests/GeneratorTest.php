@@ -23,6 +23,7 @@ namespace TypeAPI\Editor\Tests;
 use PHPUnit\Framework\TestCase;
 use TypeAPI\Editor\Generator;
 use TypeAPI\Editor\Model\Document;
+use function json_decode;
 
 /**
  * GeneratorTest
@@ -35,7 +36,7 @@ class GeneratorTest extends TestCase
 {
     public function testGenerate(): void
     {
-        $json     = \json_decode(file_get_contents(__DIR__ . '/resource/document.json'));
+        $json     = json_decode(file_get_contents(__DIR__ . '/resource/document.json'));
         $document = Document::from($json);
 
         $actual = (new Generator())->generate($document);
@@ -46,7 +47,7 @@ class GeneratorTest extends TestCase
 
     public function testGenerateComplex(): void
     {
-        $json     = \json_decode(file_get_contents(__DIR__ . '/resource/document_complex.json'));
+        $json     = json_decode(file_get_contents(__DIR__ . '/resource/document_complex.json'));
         $document = Document::from($json);
 
         $actual = (new Generator())->generate($document);
@@ -57,7 +58,7 @@ class GeneratorTest extends TestCase
 
     public function testGenerateContentType(): void
     {
-        $json     = \json_decode(file_get_contents(__DIR__ . '/resource/document_content_type.json'));
+        $json     = json_decode(file_get_contents(__DIR__ . '/resource/document_content_type.json'));
         $document = Document::from($json);
 
         $actual = (new Generator())->generate($document);
@@ -68,7 +69,7 @@ class GeneratorTest extends TestCase
 
     public function testGenerateDiscord(): void
     {
-        $json     = \json_decode(file_get_contents(__DIR__ . '/resource/document_discord.json'));
+        $json     = json_decode(file_get_contents(__DIR__ . '/resource/document_discord.json'));
         $document = Document::from($json);
 
         $actual = (new Generator())->generate($document);
@@ -79,7 +80,7 @@ class GeneratorTest extends TestCase
 
     public function testGenerateNestedArray(): void
     {
-        $json     = \json_decode(file_get_contents(__DIR__ . '/resource/document_nested_array.json'));
+        $json     = json_decode(file_get_contents(__DIR__ . '/resource/document_nested_array.json'));
         $document = Document::from($json);
 
         $actual = (new Generator())->generate($document);
@@ -90,7 +91,7 @@ class GeneratorTest extends TestCase
 
     public function testGenerateQueryObject(): void
     {
-        $json     = \json_decode(file_get_contents(__DIR__ . '/resource/document_query_object.json'));
+        $json     = json_decode(file_get_contents(__DIR__ . '/resource/document_query_object.json'));
         $document = Document::from($json);
 
         $actual = (new Generator())->generate($document);
@@ -101,11 +102,22 @@ class GeneratorTest extends TestCase
 
     public function testGenerateSecurity(): void
     {
-        $json     = \json_decode(file_get_contents(__DIR__ . '/resource/document_security.json'));
+        $json     = json_decode(file_get_contents(__DIR__ . '/resource/document_security.json'));
         $document = Document::from($json);
 
         $actual = (new Generator())->generate($document);
         $expect = file_get_contents(__DIR__ . '/resource/typeapi_security.json');
+
+        $this->assertJsonStringEqualsJsonString($expect, $actual, $actual);
+    }
+
+    public function testGenerateAirtable(): void
+    {
+        $json     = json_decode(file_get_contents(__DIR__ . '/resource/document_airtable.json'));
+        $document = Document::from($json);
+
+        $actual = (new Generator())->generate($document);
+        $expect = file_get_contents(__DIR__ . '/resource/typeapi_airtable.json');
 
         $this->assertJsonStringEqualsJsonString($expect, $actual, $actual);
     }

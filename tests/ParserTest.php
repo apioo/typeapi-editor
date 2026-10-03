@@ -23,6 +23,7 @@ namespace TypeAPI\Editor\Tests;
 use PHPUnit\Framework\TestCase;
 use PSX\Schema\SchemaManager;
 use TypeAPI\Editor\Parser;
+use function json_encode;
 
 /**
  * ParserTest
@@ -38,7 +39,7 @@ class ParserTest extends TestCase
         $actual = (new Parser(new SchemaManager()))->parseFile(__DIR__ . '/resource/typeapi.json');
         $expect = file_get_contents(__DIR__ . '/resource/document.json');
 
-        $this->assertJsonStringEqualsJsonString($expect, \json_encode($actual));
+        $this->assertJsonStringEqualsJsonString($expect, json_encode($actual));
     }
 
     public function testParseComplex(): void
@@ -46,7 +47,7 @@ class ParserTest extends TestCase
         $actual = (new Parser(new SchemaManager()))->parseFile(__DIR__ . '/resource/typeapi_complex.json');
         $expect = file_get_contents(__DIR__ . '/resource/document_complex.json');
 
-        $this->assertJsonStringEqualsJsonString($expect, \json_encode($actual));
+        $this->assertJsonStringEqualsJsonString($expect, json_encode($actual));
     }
 
     public function testParseContentType(): void
@@ -54,7 +55,7 @@ class ParserTest extends TestCase
         $actual = (new Parser(new SchemaManager()))->parseFile(__DIR__ . '/resource/typeapi_content_type.json');
         $expect = file_get_contents(__DIR__ . '/resource/document_content_type.json');
 
-        $this->assertJsonStringEqualsJsonString($expect, \json_encode($actual));
+        $this->assertJsonStringEqualsJsonString($expect, json_encode($actual));
     }
 
     public function testParseDiscord(): void
@@ -62,7 +63,7 @@ class ParserTest extends TestCase
         $actual = (new Parser(new SchemaManager()))->parseFile(__DIR__ . '/resource/typeapi_discord.json');
         $expect = file_get_contents(__DIR__ . '/resource/document_discord.json');
 
-        $this->assertJsonStringEqualsJsonString($expect, \json_encode($actual));
+        $this->assertJsonStringEqualsJsonString($expect, json_encode($actual));
     }
 
     public function testParseNestedArray(): void
@@ -70,7 +71,7 @@ class ParserTest extends TestCase
         $actual = (new Parser(new SchemaManager()))->parseFile(__DIR__ . '/resource/typeapi_nested_array.json');
         $expect = file_get_contents(__DIR__ . '/resource/document_nested_array.json');
 
-        $this->assertJsonStringEqualsJsonString($expect, \json_encode($actual));
+        $this->assertJsonStringEqualsJsonString($expect, json_encode($actual));
     }
 
     public function testParseQueryObject(): void
@@ -78,7 +79,7 @@ class ParserTest extends TestCase
         $actual = (new Parser(new SchemaManager()))->parseFile(__DIR__ . '/resource/typeapi_query_object.json');
         $expect = file_get_contents(__DIR__ . '/resource/document_query_object.json');
 
-        $this->assertJsonStringEqualsJsonString($expect, \json_encode($actual));
+        $this->assertJsonStringEqualsJsonString($expect, json_encode($actual));
     }
 
     public function testParseSecurity(): void
@@ -86,6 +87,14 @@ class ParserTest extends TestCase
         $actual = (new Parser(new SchemaManager()))->parseFile(__DIR__ . '/resource/typeapi_security.json');
         $expect = file_get_contents(__DIR__ . '/resource/document_security.json');
 
-        $this->assertJsonStringEqualsJsonString($expect, \json_encode($actual));
+        $this->assertJsonStringEqualsJsonString($expect, json_encode($actual));
+    }
+
+    public function testParseAirtable(): void
+    {
+        $actual = (new Parser(new SchemaManager()))->parseFile(__DIR__ . '/resource/typeapi_airtable.json');
+        $expect = file_get_contents(__DIR__ . '/resource/document_airtable.json');
+
+        $this->assertJsonStringEqualsJsonString($expect, json_encode($actual));
     }
 }

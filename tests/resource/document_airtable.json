@@ -1,0 +1,987 @@
+{
+  "baseUrl": "https://api.airtable.com",
+  "imports": [],
+  "operations": [
+    {
+      "arguments": [],
+      "authorization": true,
+      "description": "Retrieve the user's ID. For OAuth access tokens, the scopes associated with the token used are also returned.",
+      "httpCode": 200,
+      "httpMethod": "GET",
+      "httpPath": "/v0/meta/whoami",
+      "name": "meta.getWhoami",
+      "return": "User",
+      "security": [],
+      "stability": 1,
+      "throws": [
+        {
+          "code": 999,
+          "type": "Error"
+        }
+      ]
+    },
+    {
+      "arguments": [
+        {
+          "in": "path",
+          "name": "baseId",
+          "type": "string"
+        },
+        {
+          "in": "path",
+          "name": "tableIdOrName",
+          "type": "string"
+        },
+        {
+          "in": "query",
+          "name": "timeZone",
+          "type": "string"
+        },
+        {
+          "in": "query",
+          "name": "userLocale",
+          "type": "string"
+        },
+        {
+          "in": "query",
+          "name": "pageSize",
+          "type": "integer"
+        },
+        {
+          "in": "query",
+          "name": "maxRecords",
+          "type": "integer"
+        },
+        {
+          "in": "query",
+          "name": "offset",
+          "type": "string"
+        },
+        {
+          "in": "query",
+          "name": "view",
+          "type": "string"
+        },
+        {
+          "in": "query",
+          "name": "sort",
+          "type": "string"
+        },
+        {
+          "in": "query",
+          "name": "filterByFormula",
+          "type": "string"
+        },
+        {
+          "in": "query",
+          "name": "cellFormat",
+          "type": "string"
+        },
+        {
+          "in": "query",
+          "name": "fields",
+          "type": "string"
+        },
+        {
+          "in": "query",
+          "name": "returnFieldsByFieldId",
+          "type": "boolean"
+        },
+        {
+          "in": "query",
+          "name": "recordMetadata",
+          "type": "string"
+        }
+      ],
+      "authorization": true,
+      "description": "List records in a table. Note that table names and table ids can be used interchangeably. We recommend using table IDs so you don't need to modify your API request when your table name changes.",
+      "httpCode": 200,
+      "httpMethod": "GET",
+      "httpPath": "/v0/:baseId/:tableIdOrName",
+      "name": "records.getAll",
+      "return": "Record_Collection",
+      "security": [],
+      "stability": 1,
+      "throws": [
+        {
+          "code": 999,
+          "type": "Error"
+        }
+      ]
+    },
+    {
+      "arguments": [
+        {
+          "in": "path",
+          "name": "baseId",
+          "type": "string"
+        },
+        {
+          "in": "path",
+          "name": "tableIdOrName",
+          "type": "string"
+        },
+        {
+          "in": "path",
+          "name": "recordId",
+          "type": "string"
+        }
+      ],
+      "authorization": true,
+      "description": "Retrieve a single record. Any \"empty\" fields (e.g. \"\", [], or false) in the record will not be returned.",
+      "httpCode": 200,
+      "httpMethod": "GET",
+      "httpPath": "/v0/:baseId/:tableIdOrName/:recordId",
+      "name": "records.get",
+      "return": "Record",
+      "security": [],
+      "stability": 1,
+      "throws": [
+        {
+          "code": 999,
+          "type": "Error"
+        }
+      ]
+    },
+    {
+      "arguments": [
+        {
+          "in": "path",
+          "name": "baseId",
+          "type": "string"
+        },
+        {
+          "in": "path",
+          "name": "tableIdOrName",
+          "type": "string"
+        }
+      ],
+      "authorization": true,
+      "description": "Creates multiple records. Note that table names and table ids can be used interchangeably.",
+      "httpCode": 200,
+      "httpMethod": "POST",
+      "httpPath": "/v0/:baseId/:tableIdOrName",
+      "name": "records.create",
+      "payload": "Create_Record_Request",
+      "return": "Record_Collection",
+      "security": [],
+      "stability": 1,
+      "throws": [
+        {
+          "code": 999,
+          "type": "Error"
+        }
+      ]
+    },
+    {
+      "arguments": [
+        {
+          "in": "path",
+          "name": "baseId",
+          "type": "string"
+        },
+        {
+          "in": "path",
+          "name": "tableIdOrName",
+          "type": "string"
+        },
+        {
+          "in": "path",
+          "name": "recordId",
+          "type": "string"
+        }
+      ],
+      "authorization": true,
+      "description": "Updates a single record by replacing all fields. Table names and table IDs can be used interchangeably.",
+      "httpCode": 200,
+      "httpMethod": "PUT",
+      "httpPath": "/v0/:baseId/:tableIdOrName/:recordId",
+      "name": "records.replace",
+      "payload": "Record",
+      "return": "Record",
+      "security": [],
+      "stability": 1,
+      "throws": [
+        {
+          "code": 999,
+          "type": "Error"
+        }
+      ]
+    },
+    {
+      "arguments": [
+        {
+          "in": "path",
+          "name": "baseId",
+          "type": "string"
+        },
+        {
+          "in": "path",
+          "name": "tableIdOrName",
+          "type": "string"
+        }
+      ],
+      "authorization": true,
+      "description": "Updates up to 10 records, or upserts them when performUpsert is set.",
+      "httpCode": 200,
+      "httpMethod": "PUT",
+      "httpPath": "/v0/:baseId/:tableIdOrName",
+      "name": "records.replaceAll",
+      "payload": "Bulk_Update_Request",
+      "return": "Bulk_Update_Response",
+      "security": [],
+      "stability": 1,
+      "throws": [
+        {
+          "code": 999,
+          "type": "Error"
+        }
+      ]
+    },
+    {
+      "arguments": [
+        {
+          "in": "path",
+          "name": "baseId",
+          "type": "string"
+        },
+        {
+          "in": "path",
+          "name": "tableIdOrName",
+          "type": "string"
+        },
+        {
+          "in": "path",
+          "name": "recordId",
+          "type": "string"
+        }
+      ],
+      "authorization": true,
+      "description": "Updates a single record partially. Table names and table IDs can be used interchangeably.",
+      "httpCode": 200,
+      "httpMethod": "PATCH",
+      "httpPath": "/v0/:baseId/:tableIdOrName/:recordId",
+      "name": "records.update",
+      "payload": "Record",
+      "return": "Record",
+      "security": [],
+      "stability": 1,
+      "throws": [
+        {
+          "code": 999,
+          "type": "Error"
+        }
+      ]
+    },
+    {
+      "arguments": [
+        {
+          "in": "path",
+          "name": "baseId",
+          "type": "string"
+        },
+        {
+          "in": "path",
+          "name": "tableIdOrName",
+          "type": "string"
+        }
+      ],
+      "authorization": true,
+      "description": "Updates up to 10 records partially, or upserts them when performUpsert is set.",
+      "httpCode": 200,
+      "httpMethod": "PATCH",
+      "httpPath": "/v0/:baseId/:tableIdOrName",
+      "name": "records.updateAll",
+      "payload": "Bulk_Update_Request",
+      "return": "Bulk_Update_Response",
+      "security": [],
+      "stability": 1,
+      "throws": [
+        {
+          "code": 999,
+          "type": "Error"
+        }
+      ]
+    },
+    {
+      "arguments": [
+        {
+          "in": "path",
+          "name": "baseId",
+          "type": "string"
+        },
+        {
+          "in": "path",
+          "name": "tableIdOrName",
+          "type": "string"
+        },
+        {
+          "in": "path",
+          "name": "recordId",
+          "type": "string"
+        }
+      ],
+      "authorization": true,
+      "description": "Deletes a single record.",
+      "httpCode": 200,
+      "httpMethod": "DELETE",
+      "httpPath": "/v0/:baseId/:tableIdOrName/:recordId",
+      "name": "records.delete",
+      "return": "Delete_Response",
+      "security": [],
+      "stability": 1,
+      "throws": [
+        {
+          "code": 999,
+          "type": "Error"
+        }
+      ]
+    },
+    {
+      "arguments": [
+        {
+          "in": "path",
+          "name": "baseId",
+          "type": "string"
+        },
+        {
+          "in": "path",
+          "name": "tableId",
+          "type": "string"
+        }
+      ],
+      "authorization": true,
+      "description": "Creates a new column and returns the schema for the newly created column.",
+      "httpCode": 200,
+      "httpMethod": "POST",
+      "httpPath": "/v0/meta/bases/:baseId/tables/:tableId/fields",
+      "name": "fields.create",
+      "payload": "Field",
+      "return": "Field",
+      "security": [],
+      "stability": 1,
+      "throws": [
+        {
+          "code": 999,
+          "type": "Error"
+        }
+      ]
+    },
+    {
+      "arguments": [
+        {
+          "in": "path",
+          "name": "baseId",
+          "type": "string"
+        },
+        {
+          "in": "path",
+          "name": "tableId",
+          "type": "string"
+        },
+        {
+          "in": "path",
+          "name": "columnId",
+          "type": "string"
+        }
+      ],
+      "authorization": true,
+      "description": "Updates the name and/or description of a field.",
+      "httpCode": 200,
+      "httpMethod": "PATCH",
+      "httpPath": "/v0/meta/bases/:baseId/tables/:tableId/fields/:columnId",
+      "name": "fields.update",
+      "payload": "Field",
+      "return": "Field",
+      "security": [],
+      "stability": 1,
+      "throws": [
+        {
+          "code": 999,
+          "type": "Error"
+        }
+      ]
+    },
+    {
+      "arguments": [
+        {
+          "in": "path",
+          "name": "baseId",
+          "type": "string"
+        }
+      ],
+      "authorization": true,
+      "description": "Creates a new table and returns the schema for the newly created table.",
+      "httpCode": 200,
+      "httpMethod": "POST",
+      "httpPath": "/v0/meta/bases/:baseId/tables",
+      "name": "tables.create",
+      "payload": "Table",
+      "return": "Table",
+      "security": [],
+      "stability": 1,
+      "throws": [
+        {
+          "code": 999,
+          "type": "Error"
+        }
+      ]
+    },
+    {
+      "arguments": [
+        {
+          "in": "path",
+          "name": "baseId",
+          "type": "string"
+        },
+        {
+          "in": "path",
+          "name": "tableIdOrName",
+          "type": "string"
+        }
+      ],
+      "authorization": true,
+      "description": "Updates the name and/or description of a table.",
+      "httpCode": 200,
+      "httpMethod": "PATCH",
+      "httpPath": "/v0/meta/bases/:baseId/tables/:tableIdOrName",
+      "name": "tables.update",
+      "payload": "Table",
+      "return": "Table",
+      "security": [],
+      "stability": 1,
+      "throws": [
+        {
+          "code": 999,
+          "type": "Error"
+        }
+      ]
+    },
+    {
+      "arguments": [
+        {
+          "in": "path",
+          "name": "baseId",
+          "type": "string"
+        },
+        {
+          "in": "path",
+          "name": "tableIdOrName",
+          "type": "string"
+        },
+        {
+          "in": "path",
+          "name": "recordId",
+          "type": "string"
+        }
+      ],
+      "authorization": true,
+      "description": "Returns a list of comments for the record from newest to oldest.",
+      "httpCode": 200,
+      "httpMethod": "GET",
+      "httpPath": "/v0/:baseId/:tableIdOrName/:recordId/comments",
+      "name": "comments.getAll",
+      "return": "Comment_Collection",
+      "security": [],
+      "stability": 1,
+      "throws": [
+        {
+          "code": 999,
+          "type": "Error"
+        }
+      ]
+    },
+    {
+      "arguments": [
+        {
+          "in": "path",
+          "name": "baseId",
+          "type": "string"
+        },
+        {
+          "in": "path",
+          "name": "tableIdOrName",
+          "type": "string"
+        },
+        {
+          "in": "path",
+          "name": "recordId",
+          "type": "string"
+        }
+      ],
+      "authorization": true,
+      "description": "Creates a comment on a record.",
+      "httpCode": 200,
+      "httpMethod": "POST",
+      "httpPath": "/v0/:baseId/:tableIdOrName/:recordId/comments",
+      "name": "comments.create",
+      "payload": "Comment",
+      "return": "Comment",
+      "security": [],
+      "stability": 1,
+      "throws": [
+        {
+          "code": 999,
+          "type": "Error"
+        }
+      ]
+    },
+    {
+      "arguments": [
+        {
+          "in": "path",
+          "name": "baseId",
+          "type": "string"
+        },
+        {
+          "in": "path",
+          "name": "tableIdOrName",
+          "type": "string"
+        },
+        {
+          "in": "path",
+          "name": "recordId",
+          "type": "string"
+        },
+        {
+          "in": "path",
+          "name": "rowCommentId",
+          "type": "string"
+        }
+      ],
+      "authorization": true,
+      "description": "Updates a comment on a record. API users can only update comments they created.",
+      "httpCode": 200,
+      "httpMethod": "PATCH",
+      "httpPath": "/v0/:baseId/:tableIdOrName/:recordId/comments/:rowCommentId",
+      "name": "comments.update",
+      "payload": "Comment",
+      "return": "Comment",
+      "security": [],
+      "stability": 1,
+      "throws": [
+        {
+          "code": 999,
+          "type": "Error"
+        }
+      ]
+    },
+    {
+      "arguments": [
+        {
+          "in": "path",
+          "name": "baseId",
+          "type": "string"
+        },
+        {
+          "in": "path",
+          "name": "tableIdOrName",
+          "type": "string"
+        },
+        {
+          "in": "path",
+          "name": "recordId",
+          "type": "string"
+        },
+        {
+          "in": "path",
+          "name": "rowCommentId",
+          "type": "string"
+        }
+      ],
+      "authorization": true,
+      "description": "Deletes a comment from a record.",
+      "httpCode": 200,
+      "httpMethod": "DELETE",
+      "httpPath": "/v0/:baseId/:tableIdOrName/:recordId/comments/:rowCommentId",
+      "name": "comments.delete",
+      "return": "Delete_Response",
+      "security": [],
+      "stability": 1,
+      "throws": [
+        {
+          "code": 999,
+          "type": "Error"
+        }
+      ]
+    }
+  ],
+  "security": {
+    "type": "httpBearer"
+  },
+  "types": [
+    {
+      "description": "Payload used to create new records in a table.",
+      "name": "Create_Record_Request",
+      "properties": [
+        {
+          "description": "Array of record objects to create.",
+          "name": "records",
+          "reference": "Record",
+          "type": "array"
+        },
+        {
+          "description": "Automatic data conversion option.",
+          "name": "typecast",
+          "type": "boolean"
+        },
+        {
+          "description": "Return field names keyed by field ID.",
+          "name": "returnFieldsByFieldId",
+          "type": "boolean"
+        }
+      ],
+      "type": "struct"
+    },
+    {
+      "description": "Configuration for upsert behaviour.",
+      "name": "Perform_Upsert",
+      "properties": [
+        {
+          "description": "Fields used to target records for upsert.",
+          "name": "fieldsToMergeOn",
+          "reference": "string",
+          "type": "array"
+        }
+      ],
+      "type": "struct"
+    },
+    {
+      "description": "Payload for updating or upserting multiple records.",
+      "name": "Bulk_Update_Request",
+      "properties": [
+        {
+          "description": "Upsert options configuration.",
+          "name": "performUpsert",
+          "reference": "Perform_Upsert",
+          "type": "object"
+        },
+        {
+          "description": "Return field names keyed by field ID.",
+          "name": "returnFieldsByFieldId",
+          "type": "boolean"
+        },
+        {
+          "description": "Automatic data conversion option.",
+          "name": "typecast",
+          "type": "boolean"
+        },
+        {
+          "description": "Array of records to update.",
+          "name": "records",
+          "reference": "Record",
+          "type": "array"
+        }
+      ],
+      "type": "struct"
+    },
+    {
+      "description": "Response container for bulk update or upsert operations.",
+      "name": "Bulk_Update_Response",
+      "properties": [
+        {
+          "description": "List of record IDs created during upsert.",
+          "name": "createdRecords",
+          "reference": "string",
+          "type": "array"
+        },
+        {
+          "description": "List of record IDs updated.",
+          "name": "updatedRecords",
+          "reference": "string",
+          "type": "array"
+        },
+        {
+          "description": "The updated/created record objects.",
+          "name": "records",
+          "reference": "Record",
+          "type": "array"
+        }
+      ],
+      "type": "struct"
+    },
+    {
+      "description": "Represents a comment attached to a record.",
+      "name": "Comment",
+      "properties": [
+        {
+          "description": "Unique identifier of the comment.",
+          "name": "id",
+          "type": "string"
+        },
+        {
+          "description": "Timestamp when the comment was created.",
+          "format": "date-time",
+          "name": "createdTime",
+          "type": "string"
+        },
+        {
+          "description": "Timestamp when the comment was last updated.",
+          "format": "date-time",
+          "name": "lastUpdatedTime",
+          "type": "string"
+        },
+        {
+          "description": "The comment text content.",
+          "name": "text",
+          "type": "string"
+        },
+        {
+          "description": "ID of parent comment if threaded.",
+          "name": "parentCommentId",
+          "type": "string"
+        },
+        {
+          "description": "List of user reactions on the comment.",
+          "name": "reactions",
+          "reference": "Comment_Reaction",
+          "type": "array"
+        },
+        {
+          "description": "User who created the comment.",
+          "name": "author",
+          "reference": "Comment_Author",
+          "type": "object"
+        }
+      ],
+      "type": "struct"
+    },
+    {
+      "description": "Author metadata for a comment.",
+      "name": "Comment_Author",
+      "properties": [
+        {
+          "description": "User ID of the author.",
+          "name": "id",
+          "type": "string"
+        },
+        {
+          "description": "Email address of the author.",
+          "name": "email",
+          "type": "string"
+        },
+        {
+          "description": "Display name of the author.",
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "type": "struct"
+    },
+    {
+      "description": "Collection of record comments.",
+      "name": "Comment_Collection",
+      "properties": [
+        {
+          "description": "Pagination offset string.",
+          "name": "offset",
+          "type": "string"
+        },
+        {
+          "description": "List of comments.",
+          "name": "comments",
+          "reference": "Comment",
+          "type": "array"
+        }
+      ],
+      "type": "struct"
+    },
+    {
+      "description": "User reaction to a comment.",
+      "name": "Comment_Reaction",
+      "properties": [
+        {
+          "description": "Emoji identifier for the reaction.",
+          "name": "emoji",
+          "type": "string"
+        },
+        {
+          "description": "User who left the reaction.",
+          "name": "reactingUser",
+          "reference": "Comment_Author",
+          "type": "object"
+        }
+      ],
+      "type": "struct"
+    },
+    {
+      "description": "Response structure for deletion operations.",
+      "name": "Delete_Response",
+      "properties": [
+        {
+          "description": "Indicates whether the entity was deleted successfully.",
+          "name": "deleted",
+          "type": "boolean"
+        },
+        {
+          "description": "Identifier of the deleted entity.",
+          "name": "id",
+          "type": "string"
+        }
+      ],
+      "type": "struct"
+    },
+    {
+      "description": "Top-level error response wrapper.",
+      "name": "Error",
+      "properties": [
+        {
+          "description": "Error details payload.",
+          "name": "error",
+          "reference": "Error_Details",
+          "type": "object"
+        }
+      ],
+      "type": "struct"
+    },
+    {
+      "description": "Detailed error message and classification.",
+      "name": "Error_Details",
+      "properties": [
+        {
+          "description": "Classification key for the error.",
+          "name": "type",
+          "type": "string"
+        },
+        {
+          "description": "Human-readable error description.",
+          "name": "message",
+          "type": "string"
+        }
+      ],
+      "type": "struct"
+    },
+    {
+      "description": "Represents a table field schema definition.",
+      "name": "Field",
+      "properties": [
+        {
+          "description": "Unique identifier for the field.",
+          "name": "id",
+          "type": "string"
+        },
+        {
+          "description": "Field type identifier.",
+          "name": "type",
+          "type": "string"
+        },
+        {
+          "description": "Name of the field.",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "description": "Optional field description.",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "description": "Field configuration options.",
+          "name": "options",
+          "reference": "Field_Options",
+          "type": "object"
+        }
+      ],
+      "type": "struct"
+    },
+    {
+      "description": "Dynamic key-value map holding field configuration settings.",
+      "name": "Field_Options",
+      "properties": [],
+      "reference": "any",
+      "type": "map"
+    },
+    {
+      "description": "Represents an individual table row record.",
+      "name": "Record",
+      "properties": [
+        {
+          "description": "Unique identifier of the record.",
+          "name": "id",
+          "type": "string"
+        },
+        {
+          "description": "ISO 8601 timestamp of record creation.",
+          "format": "date-time",
+          "name": "createdTime",
+          "type": "string"
+        },
+        {
+          "description": "Dynamic key-value pairs representing cell data.",
+          "name": "fields",
+          "reference": "any",
+          "type": "map"
+        }
+      ],
+      "type": "struct"
+    },
+    {
+      "description": "Paginated list of table records.",
+      "name": "Record_Collection",
+      "properties": [
+        {
+          "description": "Pagination offset string for the next page.",
+          "name": "offset",
+          "type": "string"
+        },
+        {
+          "description": "List of record objects.",
+          "name": "records",
+          "reference": "Record",
+          "type": "array"
+        }
+      ],
+      "type": "struct"
+    },
+    {
+      "description": "Represents a table structure inside a base.",
+      "name": "Table",
+      "properties": [
+        {
+          "description": "Unique identifier of the table.",
+          "name": "id",
+          "type": "string"
+        },
+        {
+          "description": "Field ID of the primary table column.",
+          "name": "primaryFieldId",
+          "type": "string"
+        },
+        {
+          "description": "Table display name.",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "description": "Optional description of the table.",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "description": "List of field definitions in the table.",
+          "name": "fields",
+          "reference": "Field",
+          "type": "array"
+        }
+      ],
+      "type": "struct"
+    },
+    {
+      "description": "User identity representation.",
+      "name": "User",
+      "properties": [
+        {
+          "description": "User's primary email address.",
+          "name": "email",
+          "type": "string"
+        },
+        {
+          "description": "Unique user ID.",
+          "name": "id",
+          "type": "string"
+        }
+      ],
+      "type": "struct"
+    }
+  ]
+}
